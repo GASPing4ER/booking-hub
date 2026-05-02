@@ -1,0 +1,233 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Primary Colors */
+    --color-primary: #1E3A5F; /* Deep navy */
+    --color-primary-foreground: #FFFFFF; /* white */
+    
+    /* Secondary Colors */
+    --color-secondary: #4A6B8A; /* Blue-gray */
+    --color-secondary-foreground: #FFFFFF; /* white */
+    
+    /* Accent Colors */
+    --color-accent: #D4A574; /* Warm gold */
+    --color-accent-foreground: #1A1A1A; /* near-black */
+    
+    /* Background Colors */
+    --color-background: #FAFBFC; /* Soft off-white */
+    --color-foreground: #1A1A1A; /* near-black */
+    
+    /* Surface Colors */
+    --color-card: #FFFFFF; /* white */
+    --color-card-foreground: #2D3748; /* Charcoal gray */
+    
+    /* Popover Colors */
+    --color-popover: #FFFFFF; /* white */
+    --color-popover-foreground: #2D3748; /* Charcoal gray */
+    
+    /* Muted Colors */
+    --color-muted: #F7FAFC; /* gray-50 */
+    --color-muted-foreground: #718096; /* Medium gray */
+    
+    /* Border & Input */
+    --color-border: rgba(30, 58, 95, 0.15); /* Primary with opacity */
+    --color-input: rgba(30, 58, 95, 0.15); /* Primary with opacity */
+    --color-ring: #1E3A5F; /* Deep navy */
+    
+    /* Status Colors */
+    --color-success: #38A169; /* Forest green */
+    --color-success-foreground: #FFFFFF; /* white */
+    
+    --color-warning: #D69E2E; /* Amber */
+    --color-warning-foreground: #1A1A1A; /* near-black */
+    
+    --color-error: #E53E3E; /* Clear red */
+    --color-error-foreground: #FFFFFF; /* white */
+    
+    --color-destructive: #E53E3E; /* Clear red */
+    --color-destructive-foreground: #FFFFFF; /* white */
+    
+    /* Text Colors */
+    --color-text-primary: #2D3748; /* Charcoal gray */
+    --color-text-secondary: #718096; /* Medium gray */
+    
+    /* Radius */
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 18px;
+    --radius-xl: 24px;
+  }
+
+  .dark {
+    /* Primary Colors */
+    --color-primary: #4A6B8A; /* Lighter blue-gray for dark mode */
+    --color-primary-foreground: #FFFFFF; /* white */
+    
+    /* Secondary Colors */
+    --color-secondary: #2D3748; /* Darker gray */
+    --color-secondary-foreground: #FFFFFF; /* white */
+    
+    /* Accent Colors */
+    --color-accent: #D4A574; /* Warm gold */
+    --color-accent-foreground: #1A1A1A; /* near-black */
+    
+    /* Background Colors */
+    --color-background: #0F1419; /* Deep dark */
+    --color-foreground: #EBEBEB; /* 92% white */
+    
+    /* Surface Colors */
+    --color-card: #1A202C; /* Elevated dark */
+    --color-card-foreground: #EBEBEB; /* 92% white */
+    
+    /* Popover Colors */
+    --color-popover: #2D3748; /* gray-700 */
+    --color-popover-foreground: #EBEBEB; /* 92% white */
+    
+    /* Muted Colors */
+    --color-muted: #2D3748; /* gray-700 */
+    --color-muted-foreground: #A0AEC0; /* gray-400 */
+    
+    /* Border & Input */
+    --color-border: rgba(255, 255, 255, 0.12); /* White with opacity */
+    --color-input: rgba(255, 255, 255, 0.12); /* White with opacity */
+    --color-ring: #4A6B8A; /* Lighter blue-gray */
+    
+    /* Status Colors */
+    --color-success: #48BB78; /* Lighter green */
+    --color-success-foreground: #FFFFFF; /* white */
+    
+    --color-warning: #ECC94B; /* Lighter amber */
+    --color-warning-foreground: #1A1A1A; /* near-black */
+    
+    --color-error: #FC8181; /* Lighter red */
+    --color-error-foreground: #1A1A1A; /* near-black */
+    
+    --color-destructive: #FC8181; /* Lighter red */
+    --color-destructive-foreground: #1A1A1A; /* near-black */
+    
+    /* Text Colors */
+    --color-text-primary: #EBEBEB; /* 92% white */
+    --color-text-secondary: #A0AEC0; /* gray-400 */
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Crimson Pro', serif;
+  }
+
+  h1 {
+    font-size: 2.25rem;
+    line-height: 1.2;
+  }
+
+  h2 {
+    font-size: 1.875rem;
+    line-height: 1.25;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    line-height: 1.3;
+  }
+
+  h4 {
+    font-size: 1.25rem;
+    line-height: 1.4;
+  }
+
+  h5 {
+    font-size: 1.125rem;
+    line-height: 1.5;
+  }
+
+  .caption {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    letter-spacing: 0.025em;
+  }
+
+  .data-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-feature-settings: 'tnum' on, 'lnum' on;
+  }
+
+  @media (max-width: 768px) {
+    body {
+      font-size: 15px;
+    }
+  }
+}
+
+@layer utilities {
+  .transition-smooth {
+    transition: all 250ms ease-out;
+  }
+
+  .shadow-hospitality-sm {
+    box-shadow: 0 1px 3px rgba(30, 58, 95, 0.08);
+  }
+
+  .shadow-hospitality {
+    box-shadow: 0 2px 6px rgba(30, 58, 95, 0.12);
+  }
+
+  .shadow-hospitality-md {
+    box-shadow: 0 4px 12px rgba(30, 58, 95, 0.14);
+  }
+
+  .shadow-hospitality-lg {
+    box-shadow: 0 8px 24px rgba(30, 58, 95, 0.16);
+  }
+
+  .shadow-hospitality-xl {
+    box-shadow: 0 20px 40px -8px rgba(30, 58, 95, 0.16);
+  }
+
+  .dark .shadow-hospitality-sm {
+    box-shadow: 0 1px 3px rgba(212, 165, 116, 0.1);
+  }
+
+  .dark .shadow-hospitality {
+    box-shadow: 0 2px 6px rgba(212, 165, 116, 0.12);
+  }
+
+  .dark .shadow-hospitality-md {
+    box-shadow: 0 4px 12px rgba(212, 165, 116, 0.14);
+  }
+
+  .dark .shadow-hospitality-lg {
+    box-shadow: 0 8px 24px rgba(212, 165, 116, 0.16);
+  }
+
+  .dark .shadow-hospitality-xl {
+    box-shadow: 0 20px 40px -8px rgba(212, 165, 116, 0.18);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .scroll-smooth {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+  }
+}
