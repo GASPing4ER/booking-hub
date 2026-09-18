@@ -13,53 +13,53 @@ interface PricingPlan {
 
 const plans: PricingPlan[] = [
   {
-    name: 'Starter',
+    name: 'Začetni',
     price: '$29',
-    period: 'per month',
-    description: 'Perfect for individual property owners getting started',
+    period: 'na mesec',
+    description: 'Popolno za posamezne lastnike nepremičnin, ki šele začenjajo',
     features: [
-      'Up to 3 properties',
-      'Calendar synchronization',
-      'Basic analytics',
-      'Email support',
-      'Mobile app access',
+      'Do 3 nepremičnine',
+      'Sinhronizacija koledarja',
+      'Osnovna analitika',
+      'Podpora po e-pošti',
+      'Dostop do mobilne aplikacije',
     ],
     highlighted: false,
-    cta: 'Start Free Trial',
+    cta: 'Začnite brezplačno preizkusno obdobje',
   },
   {
-    name: 'Professional',
+    name: 'Profesionalni',
     price: '$79',
-    period: 'per month',
-    description: 'Ideal for growing portfolios and property managers',
+    period: 'na mesec',
+    description: 'Idealno za rastoče portfelje in upravnike nepremičnin',
     features: [
-      'Up to 15 properties',
-      'Advanced calendar sync',
-      'Comprehensive analytics',
-      'Priority support',
-      'Guest communication hub',
-      'Dynamic pricing tools',
-      'Custom branding',
+      'Do 15 nepremičnin',
+      'Napredna sinhronizacija koledarja',
+      'Izčrpna analitika',
+      'Prednostna podpora',
+      'Središče za komunikacijo z gosti',
+      'Orodja za dinamično oblikovanje cen',
+      'Prilagojena znamka',
     ],
     highlighted: true,
-    cta: 'Start Free Trial',
+    cta: 'Začnite brezplačno preizkusno obdobje',
   },
   {
-    name: 'Enterprise',
-    price: 'Custom',
-    period: 'contact us',
-    description: 'For large operations requiring advanced features',
+    name: 'Poslovni',
+    price: 'Po dogovoru',
+    period: 'kontaktirajte nas',
+    description: 'Za velika podjetja, ki potrebujejo napredne funkcionalnosti',
     features: [
-      'Unlimited properties',
-      'All Professional features',
-      'Dedicated account manager',
-      '24/7 phone support',
-      'API access',
-      'Custom integrations',
-      'White-label options',
+      'Neomejeno število nepremičnin',
+      'Vse funkcionalnosti paketa Profesionalni',
+      'Osebni skrbnik računa',
+      'Telefonska podpora 24/7',
+      'Dostop do API',
+      'Prilagojene integracije',
+      'Možnosti brez znamke (white-label)',
     ],
     highlighted: false,
-    cta: 'Contact Sales',
+    cta: 'Stopite v stik s prodajo',
   },
 ];
 
@@ -73,11 +73,12 @@ export default function PricingSection({ onSelectPlan }: PricingSectionProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="font-heading font-semibold text-3xl sm:text-4xl lg:text-5xl text-text-primary mb-4">
-            Simple, Transparent Pricing
+            Preprost in pregleden cenik
           </h2>
           <p className="font-body text-lg sm:text-xl text-text-secondary max-w-2xl mx-auto">
-            Choose the plan that fits your business. All plans include a 14-day
-            free trial with no credit card required.
+            Izberite paket, ki ustreza vašemu poslovanju. Vsi paketi vključujejo
+            14-dnevno brezplačno preizkusno obdobje brez potrebe po kreditni
+            kartici.
           </p>
         </div>
 
@@ -93,7 +94,7 @@ export default function PricingSection({ onSelectPlan }: PricingSectionProps) {
             >
               {plan.highlighted && (
                 <div className="inline-block bg-accent text-accent-foreground px-3 py-1 rounded-md font-caption text-sm font-medium mb-4">
-                  Most Popular
+                  Najbolj priljubljen
                 </div>
               )}
               <h3
@@ -169,8 +170,8 @@ export default function PricingSection({ onSelectPlan }: PricingSectionProps) {
 
         <div className="mt-12 text-center">
           <p className="font-caption text-text-secondary">
-            All plans include SSL security, automatic backups, and regular
-            updates. No hidden fees.
+            Vsi paketi vključujejo SSL varnost, samodejne varnostne kopije in
+            redne posodobitve. Brez skritih stroškov.
           </p>
         </div>
       </div>

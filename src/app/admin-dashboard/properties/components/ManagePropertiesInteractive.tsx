@@ -184,7 +184,7 @@ const ManagePropertiesInteractive = () => {
 
   const handleEmbedProperty = (property: Property) => {
     if (!providerStoreSlug?.trim()) {
-      alert('Set your provider storefront slug in Settings before embedding properties.');
+      alert('V nastavitvah nastavite URL-oznako trgovine ponudnika, preden vgrajujete nepremičnine.');
       return;
     }
 
@@ -234,7 +234,7 @@ const ManagePropertiesInteractive = () => {
       );
       if (!available) {
         alert(
-          'This listing slug is already used by another property on your account. Choose a different slug or click “Suggest from name”.'
+          'To URL-oznako oglasa že uporablja druga nepremičnina v vašem računu. Izberite drugo oznako ali kliknite »Predlagaj iz imena«.'
         );
         return;
       }
@@ -265,8 +265,8 @@ const ManagePropertiesInteractive = () => {
           const isDup = msg.includes('duplicate') || msg.includes('unique') || (error as any)?.code === '23505';
           throw new Error(
             isDup
-              ? 'That listing slug conflicts with another property. Pick a different slug or use “Suggest from name”.'
-              : msg || 'Could not save property',
+              ? 'Ta URL-oznaka oglasa je v sporu z drugo nepremičnino. Izberite drugo oznako ali uporabite »Predlagaj iz imena«.'
+              : msg || 'Shranjevanje nepremičnine ni uspelo',
           );
         }
       } else {
@@ -294,8 +294,8 @@ const ManagePropertiesInteractive = () => {
           const isDup = msg.includes('duplicate') || msg.includes('unique') || (error as any)?.code === '23505';
           throw new Error(
             isDup
-              ? 'That listing slug conflicts with another property. Pick a different slug or use “Suggest from name”.'
-              : msg || 'Could not save property',
+              ? 'Ta URL-oznaka oglasa je v sporu z drugo nepremičnino. Izberite drugo oznako ali uporabite »Predlagaj iz imena«.'
+              : msg || 'Shranjevanje nepremičnine ni uspelo',
           );
         }
       }
@@ -305,21 +305,21 @@ const ManagePropertiesInteractive = () => {
       setEditingProperty(null);
       setIsAddingNew(false);
     } catch (error: unknown) {
-      const message = error instanceof Error ? error.message : 'Error saving property';
+      const message = error instanceof Error ? error.message : 'Napaka pri shranjevanju nepremičnine';
       console.error('Error saving property:', message);
       alert(message);
     }
   };
 
   const handleUploadPropertyImages = async (files: File[], property: Property) => {
-    if (!user?.id) throw new Error('You must be signed in to upload property images.');
+    if (!user?.id) throw new Error('Za nalaganje slik nepremičnin morate biti prijavljeni.');
 
     const propertyId = property.id || crypto.randomUUID();
     const uploadedUrls: string[] = [];
 
     for (const file of files) {
       if (!file.type.startsWith('image/')) {
-        throw new Error(`${file.name} is not an image file.`);
+        throw new Error(`${file.name} ni slikovna datoteka.`);
       }
 
       const safeName = sanitizeStorageFileName(file.name);
@@ -345,7 +345,7 @@ const ManagePropertiesInteractive = () => {
   };
 
   const handleDeleteProperty = async (propertyId: string) => {
-    if (!confirm('Are you sure you want to delete this property?')) return;
+    if (!confirm('Ali ste prepričani, da želite izbrisati to nepremičnino?')) return;
 
     try {
       const { error } = await supabase
@@ -379,32 +379,32 @@ const ManagePropertiesInteractive = () => {
   if (!isHydrated || loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-gray-600">Loading properties...</div>
+        <div className="text-gray-600">Nalaganje nepremičnin...</div>
       </div>
     );
   }
 
   const stats = [
     {
-      label: 'Total Properties',
+      label: 'Skupaj nepremičnin',
       value: properties.length.toString(),
       icon: 'HomeIcon',
       color: 'text-primary'
     },
     {
-      label: 'Available',
+      label: 'Na voljo',
       value: properties.filter((p) => p.status === 'available').length.toString(),
       icon: 'CheckCircleIcon',
       color: 'text-success'
     },
     {
-      label: 'Maintenance',
+      label: 'Vzdrževanje',
       value: properties.filter((p) => p.status === 'maintenance').length.toString(),
       icon: 'WrenchScrewdriverIcon',
       color: 'text-warning'
     },
     {
-      label: 'Unavailable',
+      label: 'Ni na voljo',
       value: properties.filter((p) => p.status === 'unavailable').length.toString(),
       icon: 'XCircleIcon',
       color: 'text-error'
@@ -427,7 +427,7 @@ const ManagePropertiesInteractive = () => {
   const embedCode =
     embeddingProperty && embedUrl
       ? `<iframe src="${escapeHtmlAttribute(embedUrl)}" title="${escapeHtmlAttribute(
-          `${embeddingProperty.name} booking`,
+          `Rezervacija ${embeddingProperty.name}`,
         )}" width="100%" height="900" style="border:0;border-radius:12px;max-width:100%;" loading="lazy"></iframe>`
       : '';
 
@@ -473,7 +473,7 @@ const ManagePropertiesInteractive = () => {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search properties..."
+                  placeholder="Iskanje nepremičnin..."
                   className="w-full pl-10 pr-4 py-2.5 bg-background border border-input rounded-md text-text-primary placeholder:text-text-secondary focus:outline-none focus:ring-2 focus:ring-ring transition-smooth" />
               </div>
 
@@ -481,10 +481,10 @@ const ManagePropertiesInteractive = () => {
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
                 className="w-full px-4 py-2.5 bg-background border border-input rounded-md text-text-primary focus:outline-none focus:ring-2 focus:ring-ring transition-smooth">
-                <option value="all">All Status</option>
-                <option value="available">Available</option>
-                <option value="unavailable">Unavailable</option>
-                <option value="maintenance">Maintenance</option>
+                <option value="all">Vsi statusi</option>
+                <option value="available">Na voljo</option>
+                <option value="unavailable">Ni na voljo</option>
+                <option value="maintenance">Vzdrževanje</option>
               </select>
             </div>
           </div>
@@ -493,7 +493,7 @@ const ManagePropertiesInteractive = () => {
             onClick={handleAddProperty}
             className="flex items-center gap-2 px-6 py-2.5 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-smooth font-caption font-medium whitespace-nowrap">
             <Icon name="PlusIcon" variant="solid" size={20} />
-            Add Property
+            Dodaj nepremičnino
           </button>
         </div>
       </div>
@@ -501,7 +501,7 @@ const ManagePropertiesInteractive = () => {
       {/* Properties count */}
       <div className="flex items-center justify-between">
         <p className="text-text-secondary font-caption text-sm">
-          Showing {filteredProperties.length === 0 ? 0 : (currentPage - 1) * PAGE_SIZE + 1}–{Math.min(currentPage * PAGE_SIZE, filteredProperties.length)} of {filteredProperties.length} properties
+          Prikaz {filteredProperties.length === 0 ? 0 : (currentPage - 1) * PAGE_SIZE + 1}–{Math.min(currentPage * PAGE_SIZE, filteredProperties.length)} od {filteredProperties.length} nepremičnin
         </p>
       </div>
 
@@ -526,7 +526,7 @@ const ManagePropertiesInteractive = () => {
             size={48}
             className="text-text-secondary mx-auto mb-4" />
           <p className="text-text-secondary font-caption">
-            No properties found matching your filters.
+            Ni najdenih nepremičnin, ki bi ustrezale vašim filtrom.
           </p>
         </div>
       )}
@@ -535,14 +535,14 @@ const ManagePropertiesInteractive = () => {
       {totalPages > 1 && (
         <div className="flex items-center justify-between bg-card rounded-lg border border-border px-4 py-3">
           <p className="text-sm text-text-secondary font-caption">
-            Page {currentPage} of {totalPages}
+            Stran {currentPage} od {totalPages}
           </p>
           <div className="flex items-center gap-1">
             <button
               onClick={() => setCurrentPage(1)}
               disabled={currentPage === 1}
               className="p-2 rounded-md text-text-secondary hover:bg-muted disabled:opacity-40 disabled:cursor-not-allowed transition-smooth"
-              aria-label="First page"
+              aria-label="Prva stran"
             >
               <Icon name="ChevronDoubleLeftIcon" variant="outline" size={16} />
             </button>
@@ -550,7 +550,7 @@ const ManagePropertiesInteractive = () => {
               onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
               disabled={currentPage === 1}
               className="p-2 rounded-md text-text-secondary hover:bg-muted disabled:opacity-40 disabled:cursor-not-allowed transition-smooth"
-              aria-label="Previous page"
+              aria-label="Prejšnja stran"
             >
               <Icon name="ChevronLeftIcon" variant="outline" size={16} />
             </button>
@@ -582,7 +582,7 @@ const ManagePropertiesInteractive = () => {
               onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
               disabled={currentPage === totalPages}
               className="p-2 rounded-md text-text-secondary hover:bg-muted disabled:opacity-40 disabled:cursor-not-allowed transition-smooth"
-              aria-label="Next page"
+              aria-label="Naslednja stran"
             >
               <Icon name="ChevronRightIcon" variant="outline" size={16} />
             </button>
@@ -590,7 +590,7 @@ const ManagePropertiesInteractive = () => {
               onClick={() => setCurrentPage(totalPages)}
               disabled={currentPage === totalPages}
               className="p-2 rounded-md text-text-secondary hover:bg-muted disabled:opacity-40 disabled:cursor-not-allowed transition-smooth"
-              aria-label="Last page"
+              aria-label="Zadnja stran"
             >
               <Icon name="ChevronDoubleRightIcon" variant="outline" size={16} />
             </button>
@@ -627,16 +627,16 @@ const ManagePropertiesInteractive = () => {
             <div className="flex items-center justify-between p-6 border-b border-border">
               <div>
                 <h2 className="font-heading font-semibold text-2xl text-text-primary">
-                  Embed Accommodation
+                  Vgradi nastanitev
                 </h2>
                 <p className="text-sm font-caption text-text-secondary mt-1">
-                  Copy this iframe code into any website where you want to show {embeddingProperty.name}.
+                  Kopirajte to iframe kodo v katero koli spletno mesto, kjer želite prikazati {embeddingProperty.name}.
                 </p>
               </div>
               <button
                 onClick={() => setEmbeddingProperty(null)}
                 className="w-8 h-8 rounded-md flex items-center justify-center text-text-secondary hover:bg-muted hover:text-text-primary transition-smooth"
-                aria-label="Close embed modal"
+                aria-label="Zapri okno za vgradnjo"
               >
                 <Icon name="XMarkIcon" variant="outline" size={20} />
               </button>
@@ -645,7 +645,7 @@ const ManagePropertiesInteractive = () => {
             <div className="p-6 space-y-4">
               <div>
                 <label className="block text-sm font-caption font-medium text-text-secondary mb-2">
-                  HTML iframe code
+                  Koda HTML iframe
                 </label>
                 <textarea
                   value={embedCode}
@@ -657,7 +657,7 @@ const ManagePropertiesInteractive = () => {
 
               <div className="rounded-md bg-muted p-4">
                 <p className="text-sm font-caption text-text-secondary mb-2">
-                  Direct accommodation URL
+                  Neposredni URL nastanitve
                 </p>
                 <a
                   href={embedUrl}
@@ -675,7 +675,7 @@ const ManagePropertiesInteractive = () => {
                   onClick={() => setEmbeddingProperty(null)}
                   className="px-6 py-2.5 rounded-md border border-input text-text-secondary hover:bg-muted hover:text-text-primary transition-smooth font-caption font-medium"
                 >
-                  Close
+                  Zapri
                 </button>
                 <button
                   type="button"
@@ -685,13 +685,13 @@ const ManagePropertiesInteractive = () => {
                       setEmbedCopied(true);
                     } catch {
                       setEmbedCopied(false);
-                      alert('Could not copy automatically. Select the iframe code and copy it manually.');
+                      alert('Samodejno kopiranje ni uspelo. Izberite iframe kodo in jo kopirajte ročno.');
                     }
                   }}
                   className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-smooth font-caption font-medium"
                 >
                   <Icon name={embedCopied ? 'CheckIcon' : 'ClipboardDocumentIcon'} variant="outline" size={18} />
-                  {embedCopied ? 'Copied' : 'Copy Code'}
+                  {embedCopied ? 'Kopirano' : 'Kopiraj kodo'}
                 </button>
               </div>
             </div>

@@ -1,103 +1,103 @@
 # BookingHub
 
-A full-stack property booking management platform built with **Next.js 15**, **TypeScript**, **Tailwind CSS**, and **Supabase**. Providers can list properties, manage bookings, and receive automated email notifications via Resend.
+Celovita platforma za upravljanje rezervacij nepremičnin, zgrajena z **Next.js 15**, **TypeScript**, **Tailwind CSS** in **Supabase**. Ponudniki lahko objavljajo nepremičnine, upravljajo rezervacije in prejemajo samodejna e-poštna obvestila prek storitve Resend.
 
 ---
 
-## Table of Contents
+## Kazalo
 
-1. [Tech Stack](#tech-stack)
-2. [Prerequisites](#prerequisites)
-3. [Environment Variables](#environment-variables)
-4. [Local Development Setup](#local-development-setup)
-5. [Supabase Setup — Step by Step](#supabase-setup--step-by-step)
-   - [Step 1: Create a Supabase Project](#step-1-create-a-supabase-project)
-   - [Step 2: Run the Full Schema SQL](#step-2-run-the-full-schema-sql)
-   - [Step 3: Run the Status Timestamp Migration](#step-3-run-the-status-timestamp-migration)
-   - [Step 4: Run the pg_cron Migration (Daily Emails)](#step-4-run-the-pg_cron-migration-daily-emails)
-6. [Edge Functions Setup](#edge-functions-setup)
+1. [Tehnološki sklad](#tehnološki-sklad)
+2. [Predpogoji](#predpogoji)
+3. [Okoljske spremenljivke](#okoljske-spremenljivke)
+4. [Nastavitev lokalnega razvojnega okolja](#nastavitev-lokalnega-razvojnega-okolja)
+5. [Nastavitev Supabase — korak za korakom](#nastavitev-supabase--korak-za-korakom)
+   - [1. korak: Ustvarite projekt Supabase](#1-korak-ustvarite-projekt-supabase)
+   - [2. korak: Zaženite celotno SQL shemo](#2-korak-zaženite-celotno-sql-shemo)
+   - [3. korak: Zaženite migracijo za časovni žig statusa](#3-korak-zaženite-migracijo-za-časovni-žig-statusa)
+   - [4. korak: Zaženite migracijo pg_cron (dnevna e-pošta)](#4-korak-zaženite-migracijo-pg_cron-dnevna-e-pošta)
+6. [Nastavitev Edge Functions](#nastavitev-edge-functions)
    - [send-booking-confirmation](#1-send-booking-confirmation)
    - [send-booking-confirmed](#2-send-booking-confirmed)
    - [summary-email](#3-summary-email)
-7. [Edge Function Secrets](#edge-function-secrets)
-8. [Resend Setup](#resend-setup)
-9. [Demo Credentials](#demo-credentials)
-10. [Application Routes](#application-routes)
-11. [Available Scripts](#available-scripts)
+7. [Skrivnosti za Edge Function](#skrivnosti-za-edge-function)
+8. [Nastavitev Resend](#nastavitev-resend)
+9. [Poverilnice za demo](#poverilnice-za-demo)
+10. [Poti aplikacije](#poti-aplikacije)
+11. [Razpoložljive skripte](#razpoložljive-skripte)
 
 ---
 
-## Tech Stack
+## Tehnološki sklad
 
-| Layer | Technology |
+| Sloj | Tehnologija |
 |-------|-----------|
-| Framework | Next.js 15 (App Router) |
-| Language | TypeScript |
-| Styling | Tailwind CSS v3 |
-| Database | Supabase (PostgreSQL) |
-| Auth | Supabase Auth |
-| Email | Resend |
-| Real-time | Supabase Realtime |
-| Scheduled Jobs | pg_cron + pg_net |
+| Ogrodje | Next.js 15 (App Router) |
+| Jezik | TypeScript |
+| Oblikovanje | Tailwind CSS v3 |
+| Podatkovna baza | Supabase (PostgreSQL) |
+| Avtentikacija | Supabase Auth |
+| E-pošta | Resend |
+| Realni čas | Supabase Realtime |
+| Načrtovana opravila | pg_cron + pg_net |
 
 ---
 
-## Prerequisites
+## Predpogoji
 
 - Node.js 18+
-- npm or yarn
-- A [Supabase](https://supabase.com) account (free tier works)
-- A [Resend](https://resend.com) account (free tier works)
+- npm ali yarn
+- Račun pri [Supabase](https://supabase.com) (brezplačni paket zadostuje)
+- Račun pri [Resend](https://resend.com) (brezplačni paket zadostuje)
 
 ---
 
-## Environment Variables
+## Okoljske spremenljivke
 
-Create a `.env` file in the project root with the following keys:
+V korenskem imeniku projekta ustvarite datoteko `.env` z naslednjimi ključi:
 
 ```env
-# Supabase — get these from your project's Settings > API
+# Supabase — dobite jih v projektu pod Settings > API
 NEXT_PUBLIC_SUPABASE_URL=https://<your-project-ref>.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=<your-anon-key>
 
-# Resend — get this from resend.com/api-keys
+# Resend — dobite ga na resend.com/api-keys
 RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxx
 ```
 
 ---
 
-## Local Development Setup
+## Nastavitev lokalnega razvojnega okolja
 
 ```bash
-# 1. Install dependencies
+# 1. Namestite odvisnosti
 npm install
 
-# 2. Copy and fill in environment variables
-cp .env.example .env   # then edit .env with your real values
+# 2. Kopirajte in izpolnite okoljske spremenljivke
+cp .env.example .env   # nato uredite .env s svojimi dejanskimi vrednostmi
 
-# 3. Start the development server
+# 3. Zaženite razvojni strežnik
 npm run dev
 ```
 
-Open [http://localhost:4028](http://localhost:4028) in your browser.
+V brskalniku odprite [http://localhost:4028](http://localhost:4028).
 
 ---
 
-## Supabase Setup — Step by Step
+## Nastavitev Supabase — korak za korakom
 
-All SQL below is idempotent — safe to run multiple times.
+Ves spodnji SQL je idempotenten — varno ga je zagnati večkrat.
 
-### Step 1: Create a Supabase Project
+### 1. korak: Ustvarite projekt Supabase
 
-1. Go to [supabase.com](https://supabase.com) → **New Project**
-2. Note your **Project URL** and **anon key** from **Settings → API**
-3. Add them to your `.env` file
+1. Pojdite na [supabase.com](https://supabase.com) → **New Project**
+2. Zabeležite si **Project URL** in **anon key** pod **Settings → API**
+3. Dodajte ju v svojo datoteko `.env`
 
 ---
 
-### Step 2: Run the Full Schema SQL
+### 2. korak: Zaženite celotno SQL shemo
 
-Go to **Supabase Dashboard → SQL Editor** and run the following query. This creates all tables, types, indexes, functions, triggers, RLS policies, and sample seed data.
+Pojdite v **Supabase Dashboard → SQL Editor** in zaženite spodnjo poizvedbo. Ta ustvari vse tabele, tipe, indekse, funkcije, sprožilce, RLS pravilnike in vzorčne začetne podatke.
 
 ```sql
 -- ============================================================
@@ -426,9 +426,9 @@ END $$;
 
 ---
 
-### Step 3: Run the Status Timestamp Migration
+### 3. korak: Zaženite migracijo za časovni žig statusa
 
-This is already included in the full schema above (`status_updated_at` column). If you ran an older version of the schema without it, run this separately:
+To je že vključeno v zgornji celotni shemi (stolpec `status_updated_at`). Če ste zagnali starejšo različico sheme brez tega, zaženite ločeno:
 
 ```sql
 ALTER TABLE public.bookings
@@ -437,11 +437,11 @@ ALTER TABLE public.bookings
 
 ---
 
-### Step 4: Run the pg_cron Migration (Daily Emails)
+### 4. korak: Zaženite migracijo pg_cron (dnevna e-pošta)
 
-This schedules the daily summary email edge function to run at **8:00 AM UTC** every day.
+To načrtuje dnevno Edge Function za povzetek, ki se zažene vsak dan ob **8:00 UTC**.
 
-> **Note:** `pg_cron` must be enabled in your Supabase project. Go to **Database → Extensions** and enable `pg_cron` and `pg_net` first, then run:
+> **Opomba:** `pg_cron` mora biti omogočen v vašem projektu Supabase. Pojdite v **Database → Extensions** in najprej omogočite `pg_cron` ter `pg_net`, nato zaženite:
 
 ```sql
 -- Enable extensions
@@ -470,40 +470,40 @@ SELECT cron.schedule(
 );
 ```
 
-To verify the cron job was created:
+Za preverjanje, ali je bilo cron opravilo ustvarjeno:
 ```sql
 SELECT * FROM cron.job;
 ```
 
-To remove the cron job if needed:
+Za odstranitev cron opravila, če je potrebno:
 ```sql
 SELECT cron.unschedule('daily-booking-summary');
 ```
 
 ---
 
-## Edge Functions Setup
+## Nastavitev Edge Functions
 
-BookingHub uses three Supabase Edge Functions. Deploy them via the Supabase CLI or by pasting the code directly in the Supabase Dashboard under **Edge Functions**.
+BookingHub uporablja tri Supabase Edge Functions. Namestite jih prek Supabase CLI ali s prilepitvijo kode neposredno v Supabase Dashboard pod **Edge Functions**.
 
 ### 1. `send-booking-confirmation`
 
-**Path:** `supabase/functions/send-booking-confirmation/index.ts`
+**Pot:** `supabase/functions/send-booking-confirmation/index.ts`
 
-This function is called after a guest submits a booking. It:
-- Sends a **confirmation email to the guest** with booking details
-- Looks up the property owner and sends them a **new booking alert email**
+Ta funkcija se pokliče, ko gost odda rezervacijo. Ta funkcija:
+- Pošlje **potrditveno e-pošto gostu** s podrobnostmi rezervacije
+- Poišče lastnika nepremičnine in mu pošlje **obvestilo o novi rezervaciji**
 
-**Deploy via CLI:**
+**Namestitev prek CLI:**
 ```bash
 supabase functions deploy send-booking-confirmation
 ```
 
-**Or manually:** Go to **Supabase Dashboard → Edge Functions → New Function**, name it `send-booking-confirmation`, and paste the contents of `supabase/functions/send-booking-confirmation/index.ts`.
+**Ali ročno:** Pojdite v **Supabase Dashboard → Edge Functions → New Function**, poimenujte jo `send-booking-confirmation` in prilepite vsebino datoteke `supabase/functions/send-booking-confirmation/index.ts`.
 
-**Called from:** `booking-confirmation/page.tsx`, `provider/[providerSlug]/accommodations/[accommodationSlug]/page.tsx`
+**Klicano iz:** `booking-confirmation/page.tsx`, `provider/[providerSlug]/accommodations/[accommodationSlug]/page.tsx`
 
-**Payload shape:**
+**Oblika prejšnjega paketa (payload):**
 ```json
 {
   "guestEmail": "guest@example.com",
@@ -522,22 +522,22 @@ supabase functions deploy send-booking-confirmation
 
 ### 2. `send-booking-confirmed`
 
-**Path:** `supabase/functions/send-booking-confirmed/index.ts`
+**Pot:** `supabase/functions/send-booking-confirmed/index.ts`
 
-Called when a host **confirms** a booking (guest was not confirmed before). It sends a single **confirmation email to the guest** via Resend.
+Klicano, ko gostitelj **potrdi** rezervacijo (gost pred tem ni bil potrjen). Prek storitve Resend pošlje eno samo **potrditveno e-pošto gostu**.
 
-**Deploy via CLI:**
+**Namestitev prek CLI:**
 ```bash
 supabase functions deploy send-booking-confirmed
 ```
 
-**Or manually:** Create a function named `send-booking-confirmed` and paste `supabase/functions/send-booking-confirmed/index.ts`.
+**Ali ročno:** Ustvarite funkcijo z imenom `send-booking-confirmed` in prilepite `supabase/functions/send-booking-confirmed/index.ts`.
 
-**Called from:** admin booking flows — `ManageBookingsInteractive.tsx` (`/admin-dashboard/bookings`) and `AdminDashboardInteractive.tsx` (main dashboard bookings table).
+**Klicano iz:** skrbniških tokov rezervacij — `ManageBookingsInteractive.tsx` (`/admin-dashboard/bookings`) in `AdminDashboardInteractive.tsx` (tabela rezervacij na glavni nadzorni plošči).
 
-**Requires:** `RESEND_API_KEY` (same as other Resend-backed functions).
+**Zahteva:** `RESEND_API_KEY` (enako kot druge funkcije, ki uporabljajo Resend).
 
-**Payload shape:**
+**Oblika prejšnjega paketa (payload):**
 ```json
 {
   "guestEmail": "guest@example.com",
@@ -555,21 +555,21 @@ supabase functions deploy send-booking-confirmed
 
 ### 3. `summary-email`
 
-**Path:** `supabase/functions/summary-email/index.ts`
+**Pot:** `supabase/functions/summary-email/index.ts`
 
-This function is triggered by the pg_cron job every morning at 8:00 AM UTC. It:
-- Queries all providers with properties
-- For each provider, fetches pending bookings, today's check-ins, and 30-day occupancy rate
-- Sends a **daily digest email** via Resend
+To funkcijo sproži pg_cron opravilo vsako jutro ob 8:00 UTC. Ta funkcija:
+- Poizveduje po vseh ponudnikih z nepremičninami
+- Za vsakega ponudnika pridobi rezervacije v obdelavi, današnje prijave in stopnjo zasedenosti za 30 dni
+- Prek storitve Resend pošlje **e-pošto z dnevnim povzetkom**
 
-**Deploy via CLI:**
+**Namestitev prek CLI:**
 ```bash
 supabase functions deploy summary-email
 ```
 
-**Or manually:** Go to **Supabase Dashboard → Edge Functions → New Function**, name it `summary-email`, and paste the contents of `supabase/functions/summary-email/index.ts`.
+**Ali ročno:** Pojdite v **Supabase Dashboard → Edge Functions → New Function**, poimenujte jo `summary-email` in prilepite vsebino datoteke `supabase/functions/summary-email/index.ts`.
 
-**Can also be triggered manually** via HTTP POST (no body required):
+**Prav tako jo je mogoče sprožiti ročno** prek HTTP POST (telo ni potrebno):
 ```bash
 curl -X POST https://<your-project-ref>.supabase.co/functions/v1/summary-email \
   -H "Authorization: Bearer <your-anon-key>" \
@@ -579,84 +579,84 @@ curl -X POST https://<your-project-ref>.supabase.co/functions/v1/summary-email \
 
 ---
 
-## Edge Function Secrets
+## Skrivnosti za Edge Function
 
-These edge functions use Resend and (for `send-booking-confirmation` provider lookup) the service role. Set secrets in **Supabase Dashboard → Edge Functions → Manage Secrets**:
+Te Edge Functions uporabljajo Resend in (za iskanje ponudnika v `send-booking-confirmation`) service role ključ. Skrivnosti nastavite v **Supabase Dashboard → Edge Functions → Manage Secrets**:
 
-| Secret | Where to get it |
+| Skrivnost | Kje jo dobite |
 |--------|----------------|
 | `RESEND_API_KEY` | [resend.com/api-keys](https://resend.com/api-keys) |
-| `SUPABASE_SERVICE_ROLE_KEY` | Supabase Dashboard → Settings → API → `service_role` key |
+| `SUPABASE_SERVICE_ROLE_KEY` | Supabase Dashboard → Settings → API → ključ `service_role` |
 
-> `SUPABASE_URL` is automatically available inside edge functions — you don't need to set it manually.
-
----
-
-## Resend Setup
-
-1. Create a free account at [resend.com](https://resend.com)
-2. Go to **API Keys** → **Create API Key**
-3. Add the key to your `.env` as `RESEND_API_KEY`
-4. Also add it as an Edge Function secret (see above)
-
-> **Note:** On the free Resend plan, emails can only be sent **from** `onboarding@resend.dev` and **to** your verified email address. To send to any address, add and verify a custom domain in Resend, then update the `from` field in the Resend-backed edge functions.
+> `SUPABASE_URL` je znotraj Edge Functions samodejno na voljo — ni ga treba ročno nastavljati.
 
 ---
 
-## Demo Credentials
+## Nastavitev Resend
 
-A demo provider account is created by the seed data:
+1. Ustvarite brezplačen račun na [resend.com](https://resend.com)
+2. Pojdite v **API Keys** → **Create API Key**
+3. Dodajte ključ v svoj `.env` kot `RESEND_API_KEY`
+4. Dodajte ga tudi kot skrivnost Edge Function (glejte zgoraj)
 
-| Field | Value |
+> **Opomba:** Na brezplačnem paketu Resend je mogoče e-pošto pošiljati samo **od** `onboarding@resend.dev` in **na** vaš potrjen e-poštni naslov. Za pošiljanje na kateri koli naslov v Resend dodajte in potrdite lastno domeno, nato posodobite polje `from` v Edge Functions, ki uporabljajo Resend.
+
+---
+
+## Poverilnice za demo
+
+Začetni podatki ustvarijo demo račun ponudnika:
+
+| Polje | Vrednost |
 |-------|-------|
-| Email | `admin@seasideresort.com` |
-| Password | `admin123` |
+| E-pošta | `admin@seasideresort.com` |
+| Geslo | `admin123` |
 
-Login at `/provider-login`.
+Prijavite se na `/provider-login`.
 
 ---
 
-## Application Routes
+## Poti aplikacije
 
-| Route | Description |
+| Pot | Opis |
 |-------|-------------|
-| `/` | BookingHub marketing landing page |
-| `/provider-landing-page` | Public sample property listing page |
-| `/providers` | Public directory of providers |
-| `/providers/[providerSlug]` | Provider storefront overview |
-| `/providers/[providerSlug]/accommodations` | All listings (filter available vs all) |
-| `/providers/[providerSlug]/accommodations/[accommodationSlug]` | Property detail + booking (slug or UUID) |
-| `/providers/[providerSlug]/booking-form-page` | Multi-step booking form |
-| `/providers/[providerSlug]/booking-confirmation` | Post-booking confirmation page |
-| `/my-booking` | Guest booking lookup (by email + booking ID) |
-| `/provider-login` | Provider login |
-| `/provider-signup` | Provider registration |
-| `/forgot-password` | Password reset request |
-| `/reset-password` | Password reset (via email link) |
-| `/verify-email` | Email verification page |
-| `/admin-dashboard` | Provider dashboard (bookings overview) |
-| `/admin-dashboard/bookings` | Manage all bookings |
-| `/admin-dashboard/properties` | Manage properties |
-| `/admin-dashboard/calendar-management-page` | Availability calendar |
-| `/admin-dashboard/settings` | Account & business settings |
-| `/admin-dashboard/reports` | Revenue and occupancy reports |
+| `/` | Marketinška vstopna stran BookingHub |
+| `/provider-landing-page` | Javna vzorčna stran s seznamom nepremičnin |
+| `/providers` | Javni imenik ponudnikov |
+| `/providers/[providerSlug]` | Pregled izložbe ponudnika |
+| `/providers/[providerSlug]/accommodations` | Vsi oglasi (filter razpoložljivih vs. vseh) |
+| `/providers/[providerSlug]/accommodations/[accommodationSlug]` | Podrobnosti nepremičnine + rezervacija (slug ali UUID) |
+| `/providers/[providerSlug]/booking-form-page` | Večstopenjski obrazec za rezervacijo |
+| `/providers/[providerSlug]/booking-confirmation` | Stran s potrditvijo po rezervaciji |
+| `/my-booking` | Poizvedba gosta po rezervaciji (po e-pošti + ID rezervacije) |
+| `/provider-login` | Prijava ponudnika |
+| `/provider-signup` | Registracija ponudnika |
+| `/forgot-password` | Zahteva za ponastavitev gesla |
+| `/reset-password` | Ponastavitev gesla (prek povezave v e-pošti) |
+| `/verify-email` | Stran za potrditev e-pošte |
+| `/admin-dashboard` | Nadzorna plošča ponudnika (pregled rezervacij) |
+| `/admin-dashboard/bookings` | Upravljanje vseh rezervacij |
+| `/admin-dashboard/properties` | Upravljanje nepremičnin |
+| `/admin-dashboard/calendar-management-page` | Koledar razpoložljivosti |
+| `/admin-dashboard/settings` | Nastavitve računa in poslovanja |
+| `/admin-dashboard/reports` | Poročila o prihodkih in zasedenosti |
 
 ---
 
-## Available Scripts
+## Razpoložljive skripte
 
 ```bash
-npm run dev        # Start development server on port 4028
-npm run build      # Build for production
-npm run start      # Start production server
-npm run lint       # Run ESLint
-npm run lint:fix   # Auto-fix ESLint issues
-npm run format     # Format code with Prettier
+npm run dev        # Zaženi razvojni strežnik na vratih 4028
+npm run build      # Izgradnja za produkcijo
+npm run start      # Zaženi produkcijski strežnik
+npm run lint       # Zaženi ESLint
+npm run lint:fix   # Samodejno popravi težave ESLint
+npm run format     # Formatiraj kodo s Prettier
 ```
 
 ---
 
-## Project Structure
+## Struktura projekta
 
 ```
 ├── public/

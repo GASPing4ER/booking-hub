@@ -55,7 +55,7 @@ export default function CalendarManagementPage() {
   if (loading || (!user && !loading)) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-text-secondary">Loading...</div>
+        <div className="text-text-secondary">Nalaganje...</div>
       </div>
     );
   }
@@ -76,10 +76,10 @@ export default function CalendarManagementPage() {
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
           <div className="mb-8">
             <h1 className="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-2">
-              Calendar Management
+              Upravljanje koledarja
             </h1>
             <p className="text-text-secondary">
-              Set available and unavailable dates per property with bulk selection and recurring patterns
+              Nastavite razpoložljive in nerazpoložljive datume za posamezno nepremičnino z množičnim izborom in ponavljajočimi vzorci
             </p>
           </div>
 

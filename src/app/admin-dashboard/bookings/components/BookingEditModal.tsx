@@ -40,12 +40,12 @@ const BookingEditModal = ({ booking, onSave, onClose }: BookingEditModalProps) =
       <div className="bg-card rounded-lg border border-border shadow-hospitality-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between p-6 border-b border-border">
           <h2 className="font-heading font-semibold text-2xl text-text-primary">
-            Edit Booking
+            Uredi rezervacijo
           </h2>
           <button
             onClick={onClose}
             className="w-8 h-8 rounded-md flex items-center justify-center text-text-secondary hover:bg-muted hover:text-text-primary transition-smooth"
-            aria-label="Close modal"
+            aria-label="Zapri okno"
           >
             <Icon name="XMarkIcon" variant="outline" size={20} />
           </button>
@@ -55,7 +55,7 @@ const BookingEditModal = ({ booking, onSave, onClose }: BookingEditModalProps) =
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-caption font-medium text-text-secondary mb-2">
-                Booking ID
+                ID rezervacije
               </label>
               <input
                 type="text"
@@ -74,9 +74,9 @@ const BookingEditModal = ({ booking, onSave, onClose }: BookingEditModalProps) =
                 onChange={(e) => handleChange('status', e.target.value)}
                 className="w-full px-4 py-2.5 bg-background border border-input rounded-md text-text-primary focus:outline-none focus:ring-2 focus:ring-ring transition-smooth"
               >
-                <option value="pending">Pending</option>
-                <option value="confirmed">Confirmed</option>
-                <option value="cancelled">Cancelled</option>
+                <option value="pending">V obdelavi</option>
+                <option value="confirmed">Potrjeno</option>
+                <option value="cancelled">Preklicano</option>
               </select>
             </div>
           </div>
@@ -84,7 +84,7 @@ const BookingEditModal = ({ booking, onSave, onClose }: BookingEditModalProps) =
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-caption font-medium text-text-secondary mb-2">
-                Guest Name
+                Ime gosta
               </label>
               <input
                 type="text"
@@ -97,7 +97,7 @@ const BookingEditModal = ({ booking, onSave, onClose }: BookingEditModalProps) =
 
             <div>
               <label className="block text-sm font-caption font-medium text-text-secondary mb-2">
-                Guest Email
+                E-pošta gosta
               </label>
               <input
                 type="email"
@@ -111,7 +111,7 @@ const BookingEditModal = ({ booking, onSave, onClose }: BookingEditModalProps) =
 
           <div>
             <label className="block text-sm font-caption font-medium text-text-secondary mb-2">
-              Accommodation
+              Nastanitev
             </label>
             <select
               value={formData.accommodation}
@@ -128,7 +128,7 @@ const BookingEditModal = ({ booking, onSave, onClose }: BookingEditModalProps) =
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-caption font-medium text-text-secondary mb-2">
-                Check-in Date
+                Datum prijave
               </label>
               <input
                 type="date"
@@ -141,7 +141,7 @@ const BookingEditModal = ({ booking, onSave, onClose }: BookingEditModalProps) =
 
             <div>
               <label className="block text-sm font-caption font-medium text-text-secondary mb-2">
-                Check-out Date
+                Datum odjave
               </label>
               <input
                 type="date"
@@ -156,7 +156,7 @@ const BookingEditModal = ({ booking, onSave, onClose }: BookingEditModalProps) =
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-caption font-medium text-text-secondary mb-2">
-                Number of Guests
+                Število gostov
               </label>
               <input
                 type="number"
@@ -170,7 +170,7 @@ const BookingEditModal = ({ booking, onSave, onClose }: BookingEditModalProps) =
 
             <div>
               <label className="block text-sm font-caption font-medium text-text-secondary mb-2">
-                Total Amount
+                Skupni znesek
               </label>
               <input
                 type="text"
@@ -184,14 +184,14 @@ const BookingEditModal = ({ booking, onSave, onClose }: BookingEditModalProps) =
 
           <div>
             <label className="block text-sm font-caption font-medium text-text-secondary mb-2">
-              Special Requests
+              Posebne zahteve
             </label>
             <textarea
               value={formData.specialRequests || ''}
               onChange={(e) => handleChange('specialRequests', e.target.value)}
               rows={3}
               className="w-full px-4 py-2.5 bg-background border border-input rounded-md text-text-primary focus:outline-none focus:ring-2 focus:ring-ring transition-smooth resize-none"
-              placeholder="Any special requests or notes..."
+              placeholder="Morebitne posebne zahteve ali opombe..."
             />
           </div>
 
@@ -201,13 +201,13 @@ const BookingEditModal = ({ booking, onSave, onClose }: BookingEditModalProps) =
               onClick={onClose}
               className="px-6 py-2.5 rounded-md border border-input text-text-secondary hover:bg-muted hover:text-text-primary transition-smooth font-caption font-medium"
             >
-              Cancel
+              Prekliči
             </button>
             <button
               type="submit"
               className="px-6 py-2.5 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-smooth font-caption font-medium"
             >
-              Save Changes
+              Shrani spremembe
             </button>
           </div>
         </form>

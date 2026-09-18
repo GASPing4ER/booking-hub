@@ -58,7 +58,7 @@ export default function ManageBookingsPage() {
   if (loading || (!user && !loading)) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-text-secondary">Loading...</div>
+        <div className="text-text-secondary">Nalaganje...</div>
       </div>
     );
   }
@@ -79,10 +79,10 @@ export default function ManageBookingsPage() {
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="mb-8">
             <h1 className="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-2">
-              Manage Bookings
+              Upravljanje rezervacij
             </h1>
             <p className="text-text-secondary">
-              View, edit, and manage all accommodation bookings with advanced filtering and bulk operations
+              Poglejte, urejajte in upravljajte vse rezervacije nastanitev z naprednim filtriranjem in množičnimi operacijami
             </p>
           </div>
 

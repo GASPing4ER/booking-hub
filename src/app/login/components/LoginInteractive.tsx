@@ -22,7 +22,7 @@ export default function LoginInteractive() {
       await signIn(email, password);
       router.push('/admin-dashboard');
     } catch (err: any) {
-      setError(err.message || 'Failed to sign in. Please check your credentials.');
+      setError(err.message || 'Prijava ni uspela. Preverite svoje podatke.');
     } finally {
       setLoading(false);
     }
@@ -33,10 +33,10 @@ export default function LoginInteractive() {
       <div className="bg-white rounded-lg shadow-lg p-8">
         <div className="text-center mb-8">
           <h1 className="font-heading font-bold text-3xl text-text-primary mb-2">
-            Admin Login
+            Prijava skrbnika
           </h1>
           <p className="text-text-secondary">
-            Sign in to access your dashboard
+            Prijavite se za dostop do nadzorne plošče
           </p>
         </div>
 
@@ -52,7 +52,7 @@ export default function LoginInteractive() {
               htmlFor="email"
               className="block text-sm font-medium text-text-primary mb-2"
             >
-              Email Address
+              E-poštni naslov
             </label>
             <input
               id="email"
@@ -70,7 +70,7 @@ export default function LoginInteractive() {
               htmlFor="password"
               className="block text-sm font-medium text-text-primary mb-2"
             >
-              Password
+              Geslo
             </label>
             <input
               id="password"
@@ -79,7 +79,7 @@ export default function LoginInteractive() {
               onChange={(e) => setPassword(e.target.value)}
               required
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-              placeholder="Enter your password"
+              placeholder="Vnesite svoje geslo"
             />
           </div>
 
@@ -88,7 +88,7 @@ export default function LoginInteractive() {
             disabled={loading}
             className="w-full bg-primary text-white font-semibold py-3 px-6 rounded-lg hover:bg-primary-dark transition-smooth disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? 'Signing in...' : 'Sign In'}
+            {loading ? 'Prijavljanje...' : 'Prijavite se'}
           </button>
         </form>
 
@@ -97,13 +97,13 @@ export default function LoginInteractive() {
             href="/forgot-password"
             className="block text-sm text-primary hover:text-primary-dark transition-smooth font-medium"
           >
-            Forgot your password?
+            Ste pozabili geslo?
           </Link>
           <Link
             href="/"
             className="block text-sm text-primary hover:text-primary-dark transition-smooth"
           >
-            ← Back to Home
+            ← Nazaj na začetno stran
           </Link>
         </div>
       </div>

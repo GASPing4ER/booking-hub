@@ -24,9 +24,9 @@ interface FormData {
 }
 
 const STEPS: { id: Step; label: string; description: string }[] = [
-  { id: 'account', label: 'Account', description: 'Create your login credentials' },
-  { id: 'business', label: 'Business', description: 'Tell us about your property' },
-  { id: 'review', label: 'Review', description: 'Confirm your details' },
+  { id: 'account', label: 'Račun', description: 'Ustvarite svoje podatke za prijavo' },
+  { id: 'business', label: 'Podjetje', description: 'Povejte nam o svoji nepremičnini' },
+  { id: 'review', label: 'Pregled', description: 'Potrdite svoje podatke' },
 ];
 
 export default function ProviderSignUpInteractive() {
@@ -54,20 +54,20 @@ export default function ProviderSignUpInteractive() {
   };
 
   const validateAccount = (): string | null => {
-    if (!formData.fullName.trim()) return 'Full name is required';
-    if (!formData.email.trim()) return 'Email is required';
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) return 'Please enter a valid email';
-    if (formData.password.length < 8) return 'Password must be at least 8 characters';
-    if (formData.password !== formData.confirmPassword) return 'Passwords do not match';
+    if (!formData.fullName.trim()) return 'Polno ime je obvezno';
+    if (!formData.email.trim()) return 'E-pošta je obvezna';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) return 'Vnesite veljaven e-poštni naslov';
+    if (formData.password.length < 8) return 'Geslo mora vsebovati vsaj 8 znakov';
+    if (formData.password !== formData.confirmPassword) return 'Gesli se ne ujemata';
     return null;
   };
 
   const validateBusiness = (): string | null => {
-    if (!formData.businessName.trim()) return 'Business name is required';
-    if (!formData.businessEmail.trim()) return 'Business email is required';
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.businessEmail)) return 'Please enter a valid business email';
-    if (!formData.city.trim()) return 'City is required';
-    if (!formData.country.trim()) return 'Country is required';
+    if (!formData.businessName.trim()) return 'Ime podjetja je obvezno';
+    if (!formData.businessEmail.trim()) return 'Poslovni e-poštni naslov je obvezen';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.businessEmail)) return 'Vnesite veljaven poslovni e-poštni naslov';
+    if (!formData.city.trim()) return 'Mesto je obvezno';
+    if (!formData.country.trim()) return 'Država je obvezna';
     return null;
   };
 
@@ -109,7 +109,7 @@ export default function ProviderSignUpInteractive() {
       });
 
       if (authError) throw authError;
-      if (!authData.user) throw new Error('Failed to create account');
+      if (!authData.user) throw new Error('Ustvarjanje računa ni uspelo');
 
       // Insert business profile data
       const { error: profileError } = await supabase
@@ -132,7 +132,7 @@ export default function ProviderSignUpInteractive() {
       // Redirect to email verification page
       router.push(`/verify-email?email=${encodeURIComponent(formData.email)}`);
     } catch (err: any) {
-      setError(err.message || 'Failed to create account. Please try again.');
+      setError(err.message || 'Ustvarjanje računa ni uspelo. Poskusite znova.');
     } finally {
       setLoading(false);
     }
@@ -151,10 +151,10 @@ export default function ProviderSignUpInteractive() {
           BookingHub
         </Link>
         <h1 className="font-heading font-bold text-3xl text-text-primary mb-2">
-          Create Your Provider Account
+          Ustvarite svoj račun ponudnika
         </h1>
         <p className="text-text-secondary">
-          Join thousands of accommodation providers on BookingHub
+          Pridružite se tisočem ponudnikov nastanitev na BookingHub
         </p>
       </div>
 
@@ -201,57 +201,57 @@ export default function ProviderSignUpInteractive() {
         {/* Step 1: Account Details */}
         {currentStep === 'account' && (
           <div>
-            <h2 className="font-heading font-semibold text-xl text-text-primary mb-1">Account Details</h2>
-            <p className="text-text-secondary text-sm mb-6">Set up your login credentials</p>
+            <h2 className="font-heading font-semibold text-xl text-text-primary mb-1">Podatki računa</h2>
+            <p className="text-text-secondary text-sm mb-6">Nastavite svoje podatke za prijavo</p>
             <div className="space-y-5">
               <div>
-                <label className="block text-sm font-medium text-text-primary mb-2">Full Name *</label>
+                <label className="block text-sm font-medium text-text-primary mb-2">Polno ime *</label>
                 <input
                   type="text"
                   value={formData.fullName}
                   onChange={(e) => updateField('fullName', e.target.value)}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-                  placeholder="John Smith"
+                  placeholder="Janez Novak"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-text-primary mb-2">Email Address *</label>
+                <label className="block text-sm font-medium text-text-primary mb-2">E-poštni naslov *</label>
                 <input
                   type="email"
                   value={formData.email}
                   onChange={(e) => updateField('email', e.target.value)}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-                  placeholder="john@example.com"
+                  placeholder="janez@example.com"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-text-primary mb-2">Phone Number</label>
+                <label className="block text-sm font-medium text-text-primary mb-2">Telefonska številka</label>
                 <input
                   type="tel"
                   value={formData.phone}
                   onChange={(e) => updateField('phone', e.target.value)}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-                  placeholder="+1 (555) 000-0000"
+                  placeholder="+386 (0) 00 000 000"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-text-primary mb-2">Password *</label>
+                <label className="block text-sm font-medium text-text-primary mb-2">Geslo *</label>
                 <input
                   type="password"
                   value={formData.password}
                   onChange={(e) => updateField('password', e.target.value)}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-                  placeholder="At least 8 characters"
+                  placeholder="Vsaj 8 znakov"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-text-primary mb-2">Confirm Password *</label>
+                <label className="block text-sm font-medium text-text-primary mb-2">Potrdi geslo *</label>
                 <input
                   type="password"
                   value={formData.confirmPassword}
                   onChange={(e) => updateField('confirmPassword', e.target.value)}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-                  placeholder="Re-enter your password"
+                  placeholder="Ponovno vnesite svoje geslo"
                 />
               </div>
             </div>
@@ -261,68 +261,68 @@ export default function ProviderSignUpInteractive() {
         {/* Step 2: Business Details */}
         {currentStep === 'business' && (
           <div>
-            <h2 className="font-heading font-semibold text-xl text-text-primary mb-1">Business Details</h2>
-            <p className="text-text-secondary text-sm mb-6">Tell us about your accommodation business</p>
+            <h2 className="font-heading font-semibold text-xl text-text-primary mb-1">Podatki o podjetju</h2>
+            <p className="text-text-secondary text-sm mb-6">Povejte nam o svoji nastanitveni dejavnosti</p>
             <div className="space-y-5">
               <div>
-                <label className="block text-sm font-medium text-text-primary mb-2">Business / Property Name *</label>
+                <label className="block text-sm font-medium text-text-primary mb-2">Ime podjetja / nepremičnine *</label>
                 <input
                   type="text"
                   value={formData.businessName}
                   onChange={(e) => updateField('businessName', e.target.value)}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-                  placeholder="e.g. Sunset Beach Resort"
+                  placeholder="npr. Letovišče Sončni zaliv"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-text-primary mb-2">Business Email *</label>
+                <label className="block text-sm font-medium text-text-primary mb-2">Poslovni e-poštni naslov *</label>
                 <input
                   type="email"
                   value={formData.businessEmail}
                   onChange={(e) => updateField('businessEmail', e.target.value)}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-                  placeholder="bookings@yourproperty.com"
+                  placeholder="rezervacije@vasanepremicnina.com"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-text-primary mb-2">Business Phone</label>
+                <label className="block text-sm font-medium text-text-primary mb-2">Poslovni telefon</label>
                 <input
                   type="tel"
                   value={formData.businessPhone}
                   onChange={(e) => updateField('businessPhone', e.target.value)}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-                  placeholder="+1 (555) 000-0000"
+                  placeholder="+386 (0) 00 000 000"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-text-primary mb-2">Address</label>
+                <label className="block text-sm font-medium text-text-primary mb-2">Naslov</label>
                 <input
                   type="text"
                   value={formData.address}
                   onChange={(e) => updateField('address', e.target.value)}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-                  placeholder="123 Main Street"
+                  placeholder="Glavna ulica 123"
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-text-primary mb-2">City *</label>
+                  <label className="block text-sm font-medium text-text-primary mb-2">Mesto *</label>
                   <input
                     type="text"
                     value={formData.city}
                     onChange={(e) => updateField('city', e.target.value)}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-                    placeholder="Miami"
+                    placeholder="Ljubljana"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-text-primary mb-2">Country *</label>
+                  <label className="block text-sm font-medium text-text-primary mb-2">Država *</label>
                   <input
                     type="text"
                     value={formData.country}
                     onChange={(e) => updateField('country', e.target.value)}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-                    placeholder="United States"
+                    placeholder="Slovenija"
                   />
                 </div>
               </div>
@@ -333,28 +333,28 @@ export default function ProviderSignUpInteractive() {
         {/* Step 3: Review */}
         {currentStep === 'review' && (
           <div>
-            <h2 className="font-heading font-semibold text-xl text-text-primary mb-1">Review Your Details</h2>
-            <p className="text-text-secondary text-sm mb-6">Please confirm everything looks correct before submitting</p>
+            <h2 className="font-heading font-semibold text-xl text-text-primary mb-1">Preverite svoje podatke</h2>
+            <p className="text-text-secondary text-sm mb-6">Prosimo, potrdite, da so vsi podatki pravilni, preden jih pošljete</p>
             <div className="space-y-6">
               <div className="bg-gray-50 rounded-lg p-5">
                 <h3 className="font-semibold text-text-primary mb-3 flex items-center gap-2">
                   <svg className="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                   </svg>
-                  Account Details
+                  Podatki računa
                 </h3>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-text-secondary">Full Name</span>
+                    <span className="text-text-secondary">Polno ime</span>
                     <span className="text-text-primary font-medium">{formData.fullName}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-text-secondary">Email</span>
+                    <span className="text-text-secondary">E-pošta</span>
                     <span className="text-text-primary font-medium">{formData.email}</span>
                   </div>
                   {formData.phone && (
                     <div className="flex justify-between">
-                      <span className="text-text-secondary">Phone</span>
+                      <span className="text-text-secondary">Telefon</span>
                       <span className="text-text-primary font-medium">{formData.phone}</span>
                     </div>
                   )}
@@ -365,40 +365,40 @@ export default function ProviderSignUpInteractive() {
                   <svg className="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-2 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                   </svg>
-                  Business Details
+                  Podatki o podjetju
                 </h3>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-text-secondary">Business Name</span>
+                    <span className="text-text-secondary">Ime podjetja</span>
                     <span className="text-text-primary font-medium">{formData.businessName}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-text-secondary">Business Email</span>
+                    <span className="text-text-secondary">Poslovni e-poštni naslov</span>
                     <span className="text-text-primary font-medium">{formData.businessEmail}</span>
                   </div>
                   {formData.businessPhone && (
                     <div className="flex justify-between">
-                      <span className="text-text-secondary">Business Phone</span>
+                      <span className="text-text-secondary">Poslovni telefon</span>
                       <span className="text-text-primary font-medium">{formData.businessPhone}</span>
                     </div>
                   )}
                   {formData.address && (
                     <div className="flex justify-between">
-                      <span className="text-text-secondary">Address</span>
+                      <span className="text-text-secondary">Naslov</span>
                       <span className="text-text-primary font-medium">{formData.address}</span>
                     </div>
                   )}
                   <div className="flex justify-between">
-                    <span className="text-text-secondary">Location</span>
+                    <span className="text-text-secondary">Lokacija</span>
                     <span className="text-text-primary font-medium">{formData.city}, {formData.country}</span>
                   </div>
                 </div>
               </div>
               <p className="text-xs text-text-secondary text-center">
-                By creating an account, you agree to our{' '}
-                <span className="text-primary cursor-pointer hover:underline">Terms of Service</span>{' '}
-                and{' '}
-                <span className="text-primary cursor-pointer hover:underline">Privacy Policy</span>.
+                Z ustvarjanjem računa se strinjate z našimi{' '}
+                <span className="text-primary cursor-pointer hover:underline">pogoji uporabe</span>{' '}
+                in{' '}
+                <span className="text-primary cursor-pointer hover:underline">pravilnikom o zasebnosti</span>.
               </p>
             </div>
           </div>
@@ -415,14 +415,14 @@ export default function ProviderSignUpInteractive() {
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
-              Back
+              Nazaj
             </button>
           ) : (
             <Link
               href="/login"
               className="text-sm text-text-secondary hover:text-primary transition-smooth"
             >
-              Already have an account? Sign in
+              Že imate račun? Prijavite se
             </Link>
           )}
 
@@ -432,7 +432,7 @@ export default function ProviderSignUpInteractive() {
               onClick={handleNext}
               className="flex items-center gap-2 px-6 py-2.5 bg-primary text-white rounded-lg hover:bg-primary-dark transition-all font-semibold text-sm"
             >
-              Continue
+              Nadaljuj
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
@@ -450,11 +450,11 @@ export default function ProviderSignUpInteractive() {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                   </svg>
-                  Creating Account...
+                  Ustvarjanje računa...
                 </>
               ) : (
                 <>
-                  Create Account
+                  Ustvari račun
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>

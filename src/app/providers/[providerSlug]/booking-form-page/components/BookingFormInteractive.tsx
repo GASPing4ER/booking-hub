@@ -147,29 +147,29 @@ const BookingFormInteractive = ({
 
   const validateForm = () => {
     if (!selectedAccommodation) {
-      setFormError('Please select an accommodation');
+      setFormError('Prosimo, izberite nastanitev');
       return false;
     }
 
     if (!checkInDate || !checkOutDate) {
-      setFormError('Please select check-in and check-out dates');
+      setFormError('Prosimo, izberite datum prijave in odjave');
       return false;
     }
 
     if (!guestName || guestName.length < 2) {
-      setFormError('Please enter a valid name (at least 2 characters)');
+      setFormError('Prosimo, vnesite veljavno ime (vsaj 2 znaka)');
       return false;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!guestEmail || !emailRegex.test(guestEmail)) {
-      setFormError('Please enter a valid email address');
+      setFormError('Prosimo, vnesite veljaven e-poštni naslov');
       return false;
     }
 
     const phoneRegex = /^[\d\s\-\+\(\)]+$/;
     if (!guestPhone || !phoneRegex.test(guestPhone)) {
-      setFormError('Please enter a valid phone number');
+      setFormError('Prosimo, vnesite veljavno telefonsko številko');
       return false;
     }
 
@@ -181,7 +181,7 @@ const BookingFormInteractive = ({
       const dateString = currentDate.toISOString().split('T')[0];
       if (unavailableDates.includes(dateString)) {
         setFormError(
-          'Selected dates include unavailable periods. Please choose different dates.'
+          'Izbrani datumi vključujejo nerazpoložljive dneve. Prosimo, izberite druge datume.'
         );
         return false;
       }
@@ -230,7 +230,7 @@ const BookingFormInteractive = ({
       if (conflictData && conflictData.length > 0) {
         const conflictDates = conflictData.map((d: any) => d.date).join(', ');
         setFormError(
-          `These dates are no longer available: ${conflictDates}. Please choose different dates.`
+          `Ti datumi niso več na voljo: ${conflictDates}. Prosimo, izberite druge datume.`
         );
         setIsSubmitting(false);
         return;
@@ -285,7 +285,7 @@ const BookingFormInteractive = ({
       );
     } catch (error: any) {
       console.error('Error submitting booking:', error.message);
-      setFormError('Failed to submit booking. Please try again.');
+      setFormError('Rezervacije ni bilo mogoče oddati. Prosimo, poskusite znova.');
     } finally {
       setIsSubmitting(false);
     }
@@ -296,7 +296,7 @@ const BookingFormInteractive = ({
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="font-caption text-text-secondary">Loading form...</p>
+          <p className="font-caption text-text-secondary">Nalaganje obrazca...</p>
         </div>
       </div>
     );
@@ -319,7 +319,7 @@ const BookingFormInteractive = ({
                     </span>
                   </div>
                   <h2 className="font-heading font-semibold text-2xl text-text-primary">
-                    Select Accommodation
+                    Izberite nastanitev
                   </h2>
                 </div>
 
@@ -343,7 +343,7 @@ const BookingFormInteractive = ({
                     </span>
                   </div>
                   <h2 className="font-heading font-semibold text-2xl text-text-primary">
-                    Select Dates
+                    Izberite datume
                   </h2>
                 </div>
 
@@ -366,13 +366,13 @@ const BookingFormInteractive = ({
                       </span>
                     </div>
                     <h2 className="font-heading font-semibold text-2xl text-text-primary">
-                      Number of Guests
+                      Število gostov
                     </h2>
                   </div>
 
                   <div className="flex items-center gap-4">
                     <label className="font-caption text-text-secondary text-sm">
-                      Guests (max {selectedAccommodation.capacity})
+                      Gostje (največ {selectedAccommodation.capacity})
                     </label>
                     <div className="flex items-center gap-3">
                       <button
@@ -408,7 +408,7 @@ const BookingFormInteractive = ({
                     </span>
                   </div>
                   <h2 className="font-heading font-semibold text-2xl text-text-primary">
-                    Guest Information
+                    Podatki o gostu
                   </h2>
                 </div>
 
@@ -434,7 +434,7 @@ const BookingFormInteractive = ({
                       className="text-error flex-shrink-0" />
                     <div>
                       <p className="font-caption font-medium text-error mb-1">
-                        Unable to Submit Booking
+                        Rezervacije ni bilo mogoče oddati
                       </p>
                       <p className="caption text-error/80">{formError}</p>
                     </div>
@@ -451,11 +451,11 @@ const BookingFormInteractive = ({
                   {isSubmitting ? (
                     <>
                       <div className="w-5 h-5 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" />
-                      Processing...
+                      Obdelujem...
                     </>
                   ) : (
                     <>
-                      Submit Booking Request
+                      Pošlji zahtevo za rezervacijo
                       <Icon name="ArrowRightIcon" variant="outline" size={20} />
                     </>
                   )}
@@ -481,11 +481,11 @@ const BookingFormInteractive = ({
                   {isSubmitting ? (
                     <>
                       <div className="w-5 h-5 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" />
-                      Processing...
+                      Obdelujem...
                     </>
                   ) : (
                     <>
-                      Submit Booking Request
+                      Pošlji zahtevo za rezervacijo
                       <Icon name="ArrowRightIcon" variant="outline" size={20} />
                     </>
                   )}

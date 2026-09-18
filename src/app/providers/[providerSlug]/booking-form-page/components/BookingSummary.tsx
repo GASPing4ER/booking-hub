@@ -32,7 +32,7 @@ const BookingSummary = ({
   const formatDate = (dateString: string) => {
     if (!dateString) return '';
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
+    return date.toLocaleDateString('sl-SI', {
       weekday: 'short',
       month: 'short',
       day: 'numeric',
@@ -48,7 +48,7 @@ const BookingSummary = ({
   return (
     <div className="bg-card border border-border rounded-lg p-6 shadow-hospitality sticky top-4">
       <h3 className="font-heading font-semibold text-xl text-text-primary mb-4">
-        Booking Summary
+        Povzetek rezervacije
       </h3>
 
       {/* Accommodation Details */}
@@ -60,7 +60,7 @@ const BookingSummary = ({
                 {accommodation.name}
               </p>
               <p className="caption text-text-secondary">
-                Up to {accommodation.capacity} guests
+                Do {accommodation.capacity} gostov
               </p>
             </div>
             <Icon
@@ -74,7 +74,7 @@ const BookingSummary = ({
       ) : (
         <div className="mb-4 pb-4 border-b border-border">
           <p className="caption text-text-secondary italic">
-            No accommodation selected
+            Nastanitev ni izbrana
           </p>
         </div>
       )}
@@ -89,9 +89,9 @@ const BookingSummary = ({
             className="text-text-secondary"
           />
           <div>
-            <p className="caption text-text-secondary">Check-in</p>
+            <p className="caption text-text-secondary">Prijava</p>
             <p className="font-caption font-medium text-text-primary">
-              {checkInDate ? formatDate(checkInDate) : 'Not selected'}
+              {checkInDate ? formatDate(checkInDate) : 'Ni izbrano'}
             </p>
           </div>
         </div>
@@ -103,9 +103,9 @@ const BookingSummary = ({
             className="text-text-secondary"
           />
           <div>
-            <p className="caption text-text-secondary">Check-out</p>
+            <p className="caption text-text-secondary">Odjava</p>
             <p className="font-caption font-medium text-text-primary">
-              {checkOutDate ? formatDate(checkOutDate) : 'Not selected'}
+              {checkOutDate ? formatDate(checkOutDate) : 'Ni izbrano'}
             </p>
           </div>
         </div>
@@ -118,7 +118,7 @@ const BookingSummary = ({
               className="text-primary"
             />
             <p className="font-caption text-text-primary">
-              <strong>{nights}</strong> {nights === 1 ? 'night' : 'nights'}
+              <strong>{nights}</strong> {nights === 1 ? 'noč' : 'noči'}
             </p>
           </div>
         )}
@@ -127,7 +127,7 @@ const BookingSummary = ({
       {/* Guest Details */}
       {(guestName || guestEmail) && (
         <div className="mb-4 pb-4 border-b border-border">
-          <p className="caption text-text-secondary mb-2">Guest Information</p>
+          <p className="caption text-text-secondary mb-2">Podatki o gostu</p>
           {guestName && (
             <p className="font-caption text-text-primary mb-1">{guestName}</p>
           )}
@@ -143,21 +143,21 @@ const BookingSummary = ({
           <div className="flex items-center justify-between">
             <p className="caption text-text-secondary">
               ${accommodation.pricePerNight} × {nights}{' '}
-              {nights === 1 ? 'night' : 'nights'}
+              {nights === 1 ? 'noč' : 'noči'}
             </p>
             <p className="font-caption text-text-primary">
               ${subtotal.toFixed(2)}
             </p>
           </div>
           <div className="flex items-center justify-between">
-            <p className="caption text-text-secondary">Service fee (10%)</p>
+            <p className="caption text-text-secondary">Strošek storitve (10%)</p>
             <p className="font-caption text-text-primary">
               ${serviceFee.toFixed(2)}
             </p>
           </div>
           <div className="pt-3 border-t border-border flex items-center justify-between">
             <p className="font-heading font-semibold text-lg text-text-primary">
-              Total
+              Skupaj
             </p>
             <p className="font-heading font-semibold text-xl text-primary">
               ${total.toFixed(2)}
@@ -176,8 +176,7 @@ const BookingSummary = ({
             className="text-accent flex-shrink-0 mt-0.5"
           />
           <p className="caption text-text-secondary">
-            Your booking request will be reviewed by the property owner. You
-            will receive a confirmation email once approved.
+            Vašo zahtevo za rezervacijo bo pregledal lastnik nepremičnine. Ko bo odobrena, boste prejeli potrditveno e-pošto.
           </p>
         </div>
       </div>

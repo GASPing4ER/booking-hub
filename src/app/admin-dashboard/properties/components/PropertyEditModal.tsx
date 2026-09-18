@@ -41,6 +41,16 @@ const COMMON_PROPERTY_TYPES = [
   'Studio',
 ];
 
+const PROPERTY_TYPE_LABELS: Record<string, string> = {
+  Room: 'Soba',
+  Suite: 'Suita',
+  Apartment: 'Apartma',
+  Villa: 'Vila',
+  Cottage: 'Vikendica',
+  Lodge: 'Koča',
+  Studio: 'Studio',
+};
+
 const PropertyEditModal = ({
   property,
   isNew,
@@ -63,11 +73,11 @@ const PropertyEditModal = ({
     e.preventDefault();
     if (imageUploadBusy) return;
     if (!formData.name?.trim() || !formData.description?.trim()) {
-      alert('Please fill in all required fields');
+      alert('Izpolnite vsa obvezna polja');
       return;
     }
     if (!formData.type?.trim()) {
-      alert('Please choose or enter a property type');
+      alert('Izberite ali vnesite tip nepremičnine');
       return;
     }
     const effectiveSlug =
@@ -121,7 +131,7 @@ const PropertyEditModal = ({
       });
     } catch (err) {
       console.error(err);
-      alert(err instanceof Error ? err.message : 'Could not upload property images.');
+      alert(err instanceof Error ? err.message : 'Slik nepremičnine ni bilo mogoče naložiti.');
     } finally {
       setImageUploadBusy(false);
     }
@@ -166,12 +176,12 @@ const PropertyEditModal = ({
       <div className="bg-card rounded-lg border border-border shadow-hospitality-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between p-6 border-b border-border">
           <h2 className="font-heading font-semibold text-2xl text-text-primary">
-            {isNew ? 'Add New Property' : 'Edit Property'}
+            {isNew ? 'Dodaj novo nepremičnino' : 'Uredi nepremičnino'}
           </h2>
           <button
             onClick={onClose}
             className="w-8 h-8 rounded-md flex items-center justify-center text-text-secondary hover:bg-muted hover:text-text-primary transition-smooth"
-            aria-label="Close modal"
+            aria-label="Zapri okno"
           >
             <Icon name="XMarkIcon" variant="outline" size={20} />
           </button>
@@ -181,7 +191,7 @@ const PropertyEditModal = ({
           <div className="grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_auto] gap-4 sm:items-end">
             <div className="min-w-0">
               <label className="block text-sm font-caption font-medium text-text-secondary mb-2">
-                Property Name *
+                Ime nepremičnine *
               </label>
               <input
                 type="text"
@@ -189,7 +199,7 @@ const PropertyEditModal = ({
                 onChange={(e) => handleChange('name', e.target.value)}
                 className="w-full px-4 py-2.5 bg-background border border-input rounded-md text-text-primary focus:outline-none focus:ring-2 focus:ring-ring transition-smooth"
                 required
-                placeholder="e.g., Deluxe Ocean View Suite"
+                placeholder="npr. Deluxe suita s pogledom na morje"
               />
             </div>
             <div className="w-full sm:w-44 shrink-0">
@@ -201,9 +211,9 @@ const PropertyEditModal = ({
                 onChange={(e) => handleChange('status', e.target.value)}
                 className="w-full px-4 py-2.5 bg-background border border-input rounded-md text-text-primary focus:outline-none focus:ring-2 focus:ring-ring transition-smooth"
               >
-                <option value="available">Available</option>
-                <option value="unavailable">Unavailable</option>
-                <option value="maintenance">Maintenance</option>
+                <option value="available">Na voljo</option>
+                <option value="unavailable">Ni na voljo</option>
+                <option value="maintenance">Vzdrževanje</option>
               </select>
             </div>
           </div>
@@ -211,7 +221,7 @@ const PropertyEditModal = ({
           <div>
             <div className="flex flex-wrap items-start justify-between gap-2 mb-2">
               <label className="block text-sm font-caption font-medium text-text-secondary">
-                Listing URL slug *
+                URL-oznaka oglasa *
               </label>
               <button
                 type="button"
@@ -224,7 +234,7 @@ const PropertyEditModal = ({
                       handleChange('slug', slug);
                     } catch (err) {
                       console.error(err);
-                      alert('Could not pick a unique slug. Try again or type your own.');
+                      alert('Ni bilo mogoče izbrati edinstvene oznake. Poskusite znova ali vnesite svojo.');
                     } finally {
                       setListingSlugSuggestBusy(false);
                     }
@@ -236,7 +246,7 @@ const PropertyEditModal = ({
                 disabled={!formData.name?.trim() || listingSlugSuggestBusy}
               >
                 <Icon name="ArrowPathIcon" variant="outline" size={14} aria-hidden />
-                Suggest from name
+                Predlagaj iz imena
               </button>
             </div>
             <input
@@ -252,9 +262,9 @@ const PropertyEditModal = ({
               }
             />
             <p id="slug-help" className="text-xs text-text-secondary font-caption mt-2">
-              Derived from the property name unless you customise it. Must be unique among your listings (same slug
-              twice on your properties is rejected). Use “Suggest from name” for a guaranteed-free option — your save is
-              also checked against the database before writing.
+              Izpelje se iz imena nepremičnine, razen če jo prilagodite. Med vašimi oglasi mora biti edinstvena (dvakrat
+              ista oznaka pri vaših nepremičninah bo zavrnjena). Za zajamčeno prosto možnost uporabite »Predlagaj iz
+              imena« — ob shranjevanju se vaš vnos preveri tudi v bazi podatkov.
             </p>
             {providerStoreSlug?.trim() && (
               <p
@@ -269,7 +279,7 @@ const PropertyEditModal = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-caption font-medium text-text-secondary mb-2">
-                Property Type *
+                Tip nepremičnine *
               </label>
               <select
                 value={selectedPropertyType}
@@ -281,10 +291,10 @@ const PropertyEditModal = ({
               >
                 {COMMON_PROPERTY_TYPES.map((type) => (
                   <option key={type} value={type}>
-                    {type}
+                    {PROPERTY_TYPE_LABELS[type] || type}
                   </option>
                 ))}
-                <option value="custom">Custom type...</option>
+                <option value="custom">Tip po meri...</option>
               </select>
               {selectedPropertyType === 'custom' && (
                 <input
@@ -293,14 +303,14 @@ const PropertyEditModal = ({
                   onChange={(e) => handleChange('type', e.target.value)}
                   className="mt-3 w-full px-4 py-2.5 bg-background border border-input rounded-md text-text-primary focus:outline-none focus:ring-2 focus:ring-ring transition-smooth"
                   required
-                  placeholder="e.g., Treehouse, Glamping tent, Cabin"
+                  placeholder="npr. Hišica na drevesu, Glamping šotor, Koča"
                 />
               )}
             </div>
 
             <div>
               <label className="block text-sm font-caption font-medium text-text-secondary mb-2">
-                Capacity (Guests) *
+                Kapaciteta (gostje) *
               </label>
               <input
                 type="number"
@@ -315,7 +325,7 @@ const PropertyEditModal = ({
 
           <div>
             <label className="block text-sm font-caption font-medium text-text-secondary mb-2">
-              Description *
+              Opis *
             </label>
             <textarea
               value={formData.description}
@@ -323,13 +333,13 @@ const PropertyEditModal = ({
               rows={3}
               className="w-full px-4 py-2.5 bg-background border border-input rounded-md text-text-primary focus:outline-none focus:ring-2 focus:ring-ring transition-smooth resize-none"
               required
-              placeholder="Describe the property features and highlights..."
+              placeholder="Opišite lastnosti in glavne prednosti nepremičnine..."
             />
           </div>
 
           <div>
             <label className="block text-sm font-caption font-medium text-text-secondary mb-2">
-              Price Per Night *
+              Cena na noč *
             </label>
             <input
               type="text"
@@ -345,15 +355,15 @@ const PropertyEditModal = ({
             <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
               <div>
                 <label className="block text-sm font-caption font-medium text-text-secondary">
-                  Property Gallery
+                  Galerija nepremičnine
                 </label>
                 <p className="text-xs text-text-secondary font-caption mt-1">
-                  Upload multiple photos. The first image is used as the cover.
+                  Naložite več fotografij. Prva slika se uporabi kot naslovna.
                 </p>
               </div>
               <label className="inline-flex items-center gap-2 px-4 py-2.5 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-smooth font-caption font-medium cursor-pointer">
                 <Icon name="PhotoIcon" variant="outline" size={18} />
-                {imageUploadBusy ? 'Uploading...' : 'Upload Images'}
+                {imageUploadBusy ? 'Nalaganje...' : 'Naloži slike'}
                 <input
                   type="file"
                   accept="image/*"
@@ -377,12 +387,12 @@ const PropertyEditModal = ({
                   >
                     <img
                       src={imageUrl}
-                      alt={`${formData.name || 'Property'} image ${index + 1}`}
+                      alt={`Slika ${index + 1} nepremičnine ${formData.name || ''}`}
                       className="h-28 w-full object-cover"
                     />
                     {index === 0 && (
                       <span className="absolute left-2 top-2 rounded bg-primary px-2 py-1 text-xs font-caption font-medium text-primary-foreground">
-                        Cover
+                        Naslovna
                       </span>
                     )}
                     <div className="absolute inset-x-2 bottom-2 flex gap-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
@@ -392,16 +402,16 @@ const PropertyEditModal = ({
                           onClick={() => handleMakeCoverImage(index)}
                           className="flex-1 rounded bg-card/90 px-2 py-1 text-xs font-caption font-medium text-text-primary hover:bg-card"
                         >
-                          Make cover
+                          Nastavi kot naslovno
                         </button>
                       )}
                       <button
                         type="button"
                         onClick={() => handleRemoveImage(index)}
                         className="rounded bg-card/90 px-2 py-1 text-xs font-caption font-medium text-error hover:bg-card"
-                        aria-label={`Remove image ${index + 1}`}
+                        aria-label={`Odstrani sliko ${index + 1}`}
                       >
-                        Remove
+                        Odstrani
                       </button>
                     </div>
                   </div>
@@ -411,7 +421,7 @@ const PropertyEditModal = ({
               <div className="rounded-md border border-dashed border-border bg-muted/40 p-6 text-center">
                 <Icon name="PhotoIcon" variant="outline" size={32} className="mx-auto mb-2 text-text-secondary" />
                 <p className="text-sm font-caption text-text-secondary">
-                  No property images uploaded yet.
+                  Za nepremičnino še ni naloženih slik.
                 </p>
               </div>
             )}
@@ -419,7 +429,7 @@ const PropertyEditModal = ({
 
           <div>
             <label className="block text-sm font-caption font-medium text-text-secondary mb-2">
-              Amenities
+              Ugodnosti
             </label>
             <div className="flex gap-2 mb-3">
               <input
@@ -428,7 +438,7 @@ const PropertyEditModal = ({
                 onChange={(e) => setNewAmenity(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddAmenity())}
                 className="flex-1 px-4 py-2.5 bg-background border border-input rounded-md text-text-primary focus:outline-none focus:ring-2 focus:ring-ring transition-smooth"
-                placeholder="Add amenity (e.g., WiFi, Pool)"
+                placeholder="Dodaj ugodnost (npr. WiFi, bazen)"
               />
               <button
                 type="button"
@@ -463,14 +473,14 @@ const PropertyEditModal = ({
               onClick={onClose}
               className="px-6 py-2.5 rounded-md border border-input text-text-secondary hover:bg-muted hover:text-text-primary transition-smooth font-caption font-medium"
             >
-              Cancel
+              Prekliči
             </button>
             <button
               type="submit"
               disabled={imageUploadBusy}
               className="px-6 py-2.5 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-smooth font-caption font-medium"
             >
-              {imageUploadBusy ? 'Uploading Images...' : isNew ? 'Add Property' : 'Save Changes'}
+              {imageUploadBusy ? 'Nalaganje slik...' : isNew ? 'Dodaj nepremičnino' : 'Shrani spremembe'}
             </button>
           </div>
         </form>

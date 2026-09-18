@@ -10,7 +10,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: 'BookingHub',
-  description: 'BookingHub - Complete Booking Management for Accommodation Providers',
+  description: 'BookingHub - Celovito upravljanje rezervacij za ponudnike nastanitev',
   icons: {
     icon: [
       { url: '/favicon.ico', type: 'image/x-icon' }
@@ -24,7 +24,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="sl">
       <body>
         <AuthProvider>
           {children}

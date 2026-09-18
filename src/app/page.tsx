@@ -3,9 +3,9 @@ import { Metadata } from 'next';
 import BookingHubMarketingInteractive from './_marketing-landing/components/BookingHubMarketingInteractive';
 
 export const metadata: Metadata = {
-  title: 'BookingHub - Complete Booking Management for Accommodation Providers',
+  title: 'BookingHub - Celovito upravljanje rezervacij za ponudnike nastanitev',
   description:
-    'Streamline your accommodation business with BookingHub. Manage bookings, sync calendars, track analytics, and communicate with guests - all in one powerful platform.',
+    'Poenostavite svoje nastanitveno poslovanje z BookingHub. Upravljajte rezervacije, sinhronizirajte koledarje, spremljajte analitiko in komunicirajte z gosti - vse na eni zmogljivi platformi.',
 };
 
 export default function HomePage() {

@@ -365,12 +365,12 @@ const CalendarManagementInteractive = () => {
   if (!isHydrated || loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-gray-600">Loading calendar...</div>
+        <div className="text-gray-600">Nalaganje koledarja...</div>
       </div>
     );
   }
 
-  const monthName = currentMonth.toLocaleString('default', { month: 'long', year: 'numeric' });
+  const monthName = currentMonth.toLocaleString('sl-SI', { month: 'long', year: 'numeric' });
 
   return (
     <div className="space-y-6">
@@ -379,14 +379,14 @@ const CalendarManagementInteractive = () => {
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           <div className="flex-1">
             <label className="block text-sm font-caption font-medium text-text-secondary mb-2">
-              Select Property
+              Izberite nepremičnino
             </label>
             <select
               value={selectedProperty}
               onChange={(e) => setSelectedProperty(e.target.value)}
               className="w-full lg:w-auto px-4 py-2 border border-input rounded-md bg-background text-text-primary focus:outline-none focus:ring-2 focus:ring-primary"
             >
-              <option value="all">All Properties</option>
+              <option value="all">Vse nepremičnine</option>
               {properties.map((property) => (
                 <option key={property.id} value={property.id}>
                   {property.name}
@@ -410,7 +410,7 @@ const CalendarManagementInteractive = () => {
               }`}
             >
               <Icon name="CalendarIcon" variant="outline" size={16} className="inline mr-2" />
-              {isSelectionMode ? 'Exit Selection' : 'Bulk Select'}
+              {isSelectionMode ? 'Zapri izbor' : 'Množični izbor'}
             </button>
 
             <button
@@ -418,7 +418,7 @@ const CalendarManagementInteractive = () => {
               className="px-4 py-2 bg-secondary text-secondary-foreground rounded-md font-caption font-medium hover:bg-secondary/90 transition-smooth"
             >
               <Icon name="ArrowPathIcon" variant="outline" size={16} className="inline mr-2" />
-              Recurring Pattern
+              Ponavljajoč vzorec
             </button>
 
             {undoStack.length > 0 && (
@@ -427,7 +427,7 @@ const CalendarManagementInteractive = () => {
                 className="px-4 py-2 bg-muted text-text-primary rounded-md font-caption font-medium hover:bg-muted/80 transition-smooth"
               >
                 <Icon name="ArrowUturnLeftIcon" variant="outline" size={16} className="inline mr-2" />
-                Undo
+                Razveljavi
               </button>
             )}
           </div>
@@ -437,22 +437,22 @@ const CalendarManagementInteractive = () => {
         <div className="mt-6 flex flex-wrap gap-4 text-sm">
           <div className="flex items-center gap-2">
             <div className="w-4 h-4 bg-success/10 border border-success rounded" />
-            <span className="text-text-secondary">Available</span>
+            <span className="text-text-secondary">Razpoložljivo</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-4 h-4 bg-error/10 border border-error rounded" />
-            <span className="text-text-secondary">Unavailable</span>
+            <span className="text-text-secondary">Ni na voljo</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-4 h-4 bg-warning/10 border border-warning rounded flex items-center justify-center">
               <Icon name="LockClosedIcon" variant="solid" size={10} className="text-warning" />
             </div>
-            <span className="text-text-secondary">Booked (locked - cannot be changed)</span>
+            <span className="text-text-secondary">Rezervirano (zaklenjeno – ni mogoče spremeniti)</span>
           </div>
           {selectedProperty === 'all' && (
             <div className="flex items-center gap-2">
               <div className="w-4 h-4 bg-accent/10 border border-accent rounded" />
-              <span className="text-text-secondary">Partial (mixed availability across properties)</span>
+              <span className="text-text-secondary">Delno (mešana razpoložljivost med nepremičninami)</span>
             </div>
           )}
         </div>
@@ -464,17 +464,17 @@ const CalendarManagementInteractive = () => {
           <div className="flex flex-col gap-4">
             <div>
               <h3 className="font-caption font-semibold text-text-primary mb-2">
-                Click on days to select them
+                Kliknite dneve, da jih izberete
               </h3>
               <p className="text-sm text-text-secondary">
-                Click individual days on the calendar to select them. Booked days cannot be selected.
+                Kliknite posamezne dneve v koledarju, da jih izberete. Rezerviranih dni ni mogoče izbrati.
               </p>
             </div>
 
             {selectedDates.length > 0 && (
               <div>
                 <p className="text-sm text-text-secondary mb-3">
-                  {selectedDates.length} date{selectedDates.length !== 1 ? 's' : ''} selected
+                  {selectedDates.length} izbranih datumov
                 </p>
                 <div className="flex gap-2">
                   <button
@@ -482,20 +482,20 @@ const CalendarManagementInteractive = () => {
                     className="px-4 py-2 bg-success text-success-foreground rounded-md font-caption font-medium hover:bg-success/90 transition-smooth"
                   >
                     <Icon name="CheckCircleIcon" variant="solid" size={16} className="inline mr-2" />
-                    Set Available
+                    Nastavi kot razpoložljivo
                   </button>
                   <button
                     onClick={() => handleBulkSetAvailability('unavailable')}
                     className="px-4 py-2 bg-error text-error-foreground rounded-md font-caption font-medium hover:bg-error/90 transition-smooth"
                   >
                     <Icon name="XCircleIcon" variant="solid" size={16} className="inline mr-2" />
-                    Set Unavailable
+                    Nastavi kot nerazpoložljivo
                   </button>
                   <button
                     onClick={() => setSelectedDates([])}
                     className="px-4 py-2 bg-muted text-text-primary rounded-md font-caption font-medium hover:bg-muted/80 transition-smooth"
                   >
-                    Clear Selection
+                    Počisti izbor
                   </button>
                 </div>
               </div>
@@ -511,7 +511,7 @@ const CalendarManagementInteractive = () => {
           <button
             onClick={previousMonth}
             className="p-2 rounded-md hover:bg-muted transition-smooth"
-            aria-label="Previous month"
+            aria-label="Prejšnji mesec"
           >
             <Icon name="ChevronLeftIcon" variant="outline" size={24} className="text-text-primary" />
           </button>
@@ -519,7 +519,7 @@ const CalendarManagementInteractive = () => {
           <button
             onClick={nextMonth}
             className="p-2 rounded-md hover:bg-muted transition-smooth"
-            aria-label="Next month"
+            aria-label="Naslednji mesec"
           >
             <Icon name="ChevronRightIcon" variant="outline" size={24} className="text-text-primary" />
           </button>
@@ -527,7 +527,7 @@ const CalendarManagementInteractive = () => {
 
         {/* Day Headers */}
         <div className="grid grid-cols-7 gap-2 mb-2">
-          {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
+          {['Ned', 'Pon', 'Tor', 'Sre', 'Čet', 'Pet', 'Sob'].map((day) => (
             <div key={day} className="text-center font-caption font-medium text-text-secondary text-sm py-2">
               {day}
             </div>

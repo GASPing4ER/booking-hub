@@ -3,8 +3,8 @@ import { Suspense } from 'react';
 import VerifyEmailInteractive from './components/VerifyEmailInteractive';
 
 export const metadata: Metadata = {
-  title: 'Verify Your Email - BookingHub',
-  description: 'Please verify your email address to complete your BookingHub registration',
+  title: 'Potrdite svoj e-poštni naslov - BookingHub',
+  description: 'Prosimo, potrdite svoj e-poštni naslov, da dokončate registracijo BookingHub',
 };
 
 export default function VerifyEmailPage() {

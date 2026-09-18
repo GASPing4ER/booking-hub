@@ -65,10 +65,10 @@ export default function ProvidersPage() {
           return {
             id: profile.id,
             slug,
-            name: profile.business_name || profile.full_name || 'Provider',
+            name: profile.business_name || profile.full_name || 'Ponudnik',
             description:
               profile.bio ||
-              'Browse this provider’s accommodations and book your stay directly.',
+              'Prebrskajte nastanitve tega ponudnika in neposredno rezervirajte svoje bivanje.',
             location: location || profile.address || '',
             availableProperties: availableCounts.get(profile.id) || 0,
           };
@@ -102,13 +102,13 @@ export default function ProvidersPage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <p className="font-caption text-sm uppercase tracking-wide text-primary-foreground/75 mb-3">
-              BookingHub providers
+              BookingHub ponudniki
             </p>
             <h1 className="font-heading font-bold text-4xl sm:text-5xl mb-4">
-              Find your next stay
+              Poiščite svoje naslednje bivanje
             </h1>
             <p className="font-body text-lg text-primary-foreground/85">
-              Browse accommodation providers, compare available listings, and book directly from each storefront.
+              Prebrskajte ponudnike nastanitev, primerjajte razpoložljive nastanitve in rezervirajte neposredno v vsaki trgovini.
             </p>
           </div>
         </div>
@@ -127,7 +127,7 @@ export default function ProvidersPage() {
               type="search"
               value={searchQuery}
               onChange={(event) => setSearchQuery(event.target.value)}
-              placeholder="Search providers by name or location..."
+              placeholder="Iščite ponudnike po imenu ali lokaciji..."
               className="w-full pl-10 pr-4 py-3 bg-background border border-input rounded-md text-text-primary placeholder:text-text-secondary focus:outline-none focus:ring-2 focus:ring-ring transition-smooth"
             />
           </div>
@@ -137,7 +137,7 @@ export default function ProvidersPage() {
           <div className="flex items-center justify-center py-20">
             <div className="flex flex-col items-center gap-3">
               <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-              <p className="font-caption text-text-secondary">Loading providers...</p>
+              <p className="font-caption text-text-secondary">Nalaganje ponudnikov...</p>
             </div>
           </div>
         ) : filteredProviders.length === 0 ? (
@@ -149,10 +149,10 @@ export default function ProvidersPage() {
               className="text-text-secondary mx-auto mb-3"
             />
             <h2 className="font-heading font-semibold text-xl text-text-primary mb-2">
-              No providers found
+              Ni najdenih ponudnikov
             </h2>
             <p className="font-caption text-text-secondary">
-              Try a different search or check back when more providers are published.
+              Poskusite z drugim iskanjem ali se vrnite, ko bo objavljenih več ponudnikov.
             </p>
           </div>
         ) : (
@@ -191,7 +191,7 @@ export default function ProvidersPage() {
                     <Icon name="BuildingOfficeIcon" variant="outline" size={16} className="text-primary" />
                     <span>
                       {provider.availableProperties}{' '}
-                      {provider.availableProperties === 1 ? 'available listing' : 'available listings'}
+                      {provider.availableProperties === 1 ? 'razpoložljiva nastanitev' : 'razpoložljivih nastanitev'}
                     </span>
                   </div>
                 </div>

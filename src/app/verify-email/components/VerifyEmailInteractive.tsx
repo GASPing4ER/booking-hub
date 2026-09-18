@@ -38,7 +38,7 @@ export default function VerifyEmailInteractive() {
       setResendSuccess(true);
       setCountdown(60);
     } catch (err: any) {
-      setResendError(err.message || 'Failed to resend email. Please try again.');
+      setResendError(err.message || 'Ponovno pošiljanje e-pošte ni uspelo. Poskusite znova.');
     } finally {
       setResending(false);
     }
@@ -55,25 +55,25 @@ export default function VerifyEmailInteractive() {
         </div>
 
         <h1 className="font-heading font-bold text-2xl text-text-primary mb-3">
-          Check Your Email
+          Preverite svojo e-pošto
         </h1>
         <p className="text-text-secondary mb-2">
-          We've sent a verification link to:
+          Povezavo za potrditev smo poslali na:
         </p>
         {email && (
           <p className="font-semibold text-text-primary mb-4 break-all">{email}</p>
         )}
         <p className="text-text-secondary text-sm mb-8">
-          Click the link in the email to verify your account and get started with BookingHub. The link will expire in 24 hours.
+          Kliknite povezavo v e-pošti, da potrdite svoj račun in začnete uporabljati BookingHub. Povezava bo potekla čez 24 ur.
         </p>
 
         {/* Steps */}
         <div className="bg-gray-50 rounded-lg p-4 mb-8 text-left space-y-3">
-          <p className="text-xs font-semibold text-text-secondary uppercase tracking-wide mb-2">What to do next</p>
+          <p className="text-xs font-semibold text-text-secondary uppercase tracking-wide mb-2">Kaj storiti naprej</p>
           {[
-            'Open the email from BookingHub',
-            'Click the "Verify Email" button',
-            'You\'ll be redirected to your dashboard',
+            'Odprite e-pošto podjetja BookingHub',
+            'Kliknite gumb "Potrdi e-pošto"',
+            'Preusmerjeni boste na svojo nadzorno ploščo',
           ].map((step, idx) => (
             <div key={idx} className="flex items-start gap-3">
               <div className="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
@@ -87,7 +87,7 @@ export default function VerifyEmailInteractive() {
         {/* Resend */}
         {resendSuccess && (
           <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg">
-            <p className="text-sm text-green-700">Verification email resent successfully!</p>
+            <p className="text-sm text-green-700">Potrditvena e-pošta je bila uspešno ponovno poslana!</p>
           </div>
         )}
         {resendError && (
@@ -96,26 +96,26 @@ export default function VerifyEmailInteractive() {
           </div>
         )}
 
-        <p className="text-sm text-text-secondary mb-3">Didn't receive the email?</p>
+        <p className="text-sm text-text-secondary mb-3">Niste prejeli e-pošte?</p>
         <button
           onClick={handleResend}
           disabled={resending || countdown > 0 || !email}
           className="w-full py-3 px-4 border border-primary text-primary rounded-lg font-semibold text-sm hover:bg-primary/5 transition-all disabled:opacity-50 disabled:cursor-not-allowed mb-4"
         >
           {resending
-            ? 'Sending...'
+            ? 'Pošiljanje...'
             : countdown > 0
-            ? `Resend in ${countdown}s`
-            : 'Resend Verification Email'}
+            ? `Ponovno pošlji čez ${countdown} s`
+            : 'Ponovno pošlji potrditveno e-pošto'}
         </button>
 
         <div className="flex items-center justify-center gap-4 text-sm">
           <Link href="/provider-signup" className="text-text-secondary hover:text-primary transition-smooth">
-            ← Back to Sign Up
+            ← Nazaj na registracijo
           </Link>
           <span className="text-gray-300">|</span>
           <Link href="/login" className="text-text-secondary hover:text-primary transition-smooth">
-            Sign In
+            Prijavite se
           </Link>
         </div>
       </div>

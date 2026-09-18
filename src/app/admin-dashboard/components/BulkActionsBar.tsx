@@ -28,7 +28,7 @@ const BulkActionsBar = ({
             </span>
           </div>
           <span className="font-caption font-medium text-text-primary">
-            {selectedCount} booking{selectedCount !== 1 ? 's' : ''} selected
+            {selectedCount} izbranih rezervacij
           </span>
         </div>
 
@@ -40,7 +40,7 @@ const BulkActionsBar = ({
             className="flex items-center gap-2 px-4 py-2 rounded-md bg-success text-success-foreground hover:bg-success/90 transition-smooth"
           >
             <Icon name="CheckIcon" variant="solid" size={16} />
-            <span className="font-caption font-medium text-sm">Confirm</span>
+            <span className="font-caption font-medium text-sm">Potrdi</span>
           </button>
 
           <button
@@ -48,13 +48,13 @@ const BulkActionsBar = ({
             className="flex items-center gap-2 px-4 py-2 rounded-md bg-error text-error-foreground hover:bg-error/90 transition-smooth"
           >
             <Icon name="XMarkIcon" variant="solid" size={16} />
-            <span className="font-caption font-medium text-sm">Cancel</span>
+            <span className="font-caption font-medium text-sm">Prekliči</span>
           </button>
 
           <button
             onClick={onClearSelection}
             className="p-2 rounded-md text-text-secondary hover:bg-muted hover:text-text-primary transition-smooth"
-            aria-label="Clear selection"
+            aria-label="Počisti izbor"
           >
             <Icon name="XMarkIcon" variant="outline" size={20} />
           </button>

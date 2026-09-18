@@ -23,7 +23,7 @@ export default function ForgotPasswordInteractive() {
       if (resetError) throw resetError;
       setSent(true);
     } catch (err: any) {
-      setError(err.message || 'Failed to send reset email. Please try again.');
+      setError(err.message || 'Pošiljanje e-pošte za ponastavitev ni uspelo. Poskusite znova.');
     } finally {
       setLoading(false);
     }
@@ -38,15 +38,15 @@ export default function ForgotPasswordInteractive() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
             </svg>
           </div>
-          <h2 className="font-heading font-bold text-2xl text-text-primary mb-2">Check your email</h2>
+          <h2 className="font-heading font-bold text-2xl text-text-primary mb-2">Preverite e-pošto</h2>
           <p className="text-text-secondary text-sm mb-6">
-            We sent a password reset link to <span className="font-semibold text-text-primary">{email}</span>. Check your inbox and follow the instructions.
+            Povezavo za ponastavitev gesla smo poslali na <span className="font-semibold text-text-primary">{email}</span>. Preverite prejeto pošto in sledite navodilom.
           </p>
           <Link
             href="/provider-login"
             className="block w-full text-center bg-primary text-white font-semibold py-3 px-6 rounded-lg hover:bg-primary-dark transition-smooth"
           >
-            Back to Sign In
+            Nazaj na prijavo
           </Link>
         </div>
       </div>
@@ -62,8 +62,8 @@ export default function ForgotPasswordInteractive() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
             </svg>
           </div>
-          <h1 className="font-heading font-bold text-2xl text-text-primary">Forgot Password?</h1>
-          <p className="text-text-secondary text-sm mt-1">Enter your email and we'll send you a reset link</p>
+          <h1 className="font-heading font-bold text-2xl text-text-primary">Ste pozabili geslo?</h1>
+          <p className="text-text-secondary text-sm mt-1">Vnesite svoj e-poštni naslov in poslali vam bomo povezavo za ponastavitev</p>
         </div>
 
         {error && (
@@ -75,7 +75,7 @@ export default function ForgotPasswordInteractive() {
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-text-primary mb-1.5">
-              Email Address
+              E-poštni naslov
             </label>
             <input
               id="email"
@@ -100,10 +100,10 @@ export default function ForgotPasswordInteractive() {
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                 </svg>
-                Sending...
+                Pošiljanje...
               </>
             ) : (
-              'Send Reset Link'
+              'Pošlji povezavo za ponastavitev'
             )}
           </button>
         </form>
@@ -113,7 +113,7 @@ export default function ForgotPasswordInteractive() {
             href="/provider-login"
             className="text-sm text-primary hover:text-primary-dark transition-smooth font-medium"
           >
-            ← Back to Sign In
+            ← Nazaj na prijavo
           </Link>
         </div>
       </div>

@@ -21,21 +21,21 @@ export default function MarketingHeroSection({
             />
           </div>
           <h1 className="font-heading font-bold text-4xl sm:text-5xl lg:text-6xl mb-6 text-balance">
-            Complete Booking Management
+            Celovito upravljanje rezervacij
             <br />
-            <span className="text-accent">For Accommodation Providers</span>
+            <span className="text-accent">za ponudnike nastanitev</span>
           </h1>
           <p className="font-body text-lg sm:text-xl lg:text-2xl mb-10 text-primary-foreground/90 max-w-3xl mx-auto text-balance">
-            Streamline your operations with BookingHub. Manage reservations,
-            sync calendars across platforms, track analytics, and delight your
-            guests - all from one powerful dashboard.
+            Poenostavite svoje poslovanje z BookingHub. Upravljajte rezervacije,
+            sinhronizirajte koledarje med platformami, spremljajte analitiko in
+            razveseljujte svoje goste - vse iz ene zmogljive nadzorne plošče.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <button
               onClick={onGetStarted}
               className="inline-flex items-center gap-3 bg-accent text-accent-foreground px-8 py-4 rounded-md font-caption font-medium text-lg shadow-hospitality-md hover:shadow-hospitality-lg transition-smooth hover:scale-105"
             >
-              <span>Start Free Trial</span>
+              <span>Začnite brezplačno preizkusno obdobje</span>
               <Icon
                 name="ArrowRightIcon"
                 variant="outline"
@@ -51,7 +51,7 @@ export default function MarketingHeroSection({
               }}
               className="inline-flex items-center gap-3 bg-primary-foreground/10 text-primary-foreground px-8 py-4 rounded-md font-caption font-medium text-lg border-2 border-primary-foreground/20 hover:bg-primary-foreground/20 transition-smooth"
             >
-              <span>Learn More</span>
+              <span>Več informacij</span>
             </button>
           </div>
 
@@ -61,7 +61,7 @@ export default function MarketingHeroSection({
                 10,000+
               </div>
               <div className="font-caption text-sm text-primary-foreground/80">
-                Active Properties
+                Aktivnih nepremičnin
               </div>
             </div>
             <div className="bg-primary-foreground/10 backdrop-blur-sm rounded-md p-4">
@@ -69,7 +69,7 @@ export default function MarketingHeroSection({
                 98%
               </div>
               <div className="font-caption text-sm text-primary-foreground/80">
-                Customer Satisfaction
+                Zadovoljstvo strank
               </div>
             </div>
             <div className="bg-primary-foreground/10 backdrop-blur-sm rounded-md p-4">
@@ -77,7 +77,7 @@ export default function MarketingHeroSection({
                 24/7
               </div>
               <div className="font-caption text-sm text-primary-foreground/80">
-                Support Available
+                Podpora na voljo
               </div>
             </div>
           </div>

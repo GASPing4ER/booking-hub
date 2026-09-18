@@ -81,7 +81,7 @@ const AdminContextBar = ({
       id: b.id,
       type: b.status === 'cancelled' ? 'cancellation' : 'new_booking',
       guestName: b.guest_name,
-      propertyName: b.properties?.name || 'Unknown',
+      propertyName: b.properties?.name || 'Neznano',
       createdAt: b.created_at,
       read: readIds.includes(b.id),
     }));
@@ -153,11 +153,11 @@ const AdminContextBar = ({
   const formatRelativeTime = (dateStr: string) => {
     const diff = Date.now() - new Date(dateStr).getTime();
     const mins = Math.floor(diff / 60000);
-    if (mins < 1) return 'just now';
-    if (mins < 60) return `${mins}m ago`;
+    if (mins < 1) return 'pravkar';
+    if (mins < 60) return `pred ${mins} min`;
     const hrs = Math.floor(mins / 60);
-    if (hrs < 24) return `${hrs}h ago`;
-    return `${Math.floor(hrs / 24)}d ago`;
+    if (hrs < 24) return `pred ${hrs} h`;
+    return `pred ${Math.floor(hrs / 24)} d`;
   };
 
   // Close dropdowns on outside click
@@ -201,7 +201,7 @@ const AdminContextBar = ({
                 if (!isNotifOpen) markAllRead();
               }}
               className="relative w-10 h-10 rounded-md flex items-center justify-center text-text-secondary hover:bg-muted hover:text-primary transition-smooth"
-              aria-label="Notifications"
+              aria-label="Obvestila"
             >
               <Icon name="BellIcon" variant="outline" size={24} />
               {unreadCount > 0 && (
@@ -216,13 +216,13 @@ const AdminContextBar = ({
             {isNotifOpen && (
               <div className="absolute right-0 mt-2 w-80 bg-popover border border-border rounded-md shadow-hospitality-md z-50 overflow-hidden">
                 <div className="flex items-center justify-between px-4 py-3 border-b border-border">
-                  <h3 className="font-caption font-semibold text-text-primary text-sm">Notifications</h3>
+                  <h3 className="font-caption font-semibold text-text-primary text-sm">Obvestila</h3>
                   {notifications.length > 0 && (
                     <button
                       onClick={markAllRead}
                       className="text-xs text-primary hover:underline font-caption"
                     >
-                      Mark all read
+                      Označi vse kot prebrano
                     </button>
                   )}
                 </div>
@@ -231,7 +231,7 @@ const AdminContextBar = ({
                   {notifications.length === 0 ? (
                     <div className="px-4 py-8 text-center">
                       <Icon name="BellSlashIcon" variant="outline" size={32} className="text-text-secondary mx-auto mb-2" />
-                      <p className="text-sm text-text-secondary font-caption">No recent notifications</p>
+                      <p className="text-sm text-text-secondary font-caption">Ni nedavnih obvestil</p>
                     </div>
                   ) : (
                     notifications.map((notif) => (
@@ -255,7 +255,7 @@ const AdminContextBar = ({
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-sm font-caption font-medium text-text-primary leading-snug">
-                            {notif.type === 'new_booking' ? 'New booking' : 'Booking cancelled'}
+                            {notif.type === 'new_booking' ? 'Nova rezervacija' : 'Rezervacija preklicana'}
                           </p>
                           <p className="text-xs text-text-secondary font-caption truncate">
                             {notif.guestName} · {notif.propertyName}
@@ -278,7 +278,7 @@ const AdminContextBar = ({
                     onClick={() => setIsNotifOpen(false)}
                     className="text-xs text-primary hover:underline font-caption"
                   >
-                    View all bookings →
+                    Poglej vse rezervacije →
                   </Link>
                 </div>
               </div>
@@ -290,7 +290,7 @@ const AdminContextBar = ({
             <button
               onClick={toggleDropdown}
               className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-muted transition-smooth"
-              aria-label="User menu"
+              aria-label="Uporabniški meni"
             >
               <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
                 <span className="font-caption font-medium text-primary-foreground text-sm">
@@ -299,7 +299,7 @@ const AdminContextBar = ({
               </div>
               <div className="hidden md:flex flex-col items-start">
                 <span className="font-caption font-medium text-text-primary text-sm">{adminName}</span>
-                <span className="font-caption text-xs text-text-secondary">Admin</span>
+                <span className="font-caption text-xs text-text-secondary">Skrbnik</span>
               </div>
               <Icon
                 name="ChevronDownIcon"
@@ -323,7 +323,7 @@ const AdminContextBar = ({
                     className="flex items-center gap-3 px-4 py-3 text-text-secondary hover:bg-muted hover:text-text-primary transition-smooth"
                   >
                     <Icon name="UserIcon" variant="outline" size={20} />
-                    <span className="font-caption font-medium">Profile</span>
+                    <span className="font-caption font-medium">Profil</span>
                   </Link>
 
                   <Link
@@ -332,7 +332,7 @@ const AdminContextBar = ({
                     className="flex items-center gap-3 px-4 py-3 text-text-secondary hover:bg-muted hover:text-text-primary transition-smooth"
                   >
                     <Icon name="CogIcon" variant="outline" size={20} />
-                    <span className="font-caption font-medium">Settings</span>
+                    <span className="font-caption font-medium">Nastavitve</span>
                   </Link>
 
                   <button
@@ -340,7 +340,7 @@ const AdminContextBar = ({
                     className="w-full flex items-center gap-3 px-4 py-3 text-error hover:bg-muted transition-smooth"
                   >
                     <Icon name="ArrowRightOnRectangleIcon" variant="outline" size={20} />
-                    <span className="font-caption font-medium">Logout</span>
+                    <span className="font-caption font-medium">Odjava</span>
                   </button>
                 </div>
               </div>

@@ -10,9 +10,9 @@ interface NavLink {
 }
 
 const navLinks: NavLink[] = [
-  { href: '/', label: 'Home' },
-  { href: '/provider-landing-page', label: 'Book a Stay' },
-  { href: '/my-booking', label: 'My Booking' },
+  { href: '/', label: 'Domov' },
+  { href: '/provider-landing-page', label: 'Rezervirajte nastanitev' },
+  { href: '/my-booking', label: 'Moja rezervacija' },
 ];
 
 export default function PublicNavHeader() {
@@ -62,13 +62,13 @@ export default function PublicNavHeader() {
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
               </svg>
-              Provider Login
+              Prijava ponudnika
             </Link>
             <Link
               href="/provider-landing-page"
               className="px-4 py-2 bg-primary text-white text-sm font-caption font-semibold rounded-lg hover:bg-primary-dark transition-smooth"
             >
-              Book Now
+              Rezerviraj zdaj
             </Link>
           </div>
         </div>

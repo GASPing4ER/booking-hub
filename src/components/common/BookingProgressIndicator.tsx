@@ -19,13 +19,13 @@ interface BookingProgressIndicatorProps {
 const BookingProgressIndicator = ({
   currentStep,
   providerSlug,
-  providerName = 'Provider',
+  providerName = 'Ponudnik',
 }: BookingProgressIndicatorProps) => {
   const steps: ProgressStep[] = [
-    { label: 'Browse', path: `/providers/${providerSlug}/accommodations`, step: 1 },
-    { label: 'Book', path: `/providers/${providerSlug}/booking-form-page`, step: 2 },
+    { label: 'Brskanje', path: `/providers/${providerSlug}/accommodations`, step: 1 },
+    { label: 'Rezervacija', path: `/providers/${providerSlug}/booking-form-page`, step: 2 },
     {
-      label: 'Confirm',
+      label: 'Potrditev',
       path: `/providers/${providerSlug}/booking-confirmation`,
       step: 3,
     },

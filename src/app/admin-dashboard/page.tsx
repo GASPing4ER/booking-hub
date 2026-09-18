@@ -29,15 +29,15 @@ export default function AdminDashboardPage() {
     const loadProfile = async () => {
       try {
         const profile = await getUserProfile();
-        const fullName = profile?.full_name || user?.user_metadata?.full_name || user?.email || 'Provider';
+        const fullName = profile?.full_name || user?.user_metadata?.full_name || user?.email || 'Ponudnik';
         const businessName = profile?.business_name || profile?.company_name || fullName;
         setProviderName(businessName);
         setAdminName(fullName);
         setAdminEmail(user.email || '');
       } catch {
-        setAdminName(user?.user_metadata?.full_name || user?.email || 'Provider');
+        setAdminName(user?.user_metadata?.full_name || user?.email || 'Ponudnik');
         setAdminEmail(user?.email || '');
-        setProviderName(user?.user_metadata?.full_name || 'My Business');
+        setProviderName(user?.user_metadata?.full_name || 'Moje podjetje');
       } finally {
         setProfileLoading(false);
       }
@@ -58,7 +58,7 @@ export default function AdminDashboardPage() {
   if (loading || (!user && !loading)) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-text-secondary">Loading...</div>
+        <div className="text-text-secondary">Nalaganje...</div>
       </div>
     );
   }
@@ -70,8 +70,8 @@ export default function AdminDashboardPage() {
       <div className="flex min-h-screen min-w-0 flex-1 flex-col">
         <AdminContextBar
           providerSlug={providerSlug}
-          providerName={providerName || 'My Business'}
-          adminName={adminName || 'Provider'}
+          providerName={providerName || 'Moje podjetje'}
+          adminName={adminName || 'Ponudnik'}
           adminEmail={adminEmail}
           onLogout={handleLogout}
         />
@@ -79,11 +79,11 @@ export default function AdminDashboardPage() {
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="mb-8">
             <h1 className="font-heading font-bold text-3xl sm:text-4xl text-text-primary mb-2">
-              Booking Management
+              Upravljanje rezervacij
             </h1>
             <p className="text-text-secondary">
-              Manage your accommodation bookings, track occupancy, and monitor
-              business performance
+              Upravljajte rezervacije nastanitev, spremljajte zasedenost in
+              nadzorujte poslovno uspešnost
             </p>
           </div>
 

@@ -75,10 +75,10 @@ export default function MyBookingInteractive() {
       if (matched) {
         setBooking(matched as BookingResult);
       } else {
-        setError('No booking found with that email and reference number. Please check your details and try again.');
+        setError('Ni rezervacije s tem e-poštnim naslovom in referenčno številko. Preverite podatke in poskusite znova.');
       }
     } catch (err: any) {
-      setError(err.message || 'Failed to look up booking. Please try again.');
+      setError(err.message || 'Iskanje rezervacije ni uspelo. Poskusite znova.');
     } finally {
       setLoading(false);
     }
@@ -86,7 +86,7 @@ export default function MyBookingInteractive() {
 
   const handleCancelBooking = async () => {
     if (!booking) return;
-    if (!confirm('Are you sure you want to cancel this booking? This action cannot be undone.')) return;
+    if (!confirm('Ste prepričani, da želite preklicati to rezervacijo? Tega dejanja ni mogoče razveljaviti.')) return;
     setCancelling(true);
     setCancelError('');
     try {
@@ -98,7 +98,7 @@ export default function MyBookingInteractive() {
       if (updateError) throw updateError;
       setBooking({ ...booking, status: 'cancelled' });
     } catch (err: any) {
-      setCancelError(err.message || 'Failed to cancel booking. Please try again.');
+      setCancelError(err.message || 'Preklic rezervacije ni uspel. Poskusite znova.');
     } finally {
       setCancelling(false);
     }
@@ -107,7 +107,7 @@ export default function MyBookingInteractive() {
   const formatDate = (dateStr: string) => {
     if (!dateStr) return '';
     const date = new Date(dateStr + 'T00:00:00');
-    return date.toLocaleDateString('en-US', {
+    return date.toLocaleDateString('sl-SI', {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
@@ -128,6 +128,15 @@ export default function MyBookingInteractive() {
     }
   };
 
+  const getStatusLabel = (status: string) => {
+    switch (status) {
+      case 'confirmed': return 'potrjeno';
+      case 'pending': return 'v obdelavi';
+      case 'cancelled': return 'preklicano';
+      default: return status;
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <PublicNavHeader />
@@ -137,8 +146,8 @@ export default function MyBookingInteractive() {
           <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
             <Icon name="MagnifyingGlassIcon" variant="outline" size={32} className="text-primary" />
           </div>
-          <h1 className="font-heading font-bold text-3xl text-text-primary mb-2">Find My Booking</h1>
-          <p className="text-text-secondary">Enter your email and booking reference to view your reservation details</p>
+          <h1 className="font-heading font-bold text-3xl text-text-primary mb-2">Poiščite mojo rezervacijo</h1>
+          <p className="text-text-secondary">Vnesite svoj e-poštni naslov in referenco rezervacije za ogled podrobnosti</p>
         </div>
 
         {/* Search Form */}
@@ -146,7 +155,7 @@ export default function MyBookingInteractive() {
           <form onSubmit={handleSearch} className="space-y-5">
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-text-primary mb-1.5">
-                Email Address
+                E-poštni naslov
               </label>
               <input
                 id="email"
@@ -155,13 +164,13 @@ export default function MyBookingInteractive() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm placeholder-gray-400"
-                placeholder="The email you used when booking"
+                placeholder="E-poštni naslov, ki ste ga uporabili pri rezervaciji"
               />
             </div>
 
             <div>
               <label htmlFor="bookingRef" className="block text-sm font-medium text-text-primary mb-1.5">
-                Booking Reference
+                Referenca rezervacije
               </label>
               <input
                 id="bookingRef"
@@ -170,10 +179,10 @@ export default function MyBookingInteractive() {
                 onChange={(e) => setBookingRef(e.target.value)}
                 required
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm placeholder-gray-400 uppercase"
-                placeholder="e.g. A1B2C3D4 (first 8 characters of your booking ID)"
+                placeholder="npr. A1B2C3D4 (prvih 8 znakov ID-ja rezervacije)"
                 maxLength={8}
               />
-              <p className="text-xs text-text-secondary mt-1">Found in your booking confirmation email</p>
+              <p className="text-xs text-text-secondary mt-1">Najdete v e-pošti s potrditvijo rezervacije</p>
             </div>
 
             {error && (
@@ -194,12 +203,12 @@ export default function MyBookingInteractive() {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                   </svg>
-                  Searching...
+                  Iskanje...
                 </>
               ) : (
                 <>
                   <Icon name="MagnifyingGlassIcon" variant="outline" size={18} />
-                  Find My Booking
+                  Poišči mojo rezervacijo
                 </>
               )}
             </button>
@@ -212,13 +221,13 @@ export default function MyBookingInteractive() {
             {/* Header */}
             <div className="bg-primary/5 border-b border-border px-6 py-4 flex items-center justify-between">
               <div>
-                <p className="font-caption text-xs text-text-secondary uppercase tracking-wide mb-1">Booking Reference</p>
+                <p className="font-caption text-xs text-text-secondary uppercase tracking-wide mb-1">Referenca rezervacije</p>
                 <p className="font-heading font-bold text-lg text-primary tracking-wider">
                   #{booking.id.slice(0, 8).toUpperCase()}
                 </p>
               </div>
               <span className={`px-3 py-1 rounded-full text-xs font-caption font-semibold capitalize ${getStatusColor(booking.status)}`}>
-                {booking.status}
+                {getStatusLabel(booking.status)}
               </span>
             </div>
 
@@ -229,8 +238,8 @@ export default function MyBookingInteractive() {
                   <Icon name="BuildingOfficeIcon" variant="outline" size={16} className="text-text-secondary" />
                 </div>
                 <div>
-                  <p className="font-caption text-xs text-text-secondary uppercase tracking-wide">Property</p>
-                  <p className="font-heading font-semibold text-text-primary">{booking.properties?.name || 'Unknown Property'}</p>
+                  <p className="font-caption text-xs text-text-secondary uppercase tracking-wide">Nepremičnina</p>
+                  <p className="font-heading font-semibold text-text-primary">{booking.properties?.name || 'Neznana nepremičnina'}</p>
                 </div>
               </div>
 
@@ -240,7 +249,7 @@ export default function MyBookingInteractive() {
                   <Icon name="UserIcon" variant="outline" size={16} className="text-text-secondary" />
                 </div>
                 <div>
-                  <p className="font-caption text-xs text-text-secondary uppercase tracking-wide">Guest</p>
+                  <p className="font-caption text-xs text-text-secondary uppercase tracking-wide">Gost</p>
                   <p className="font-heading font-semibold text-text-primary">{booking.guest_name}</p>
                   <p className="font-caption text-sm text-text-secondary">{booking.guest_email}</p>
                 </div>
@@ -252,19 +261,19 @@ export default function MyBookingInteractive() {
                   <Icon name="CalendarDaysIcon" variant="outline" size={16} className="text-text-secondary" />
                 </div>
                 <div className="flex-1">
-                  <p className="font-caption text-xs text-text-secondary uppercase tracking-wide mb-1">Dates</p>
+                  <p className="font-caption text-xs text-text-secondary uppercase tracking-wide mb-1">Datumi</p>
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <p className="font-caption text-xs text-text-secondary">Check-in</p>
+                      <p className="font-caption text-xs text-text-secondary">Prijava</p>
                       <p className="font-caption font-medium text-text-primary text-sm">{formatDate(booking.check_in)}</p>
                     </div>
                     <div>
-                      <p className="font-caption text-xs text-text-secondary">Check-out</p>
+                      <p className="font-caption text-xs text-text-secondary">Odjava</p>
                       <p className="font-caption font-medium text-text-primary text-sm">{formatDate(booking.check_out)}</p>
                     </div>
                   </div>
                   <p className="font-caption text-xs text-text-secondary mt-1">
-                    {getNights(booking.check_in, booking.check_out)} nights · {booking.guests} {booking.guests === 1 ? 'guest' : 'guests'}
+                    {getNights(booking.check_in, booking.check_out)} noči · {booking.guests} {booking.guests === 1 ? 'gost' : 'gostov'}
                   </p>
                 </div>
               </div>
@@ -275,7 +284,7 @@ export default function MyBookingInteractive() {
                   <Icon name="CurrencyDollarIcon" variant="outline" size={16} className="text-primary" />
                 </div>
                 <div>
-                  <p className="font-caption text-xs text-text-secondary uppercase tracking-wide">Total Amount</p>
+                  <p className="font-caption text-xs text-text-secondary uppercase tracking-wide">Skupni znesek</p>
                   <p className="font-heading font-bold text-2xl text-primary">
                     ${parseFloat(booking.total_amount).toFixed(2)}
                   </p>
@@ -289,7 +298,7 @@ export default function MyBookingInteractive() {
                     <Icon name="ChatBubbleLeftEllipsisIcon" variant="outline" size={16} className="text-text-secondary" />
                   </div>
                   <div>
-                    <p className="font-caption text-xs text-text-secondary uppercase tracking-wide">Special Requests</p>
+                    <p className="font-caption text-xs text-text-secondary uppercase tracking-wide">Posebne zahteve</p>
                     <p className="font-caption text-sm text-text-primary mt-1">{booking.special_requests}</p>
                   </div>
                 </div>
@@ -300,13 +309,13 @@ export default function MyBookingInteractive() {
             <div className={`px-6 py-4 border-t border-border ${booking.status === 'confirmed' ? 'bg-success/5' : booking.status === 'cancelled' ? 'bg-error/5' : 'bg-yellow-50'}`}>
               <p className="font-caption text-sm">
                 {booking.status === 'confirmed' && (
-                  <span className="text-success">✓ Your booking has been confirmed. We look forward to welcoming you!</span>
+                  <span className="text-success">✓ Vaša rezervacija je potrjena. Veselimo se vašega obiska!</span>
                 )}
                 {booking.status === 'pending' && (
-                  <span className="text-yellow-700">⏳ Your booking is pending confirmation. We'll review and confirm within 24 hours.</span>
+                  <span className="text-yellow-700">⏳ Vaša rezervacija čaka na potrditev. Pregledali in potrdili jo bomo v 24 urah.</span>
                 )}
                 {booking.status === 'cancelled' && (
-                  <span className="text-error">✗ This booking has been cancelled.</span>
+                  <span className="text-error">✗ Ta rezervacija je bila preklicana.</span>
                 )}
               </p>
 
@@ -327,12 +336,12 @@ export default function MyBookingInteractive() {
                           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                         </svg>
-                        Cancelling...
+                        Preklicujem...
                       </>
                     ) : (
                       <>
                         <Icon name="XCircleIcon" variant="outline" size={16} />
-                        Cancel Booking
+                        Prekliči rezervacijo
                       </>
                     )}
                   </button>
@@ -344,7 +353,7 @@ export default function MyBookingInteractive() {
 
         <div className="mt-8 text-center">
           <Link href="/" className="text-sm text-primary hover:text-primary-dark transition-smooth font-medium">
-            ← Back to Home
+            ← Nazaj na začetno stran
           </Link>
         </div>
       </div>

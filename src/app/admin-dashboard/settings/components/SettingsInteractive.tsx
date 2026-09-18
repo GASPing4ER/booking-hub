@@ -49,10 +49,10 @@ const getPasswordStrength = (password: string): { label: string; color: string; 
   if (/[0-9]/.test(password)) score++;
   if (/[^A-Za-z0-9]/.test(password)) score++;
 
-  if (score <= 1) return { label: 'Weak', color: 'bg-error', width: '25%' };
-  if (score <= 2) return { label: 'Fair', color: 'bg-warning', width: '50%' };
-  if (score <= 3) return { label: 'Good', color: 'bg-primary/70', width: '75%' };
-  return { label: 'Strong', color: 'bg-success', width: '100%' };
+  if (score <= 1) return { label: 'Šibko', color: 'bg-error', width: '25%' };
+  if (score <= 2) return { label: 'Zadovoljivo', color: 'bg-warning', width: '50%' };
+  if (score <= 3) return { label: 'Dobro', color: 'bg-primary/70', width: '75%' };
+  return { label: 'Močno', color: 'bg-success', width: '100%' };
 };
 
 const SettingsInteractive = ({
@@ -191,10 +191,10 @@ const SettingsInteractive = ({
         });
 
       if (error) throw error;
-      showFeedback('success', 'Profile updated successfully');
+      showFeedback('success', 'Profil je bil uspešno posodobljen');
     } catch (error: any) {
       console.error('Error saving profile:', error.message);
-      showFeedback('error', 'Failed to save profile. Please try again.');
+      showFeedback('error', 'Shranjevanje profila ni uspelo. Poskusite znova.');
     } finally {
       setSaving(false);
     }
@@ -203,7 +203,7 @@ const SettingsInteractive = ({
   const handleSaveBusiness = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!businessSettings.businessName.trim()) {
-      showFeedback('error', 'Business name is required');
+      showFeedback('error', 'Ime podjetja je obvezno');
       return;
     }
     setSaving(true);
@@ -214,7 +214,7 @@ const SettingsInteractive = ({
       if (!rawPreference) {
         showFeedback(
           'error',
-          'Enter a storefront URL slug, or clear it and rely on your business name to generate one.',
+          'Vnesite URL-oznako trgovine ali jo pustite prazno, da se ustvari iz imena podjetja.',
         );
         setSaving(false);
         return;
@@ -226,7 +226,7 @@ const SettingsInteractive = ({
       if (!available) {
         showFeedback(
           'error',
-          'That storefront URL slug is already taken by another provider. Change it or click “Suggest from business name” for an available option.',
+          'To URL-oznako trgovine že uporablja drug ponudnik. Spremenite jo ali kliknite »Predlagaj iz imena podjetja« za razpoložljivo možnost.',
         );
         setSaving(false);
         return;
@@ -252,20 +252,20 @@ const SettingsInteractive = ({
         const isDup = errCode === '23505' || msg.includes('duplicate') || msg.includes('unique');
         throw new Error(
           isDup
-            ? 'That storefront URL slug is already in use. Pick another or use “Suggest from business name”.'
-            : msg || 'Save failed',
+            ? 'Ta URL-oznaka trgovine je že v uporabi. Izberite drugo ali uporabite »Predlagaj iz imena podjetja«.'
+            : msg || 'Shranjevanje ni uspelo',
         );
       }
 
       setBusinessSettings((prev) => ({ ...prev, businessSlug: resolvedSlug! }));
-      showFeedback('success', 'Business details updated successfully');
+      showFeedback('success', 'Podatki o podjetju so bili uspešno posodobljeni');
     } catch (error: unknown) {
       console.error('Error saving business settings:', error);
       showFeedback(
         'error',
         error instanceof Error && error.message
           ? error.message
-          : 'Failed to save business details. Please try again.',
+          : 'Shranjevanje podatkov o podjetju ni uspelo. Poskusite znova.',
       );
     } finally {
       setSaving(false);
@@ -276,15 +276,15 @@ const SettingsInteractive = ({
     e.preventDefault();
 
     if (!securitySettings.newPassword) {
-      showFeedback('error', 'Please enter a new password');
+      showFeedback('error', 'Vnesite novo geslo');
       return;
     }
     if (securitySettings.newPassword.length < 8) {
-      showFeedback('error', 'New password must be at least 8 characters');
+      showFeedback('error', 'Novo geslo mora imeti vsaj 8 znakov');
       return;
     }
     if (securitySettings.newPassword !== securitySettings.confirmPassword) {
-      showFeedback('error', 'New passwords do not match');
+      showFeedback('error', 'Novi gesli se ne ujemata');
       return;
     }
 
@@ -297,7 +297,7 @@ const SettingsInteractive = ({
       });
 
       if (signInError) {
-        showFeedback('error', 'Current password is incorrect');
+        showFeedback('error', 'Trenutno geslo je napačno');
         setSaving(false);
         return;
       }
@@ -309,10 +309,10 @@ const SettingsInteractive = ({
       if (updateError) throw updateError;
 
       setSecuritySettings({ currentPassword: '', newPassword: '', confirmPassword: '' });
-      showFeedback('success', 'Password changed successfully');
+      showFeedback('success', 'Geslo je bilo uspešno spremenjeno');
     } catch (error: any) {
       console.error('Error changing password:', error.message);
-      showFeedback('error', 'Failed to change password. Please try again.');
+      showFeedback('error', 'Sprememba gesla ni uspela. Poskusite znova.');
     } finally {
       setSaving(false);
     }
@@ -323,23 +323,23 @@ const SettingsInteractive = ({
       <div className="min-h-[400px] flex items-center justify-center">
         <div className="flex items-center gap-3 text-text-secondary">
           <div className="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-          <span className="font-caption">Loading settings...</span>
+          <span className="font-caption">Nalaganje nastavitev...</span>
         </div>
       </div>
     );
   }
 
   const tabs: { id: TabId; label: string; icon: string }[] = [
-    { id: 'profile', label: 'Provider Profile', icon: 'UserIcon' },
-    { id: 'business', label: 'Business Details', icon: 'BuildingOfficeIcon' },
-    { id: 'security', label: 'Account Security', icon: 'ShieldCheckIcon' },
+    { id: 'profile', label: 'Profil ponudnika', icon: 'UserIcon' },
+    { id: 'business', label: 'Podatki o podjetju', icon: 'BuildingOfficeIcon' },
+    { id: 'security', label: 'Varnost računa', icon: 'ShieldCheckIcon' },
   ];
 
   const passwordStrength = getPasswordStrength(securitySettings.newPassword);
   const storefrontPathPreview = slugifyPropertyLabel(
     businessSettings.businessSlug.trim() ||
       businessSettings.businessName.trim() ||
-      'your-shop',
+      'vasa-trgovina',
   );
 
   return (
@@ -391,10 +391,10 @@ const SettingsInteractive = ({
           <form onSubmit={handleSaveProfile} className="p-6 space-y-6">
             <div>
               <h3 className="font-heading font-semibold text-xl text-text-primary mb-1">
-                Provider Profile
+                Profil ponudnika
               </h3>
               <p className="text-sm text-text-secondary mb-6">
-                Update your personal information visible to guests and on your provider profile.
+                Posodobite svoje osebne podatke, ki so vidni gostom in v vašem profilu ponudnika.
               </p>
 
               {/* Avatar placeholder */}
@@ -405,7 +405,7 @@ const SettingsInteractive = ({
                   </span>
                 </div>
                 <div>
-                  <p className="font-caption font-medium text-text-primary">{profileSettings.fullName || 'Provider'}</p>
+                  <p className="font-caption font-medium text-text-primary">{profileSettings.fullName || 'Ponudnik'}</p>
                   <p className="text-sm text-text-secondary">{profileSettings.email}</p>
                 </div>
               </div>
@@ -413,20 +413,20 @@ const SettingsInteractive = ({
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-caption font-medium text-text-secondary mb-2">
-                    Full Name <span className="text-error">*</span>
+                    Polno ime <span className="text-error">*</span>
                   </label>
                   <input
                     type="text"
                     required
                     value={profileSettings.fullName}
                     onChange={(e) => setProfileSettings((p) => ({ ...p, fullName: e.target.value }))}
-                    placeholder="Your full name"
+                    placeholder="Vaše polno ime"
                     className="w-full px-4 py-2.5 bg-background border border-input rounded-md text-text-primary placeholder:text-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-ring transition-smooth"
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-caption font-medium text-text-secondary mb-2">
-                    Email Address
+                    E-poštni naslov
                   </label>
                   <input
                     type="email"
@@ -434,11 +434,11 @@ const SettingsInteractive = ({
                     disabled
                     className="w-full px-4 py-2.5 bg-muted border border-input rounded-md text-text-secondary cursor-not-allowed"
                   />
-                  <p className="text-xs text-text-secondary mt-1">Email cannot be changed here</p>
+                  <p className="text-xs text-text-secondary mt-1">E-pošte tukaj ni mogoče spremeniti</p>
                 </div>
                 <div className="sm:col-span-2">
                   <label className="block text-sm font-caption font-medium text-text-secondary mb-2">
-                    Phone Number
+                    Telefonska številka
                   </label>
                   <input
                     type="tel"
@@ -450,13 +450,13 @@ const SettingsInteractive = ({
                 </div>
                 <div className="sm:col-span-2">
                   <label className="block text-sm font-caption font-medium text-text-secondary mb-2">
-                    Bio / About
+                    Predstavitev / O meni
                   </label>
                   <textarea
                     rows={3}
                     value={profileSettings.bio}
                     onChange={(e) => setProfileSettings((p) => ({ ...p, bio: e.target.value }))}
-                    placeholder="Tell guests a little about yourself..."
+                    placeholder="Povejte gostom nekaj o sebi..."
                     className="w-full px-4 py-2.5 bg-background border border-input rounded-md text-text-primary placeholder:text-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-ring transition-smooth resize-none"
                   />
                 </div>
@@ -470,7 +470,7 @@ const SettingsInteractive = ({
                 className="flex items-center gap-2 px-6 py-2.5 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-60 transition-smooth font-caption font-medium"
               >
                 {saving && <div className="w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" />}
-                Save Profile
+                Shrani profil
               </button>
             </div>
           </form>
@@ -481,18 +481,18 @@ const SettingsInteractive = ({
           <form onSubmit={handleSaveBusiness} className="p-6 space-y-6">
             <div>
               <h3 className="font-heading font-semibold text-xl text-text-primary mb-1">
-                Business Details
+                Podatki o podjetju
               </h3>
               <p className="text-sm text-text-secondary mb-6">
-                Update your business information, public storefront URL, and details used for bookings and guest
-                communications.
+                Posodobite podatke o podjetju, javni URL trgovine ter podatke, ki se uporabljajo za rezervacije in
+                komunikacijo z gosti.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="sm:col-span-2 space-y-4">
                   <div>
                     <label className="block text-sm font-caption font-medium text-text-secondary mb-2">
-                      Business Name <span className="text-error">*</span>
+                      Ime podjetja <span className="text-error">*</span>
                     </label>
                     <input
                       type="text"
@@ -501,14 +501,14 @@ const SettingsInteractive = ({
                       onChange={(e) =>
                         setBusinessSettings((p) => ({ ...p, businessName: e.target.value }))
                       }
-                      placeholder="Your business or property name"
+                      placeholder="Ime vašega podjetja ali nepremičnine"
                       className="w-full px-4 py-2.5 bg-background border border-input rounded-md text-text-primary placeholder:text-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-ring transition-smooth"
                     />
                   </div>
                   <div>
                     <div className="flex flex-wrap items-start justify-between gap-2 mb-2">
                       <label className="block text-sm font-caption font-medium text-text-secondary">
-                        Storefront URL slug *
+                        URL-oznaka trgovine *
                       </label>
                       <button
                         type="button"
@@ -521,7 +521,7 @@ const SettingsInteractive = ({
                             setBusinessSettings((prev) => ({ ...prev, businessSlug: slug }));
                           } catch (err) {
                             console.error(err);
-                            showFeedback('error', 'Could not pick an available storefront slug. Try again.');
+                            showFeedback('error', 'Ni bilo mogoče izbrati razpoložljive URL-oznake trgovine. Poskusite znova.');
                           } finally {
                             setSuggestBusinessSlugBusy(false);
                           }
@@ -532,7 +532,7 @@ const SettingsInteractive = ({
                         className="text-xs font-caption text-primary hover:underline flex items-center gap-1 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         <Icon name="ArrowPathIcon" variant="outline" size={14} aria-hidden />
-                        Suggest from business name
+                        Predlagaj iz imena podjetja
                       </button>
                     </div>
                     <input
@@ -548,9 +548,10 @@ const SettingsInteractive = ({
                       className="w-full px-4 py-2.5 bg-background border border-input rounded-md text-text-primary font-mono text-sm placeholder:text-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-ring transition-smooth"
                     />
                     <p id="business-slug-help" className="text-xs text-text-secondary font-caption mt-2">
-                      Public path for your shop: lowercase letters, numbers, hyphens only. Must be unique across all
-                      providers. Saved value is validated before save — use “Suggest from business name” if yours is
-                      taken. If left empty when you save, it is derived from your business name and checked the same way.
+                      Javna pot vaše trgovine: samo male črke, številke in vezaji. Mora biti edinstvena med vsemi
+                      ponudniki. Vnesena vrednost se preveri pred shranjevanjem — če je vaša zasedena, uporabite
+                      »Predlagaj iz imena podjetja«. Če polje pustite prazno, se ob shranjevanju izpelje iz imena
+                      podjetja in preveri na enak način.
                     </p>
                     <p className="text-xs font-mono text-text-secondary font-caption mt-2 break-all">
                       /providers/{storefrontPathPreview}
@@ -559,19 +560,19 @@ const SettingsInteractive = ({
                 </div>
                 <div>
                   <label className="block text-sm font-caption font-medium text-text-secondary mb-2">
-                    Business Email
+                    E-pošta podjetja
                   </label>
                   <input
                     type="email"
                     value={businessSettings.businessEmail}
                     onChange={(e) => setBusinessSettings((p) => ({ ...p, businessEmail: e.target.value }))}
-                    placeholder="contact@yourbusiness.com"
+                    placeholder="stik@vasepodjetje.si"
                     className="w-full px-4 py-2.5 bg-background border border-input rounded-md text-text-primary placeholder:text-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-ring transition-smooth"
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-caption font-medium text-text-secondary mb-2">
-                    Business Phone
+                    Telefon podjetja
                   </label>
                   <input
                     type="tel"
@@ -583,74 +584,74 @@ const SettingsInteractive = ({
                 </div>
                 <div className="sm:col-span-2">
                   <label className="block text-sm font-caption font-medium text-text-secondary mb-2">
-                    Street Address
+                    Ulični naslov
                   </label>
                   <input
                     type="text"
                     value={businessSettings.address}
                     onChange={(e) => setBusinessSettings((p) => ({ ...p, address: e.target.value }))}
-                    placeholder="123 Main Street"
+                    placeholder="Glavna ulica 123"
                     className="w-full px-4 py-2.5 bg-background border border-input rounded-md text-text-primary placeholder:text-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-ring transition-smooth"
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-caption font-medium text-text-secondary mb-2">
-                    City
+                    Mesto
                   </label>
                   <input
                     type="text"
                     value={businessSettings.city}
                     onChange={(e) => setBusinessSettings((p) => ({ ...p, city: e.target.value }))}
-                    placeholder="City"
+                    placeholder="Mesto"
                     className="w-full px-4 py-2.5 bg-background border border-input rounded-md text-text-primary placeholder:text-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-ring transition-smooth"
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-caption font-medium text-text-secondary mb-2">
-                    Country
+                    Država
                   </label>
                   <input
                     type="text"
                     value={businessSettings.country}
                     onChange={(e) => setBusinessSettings((p) => ({ ...p, country: e.target.value }))}
-                    placeholder="Country"
+                    placeholder="Država"
                     className="w-full px-4 py-2.5 bg-background border border-input rounded-md text-text-primary placeholder:text-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-ring transition-smooth"
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-caption font-medium text-text-secondary mb-2">
-                    Timezone
+                    Časovni pas
                   </label>
                   <select
                     value={businessSettings.timezone}
                     onChange={(e) => setBusinessSettings((p) => ({ ...p, timezone: e.target.value }))}
                     className="w-full px-4 py-2.5 bg-background border border-input rounded-md text-text-primary focus:outline-none focus:ring-2 focus:ring-ring transition-smooth"
                   >
-                    <option value="America/New_York">Eastern Time (ET)</option>
-                    <option value="America/Chicago">Central Time (CT)</option>
-                    <option value="America/Denver">Mountain Time (MT)</option>
-                    <option value="America/Los_Angeles">Pacific Time (PT)</option>
+                    <option value="America/New_York">Vzhodni čas (ET)</option>
+                    <option value="America/Chicago">Osrednji čas (CT)</option>
+                    <option value="America/Denver">Gorski čas (MT)</option>
+                    <option value="America/Los_Angeles">Pacifiški čas (PT)</option>
                     <option value="Europe/London">London (GMT)</option>
-                    <option value="Europe/Paris">Paris (CET)</option>
-                    <option value="Asia/Tokyo">Tokyo (JST)</option>
+                    <option value="Europe/Paris">Pariz (CET)</option>
+                    <option value="Asia/Tokyo">Tokio (JST)</option>
                     <option value="Australia/Sydney">Sydney (AEST)</option>
                   </select>
                 </div>
                 <div>
                   <label className="block text-sm font-caption font-medium text-text-secondary mb-2">
-                    Currency
+                    Valuta
                   </label>
                   <select
                     value={businessSettings.currency}
                     onChange={(e) => setBusinessSettings((p) => ({ ...p, currency: e.target.value }))}
                     className="w-full px-4 py-2.5 bg-background border border-input rounded-md text-text-primary focus:outline-none focus:ring-2 focus:ring-ring transition-smooth"
                   >
-                    <option value="USD">USD — US Dollar</option>
-                    <option value="EUR">EUR — Euro</option>
-                    <option value="GBP">GBP — British Pound</option>
-                    <option value="CAD">CAD — Canadian Dollar</option>
-                    <option value="AUD">AUD — Australian Dollar</option>
-                    <option value="JPY">JPY — Japanese Yen</option>
+                    <option value="USD">USD — ameriški dolar</option>
+                    <option value="EUR">EUR — evro</option>
+                    <option value="GBP">GBP — britanski funt</option>
+                    <option value="CAD">CAD — kanadski dolar</option>
+                    <option value="AUD">AUD — avstralski dolar</option>
+                    <option value="JPY">JPY — japonski jen</option>
                   </select>
                 </div>
               </div>
@@ -663,7 +664,7 @@ const SettingsInteractive = ({
                 className="flex items-center gap-2 px-6 py-2.5 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-60 transition-smooth font-caption font-medium"
               >
                 {saving && <div className="w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" />}
-                Save Business Details
+                Shrani podatke o podjetju
               </button>
             </div>
           </form>
@@ -676,17 +677,17 @@ const SettingsInteractive = ({
             <form onSubmit={handleChangePassword} className="space-y-6">
               <div>
                 <h3 className="font-heading font-semibold text-xl text-text-primary mb-1">
-                  Change Password
+                  Spremeni geslo
                 </h3>
                 <p className="text-sm text-text-secondary mb-6">
-                  Choose a strong password to keep your account secure. You must enter your current password to make changes.
+                  Izberite močno geslo, da bo vaš račun varen. Za spremembo morate vnesti trenutno geslo.
                 </p>
 
                 <div className="space-y-4 max-w-md">
                   {/* Current Password */}
                   <div>
                     <label className="block text-sm font-caption font-medium text-text-secondary mb-2">
-                      Current Password <span className="text-error">*</span>
+                      Trenutno geslo <span className="text-error">*</span>
                     </label>
                     <div className="relative">
                       <input
@@ -694,14 +695,14 @@ const SettingsInteractive = ({
                         required
                         value={securitySettings.currentPassword}
                         onChange={(e) => setSecuritySettings((p) => ({ ...p, currentPassword: e.target.value }))}
-                        placeholder="Enter current password"
+                        placeholder="Vnesite trenutno geslo"
                         className="w-full px-4 py-2.5 pr-12 bg-background border border-input rounded-md text-text-primary placeholder:text-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-ring transition-smooth"
                       />
                       <button
                         type="button"
                         onClick={() => setShowCurrentPw(!showCurrentPw)}
                         className="absolute right-3 top-1/2 -translate-y-1/2 text-text-secondary hover:text-text-primary transition-smooth"
-                        aria-label={showCurrentPw ? 'Hide password' : 'Show password'}
+                        aria-label={showCurrentPw ? 'Skrij geslo' : 'Prikaži geslo'}
                       >
                         <Icon name={showCurrentPw ? 'EyeSlashIcon' : 'EyeIcon'} variant="outline" size={20} />
                       </button>
@@ -711,7 +712,7 @@ const SettingsInteractive = ({
                   {/* New Password */}
                   <div>
                     <label className="block text-sm font-caption font-medium text-text-secondary mb-2">
-                      New Password <span className="text-error">*</span>
+                      Novo geslo <span className="text-error">*</span>
                     </label>
                     <div className="relative">
                       <input
@@ -719,14 +720,14 @@ const SettingsInteractive = ({
                         required
                         value={securitySettings.newPassword}
                         onChange={(e) => setSecuritySettings((p) => ({ ...p, newPassword: e.target.value }))}
-                        placeholder="Enter new password"
+                        placeholder="Vnesite novo geslo"
                         className="w-full px-4 py-2.5 pr-12 bg-background border border-input rounded-md text-text-primary placeholder:text-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-ring transition-smooth"
                       />
                       <button
                         type="button"
                         onClick={() => setShowNewPw(!showNewPw)}
                         className="absolute right-3 top-1/2 -translate-y-1/2 text-text-secondary hover:text-text-primary transition-smooth"
-                        aria-label={showNewPw ? 'Hide password' : 'Show password'}
+                        aria-label={showNewPw ? 'Skrij geslo' : 'Prikaži geslo'}
                       >
                         <Icon name={showNewPw ? 'EyeSlashIcon' : 'EyeIcon'} variant="outline" size={20} />
                       </button>
@@ -742,17 +743,17 @@ const SettingsInteractive = ({
                           />
                         </div>
                         <p className="text-xs text-text-secondary">
-                          Strength: <span className="font-medium text-text-primary">{passwordStrength.label}</span>
+                          Moč: <span className="font-medium text-text-primary">{passwordStrength.label}</span>
                         </p>
                       </div>
                     )}
-                    <p className="text-xs text-text-secondary mt-1">Minimum 8 characters</p>
+                    <p className="text-xs text-text-secondary mt-1">Najmanj 8 znakov</p>
                   </div>
 
                   {/* Confirm New Password */}
                   <div>
                     <label className="block text-sm font-caption font-medium text-text-secondary mb-2">
-                      Confirm New Password <span className="text-error">*</span>
+                      Potrdi novo geslo <span className="text-error">*</span>
                     </label>
                     <div className="relative">
                       <input
@@ -760,7 +761,7 @@ const SettingsInteractive = ({
                         required
                         value={securitySettings.confirmPassword}
                         onChange={(e) => setSecuritySettings((p) => ({ ...p, confirmPassword: e.target.value }))}
-                        placeholder="Confirm new password"
+                        placeholder="Potrdite novo geslo"
                         className={`w-full px-4 py-2.5 pr-12 bg-background border rounded-md text-text-primary placeholder:text-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-ring transition-smooth ${
                           securitySettings.confirmPassword && securitySettings.confirmPassword !== securitySettings.newPassword
                             ? 'border-error' :'border-input'
@@ -770,13 +771,13 @@ const SettingsInteractive = ({
                         type="button"
                         onClick={() => setShowConfirmPw(!showConfirmPw)}
                         className="absolute right-3 top-1/2 -translate-y-1/2 text-text-secondary hover:text-text-primary transition-smooth"
-                        aria-label={showConfirmPw ? 'Hide password' : 'Show password'}
+                        aria-label={showConfirmPw ? 'Skrij geslo' : 'Prikaži geslo'}
                       >
                         <Icon name={showConfirmPw ? 'EyeSlashIcon' : 'EyeIcon'} variant="outline" size={20} />
                       </button>
                     </div>
                     {securitySettings.confirmPassword && securitySettings.confirmPassword !== securitySettings.newPassword && (
-                      <p className="text-xs text-error mt-1">Passwords do not match</p>
+                      <p className="text-xs text-error mt-1">Gesli se ne ujemata</p>
                     )}
                   </div>
                 </div>
@@ -790,7 +791,7 @@ const SettingsInteractive = ({
                 >
                   {saving && <div className="w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" />}
                   <Icon name="LockClosedIcon" variant="outline" size={18} />
-                  Update Password
+                  Posodobi geslo
                 </button>
               </div>
             </form>
@@ -798,20 +799,20 @@ const SettingsInteractive = ({
             {/* Security Info Section */}
             <div className="pt-6 border-t border-border">
               <h3 className="font-heading font-semibold text-xl text-text-primary mb-4">
-                Account Information
+                Podatki o računu
               </h3>
               <div className="space-y-3">
                 <div className="flex items-center justify-between p-4 bg-muted/50 rounded-lg border border-border">
                   <div className="flex items-center gap-3">
                     <Icon name="EnvelopeIcon" variant="outline" size={20} className="text-primary" />
                     <div>
-                      <p className="font-caption font-medium text-text-primary text-sm">Email Address</p>
+                      <p className="font-caption font-medium text-text-primary text-sm">E-poštni naslov</p>
                       <p className="text-sm text-text-secondary">{adminEmail}</p>
                     </div>
                   </div>
                   <span className="flex items-center gap-1.5 text-xs font-caption font-medium text-success bg-success/10 px-2.5 py-1 rounded-full">
                     <Icon name="CheckCircleIcon" variant="solid" size={14} className="text-success" />
-                    Verified
+                    Potrjeno
                   </span>
                 </div>
 
@@ -819,12 +820,12 @@ const SettingsInteractive = ({
                   <div className="flex items-center gap-3">
                     <Icon name="ShieldCheckIcon" variant="outline" size={20} className="text-primary" />
                     <div>
-                      <p className="font-caption font-medium text-text-primary text-sm">Two-Factor Authentication</p>
-                      <p className="text-sm text-text-secondary">Add an extra layer of security to your account</p>
+                      <p className="font-caption font-medium text-text-primary text-sm">Dvostopenjska avtentikacija</p>
+                      <p className="text-sm text-text-secondary">Dodajte dodatno raven varnosti za svoj račun</p>
                     </div>
                   </div>
                   <span className="text-xs font-caption font-medium text-text-secondary bg-muted px-2.5 py-1 rounded-full">
-                    Coming Soon
+                    Kmalu na voljo
                   </span>
                 </div>
               </div>

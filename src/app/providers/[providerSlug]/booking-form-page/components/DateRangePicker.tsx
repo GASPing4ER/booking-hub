@@ -30,7 +30,7 @@ const DateRangePicker = ({
     setCheckInError('');
 
     if (unavailableDates.includes(selectedDate)) {
-      setCheckInError('This date is unavailable');
+      setCheckInError('Ta datum ni na voljo');
       return;
     }
 
@@ -49,12 +49,12 @@ const DateRangePicker = ({
     setCheckOutError('');
 
     if (unavailableDates.includes(selectedDate)) {
-      setCheckOutError('This date is unavailable');
+      setCheckOutError('Ta datum ni na voljo');
       return;
     }
 
     if (checkInDate && selectedDate <= checkInDate) {
-      setCheckOutError('Check-out must be after check-in');
+      setCheckOutError('Odjava mora biti po prijavi');
       return;
     }
 
@@ -67,7 +67,7 @@ const DateRangePicker = ({
       );
 
       if (nights < minStayNights) {
-        setCheckOutError(`Minimum stay is ${minStayNights} nights`);
+        setCheckOutError(`Najkrajše bivanje je ${minStayNights} noči`);
         return;
       }
     }
@@ -94,7 +94,7 @@ const DateRangePicker = ({
           htmlFor="checkInDate"
           className="block font-caption font-medium text-text-primary mb-2"
         >
-          Check-in Date <span className="text-error">*</span>
+          Datum prijave <span className="text-error">*</span>
         </label>
         <div className="relative">
           <input
@@ -135,7 +135,7 @@ const DateRangePicker = ({
           htmlFor="checkOutDate"
           className="block font-caption font-medium text-text-primary mb-2"
         >
-          Check-out Date <span className="text-error">*</span>
+          Datum odjave <span className="text-error">*</span>
         </label>
         <div className="relative">
           <input
@@ -181,7 +181,7 @@ const DateRangePicker = ({
             className="text-primary"
           />
           <span className="font-caption text-text-primary">
-            <strong>{nights}</strong> {nights === 1 ? 'night' : 'nights'}
+            <strong>{nights}</strong> {nights === 1 ? 'noč' : 'noči'}
           </span>
         </div>
       )}
@@ -195,8 +195,8 @@ const DateRangePicker = ({
           className="text-accent flex-shrink-0 mt-0.5"
         />
         <p className="caption text-text-secondary">
-          Minimum stay requirement: {minStayNights}{' '}
-          {minStayNights === 1 ? 'night' : 'nights'}
+          Najkrajše bivanje: {minStayNights}{' '}
+          {minStayNights === 1 ? 'noč' : 'noči'}
         </p>
       </div>
     </div>

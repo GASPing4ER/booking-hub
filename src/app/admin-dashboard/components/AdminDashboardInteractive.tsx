@@ -119,7 +119,7 @@ const AdminDashboardInteractive = () => {
         id: booking.id,
         guestName: booking.guest_name,
         guestEmail: booking.guest_email,
-        accommodation: booking.properties?.name || 'Unknown',
+        accommodation: booking.properties?.name || 'Neznano',
         checkIn: booking.check_in,
         checkOut: booking.check_out,
         status: booking.status,
@@ -166,7 +166,7 @@ const AdminDashboardInteractive = () => {
           const toast: Toast = {
             id: booking.id,
             guestName: booking.guest_name,
-            propertyName: prop?.name || 'your property',
+            propertyName: prop?.name || 'vašo nepremičnino',
           };
 
           setToasts((prev) => [toast, ...prev].slice(0, 3));
@@ -232,7 +232,7 @@ const AdminDashboardInteractive = () => {
   const metrics: MetricCard[] = [
     {
       id: 'total',
-      label: 'Total Bookings',
+      label: 'Skupaj rezervacij',
       value: bookings.length.toString(),
       change: (() => {
         const now = new Date();
@@ -261,7 +261,7 @@ const AdminDashboardInteractive = () => {
     },
     {
       id: 'occupancy',
-      label: 'Occupancy Rate',
+      label: 'Stopnja zasedenosti',
       value: (() => {
         const confirmedBookings = bookings.filter(b => b.status === 'confirmed');
         const totalBookedDays = confirmedBookings.reduce((sum, b) => {
@@ -279,7 +279,7 @@ const AdminDashboardInteractive = () => {
     },
     {
       id: 'revenue',
-      label: 'Monthly Revenue',
+      label: 'Mesečni prihodek',
       value: (() => {
         const now = new Date();
         const thirtyDaysAgo = new Date(now);
@@ -295,11 +295,11 @@ const AdminDashboardInteractive = () => {
     },
     {
       id: 'pending',
-      label: 'Pending Requests',
+      label: 'Zahteve v obdelavi',
       value: bookings.filter((b) => b.status === 'pending').length.toString(),
       change: (() => {
         const pendingCount = bookings.filter(b => b.status === 'pending').length;
-        return pendingCount > 0 ? `${pendingCount} awaiting` : 'None';
+        return pendingCount > 0 ? `${pendingCount} čaka` : 'Brez';
       })(),
       changeType: bookings.filter(b => b.status === 'pending').length > 0 ? 'neutral' : 'positive',
       icon: 'ClockIcon',
@@ -307,14 +307,14 @@ const AdminDashboardInteractive = () => {
   ];
 
   const statusOptions: FilterOption[] = [
-    { value: 'all', label: 'All Status', count: bookings.length },
-    { value: 'pending', label: 'Pending', count: bookings.filter((b) => b.status === 'pending').length },
-    { value: 'confirmed', label: 'Confirmed', count: bookings.filter((b) => b.status === 'confirmed').length },
-    { value: 'cancelled', label: 'Cancelled', count: bookings.filter((b) => b.status === 'cancelled').length },
+    { value: 'all', label: 'Vsi statusi', count: bookings.length },
+    { value: 'pending', label: 'V obdelavi', count: bookings.filter((b) => b.status === 'pending').length },
+    { value: 'confirmed', label: 'Potrjeno', count: bookings.filter((b) => b.status === 'confirmed').length },
+    { value: 'cancelled', label: 'Preklicano', count: bookings.filter((b) => b.status === 'cancelled').length },
   ];
 
   const accommodationOptions: FilterOption[] = [
-    { value: 'all', label: 'All Accommodations' },
+    { value: 'all', label: 'Vse nastanitve' },
     ...Array.from(new Set(bookings.map((b) => b.accommodation))).map((acc) => ({
       value: acc,
       label: acc,
@@ -406,7 +406,7 @@ const AdminDashboardInteractive = () => {
 
   const handleBulkDelete = async () => {
     if (selectedBookings.length === 0) return;
-    if (!confirm(`Delete ${selectedBookings.length} bookings?`)) return;
+    if (!confirm(`Izbrišem ${selectedBookings.length} rezervacij?`)) return;
     try {
       const { error } = await supabase.from('bookings').delete().in('id', selectedBookings);
       if (error) throw error;
@@ -420,7 +420,7 @@ const AdminDashboardInteractive = () => {
   if (!isHydrated || loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-gray-600">Loading dashboard...</div>
+        <div className="text-gray-600">Nalaganje nadzorne plošče...</div>
       </div>
     );
   }
@@ -438,15 +438,15 @@ const AdminDashboardInteractive = () => {
               <Icon name="CalendarIcon" variant="outline" size={16} className="text-success" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-caption font-semibold text-text-primary">New booking received!</p>
+              <p className="text-sm font-caption font-semibold text-text-primary">Prejeta nova rezervacija!</p>
               <p className="text-xs text-text-secondary font-caption truncate">
-                {toast.guestName} booked {toast.propertyName}
+                {toast.guestName} je rezerviral(a) {toast.propertyName}
               </p>
             </div>
             <button
               onClick={() => dismissToast(toast.id)}
               className="text-text-secondary hover:text-text-primary transition-smooth flex-shrink-0"
-              aria-label="Dismiss"
+              aria-label="Zapri"
             >
               <Icon name="XMarkIcon" variant="outline" size={16} />
             </button>
@@ -486,7 +486,7 @@ const AdminDashboardInteractive = () => {
         onStatusChange={handleStatusChange}
         onEdit={(bookingId: string) => {}}
         onDelete={async (bookingId: string) => {
-          if (!confirm('Delete this booking?')) return;
+          if (!confirm('Izbrišem to rezervacijo?')) return;
           try {
             const { error } = await supabase.from('bookings').delete().eq('id', bookingId);
             if (error) throw error;

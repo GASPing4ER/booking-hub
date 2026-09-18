@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import ForgotPasswordInteractive from './components/ForgotPasswordInteractive';
 
 export const metadata: Metadata = {
-  title: 'Forgot Password | BookingHub',
-  description: 'Reset your BookingHub account password.',
+  title: 'Pozabljeno geslo | BookingHub',
+  description: 'Ponastavite geslo svojega računa BookingHub.',
 };
 
 export default function ForgotPasswordPage() {

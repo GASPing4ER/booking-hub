@@ -29,32 +29,32 @@ const AdminSidebar = ({
 
   const navItems: NavItem[] = [
     {
-      label: 'Dashboard',
+      label: 'Nadzorna plošča',
       path: ADMIN_BASE,
       icon: 'ChartBarIcon',
     },
     {
-      label: 'Manage Bookings',
+      label: 'Upravljanje rezervacij',
       path: `${ADMIN_BASE}/bookings`,
       icon: 'CalendarIcon',
     },
     {
-      label: 'Properties',
+      label: 'Nepremičnine',
       path: `${ADMIN_BASE}/properties`,
       icon: 'HomeIcon',
     },
     {
-      label: 'Calendar',
+      label: 'Koledar',
       path: `${ADMIN_BASE}/calendar-management-page`,
       icon: 'CalendarDaysIcon',
     },
     {
-      label: 'Reports',
+      label: 'Poročila',
       path: `${ADMIN_BASE}/reports`,
       icon: 'ChartPieIcon',
     },
     {
-      label: 'Settings',
+      label: 'Nastavitve',
       path: `${ADMIN_BASE}/settings`,
       icon: 'CogIcon',
     },
@@ -81,7 +81,7 @@ const AdminSidebar = ({
       <button
         onClick={toggleMobileMenu}
         className="lg:hidden fixed top-4 left-4 z-200 w-10 h-10 bg-card rounded-md shadow-hospitality flex items-center justify-center transition-smooth hover:bg-muted"
-        aria-label="Toggle menu"
+        aria-label="Preklopi meni"
       >
         <Icon
           name={mobileOpen ? 'XMarkIcon' : 'Bars3Icon'}
@@ -191,7 +191,7 @@ const AdminSidebar = ({
               type="button"
               onClick={toggleCollapse}
               className="flex w-full items-center justify-center gap-3 rounded-md px-3 py-3 text-text-secondary transition-smooth hover:bg-muted hover:text-text-primary"
-              aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+              aria-label={collapsed ? 'Razširi stransko vrstico' : 'Strni stransko vrstico'}
             >
               <Icon
                 name={collapsed ? 'ChevronRightIcon' : 'ChevronLeftIcon'}
@@ -200,7 +200,7 @@ const AdminSidebar = ({
                 className="text-text-secondary"
               />
               {!collapsed && (
-                <span className="font-caption font-medium">Collapse</span>
+                <span className="font-caption font-medium">Strni</span>
               )}
             </button>
           </div>

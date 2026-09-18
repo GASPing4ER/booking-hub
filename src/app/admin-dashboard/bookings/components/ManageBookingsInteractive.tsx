@@ -144,7 +144,7 @@ const ManageBookingsInteractive = () => {
         id: booking.id,
         guestName: booking.guest_name,
         guestEmail: booking.guest_email,
-        accommodation: booking.properties?.name || 'Unknown',
+        accommodation: booking.properties?.name || 'Neznano',
         checkIn: booking.check_in,
         checkOut: booking.check_out,
         status: booking.status,
@@ -195,7 +195,7 @@ const ManageBookingsInteractive = () => {
     return [
       {
         id: 'total',
-        label: 'Total Bookings (30d)',
+        label: 'Skupaj rezervacij (30d)',
         value: currTotal.toString(),
         change: totalChange.change,
         changeType: totalChange.changeType,
@@ -203,7 +203,7 @@ const ManageBookingsInteractive = () => {
       },
       {
         id: 'pending',
-        label: 'Pending (30d)',
+        label: 'V obdelavi (30d)',
         value: currPending.toString(),
         change: pendingChange.change,
         changeType: pendingChange.changeType,
@@ -211,7 +211,7 @@ const ManageBookingsInteractive = () => {
       },
       {
         id: 'confirmed',
-        label: 'Confirmed (30d)',
+        label: 'Potrjeno (30d)',
         value: currConfirmed.toString(),
         change: confirmedChange.change,
         changeType: confirmedChange.changeType,
@@ -219,7 +219,7 @@ const ManageBookingsInteractive = () => {
       },
       {
         id: 'cancelled',
-        label: 'Cancelled (30d)',
+        label: 'Preklicano (30d)',
         value: currCancelled.toString(),
         change: cancelledChange.change,
         changeType: cancelledChange.changeType === 'positive' ? 'negative' : cancelledChange.changeType === 'negative' ? 'positive' : 'neutral',
@@ -276,26 +276,26 @@ const ManageBookingsInteractive = () => {
   ]);
 
   const statusOptions: FilterOption[] = [
-    { value: 'all', label: 'All Status', count: bookings.length },
+    { value: 'all', label: 'Vsi statusi', count: bookings.length },
     {
       value: 'pending',
-      label: 'Pending',
+      label: 'V obdelavi',
       count: bookings.filter((b) => b.status === 'pending').length,
     },
     {
       value: 'confirmed',
-      label: 'Confirmed',
+      label: 'Potrjeno',
       count: bookings.filter((b) => b.status === 'confirmed').length,
     },
     {
       value: 'cancelled',
-      label: 'Cancelled',
+      label: 'Preklicano',
       count: bookings.filter((b) => b.status === 'cancelled').length,
     },
   ];
 
   const accommodationOptions: FilterOption[] = [
-    { value: 'all', label: 'All Accommodations' },
+    { value: 'all', label: 'Vse nastanitve' },
     ...Array.from(new Set(bookings.map((b) => b.accommodation))).map(
       (acc) => ({
         value: acc,
@@ -360,7 +360,7 @@ const ManageBookingsInteractive = () => {
   };
 
   const handleDeleteBooking = async (bookingId: string) => {
-    if (!confirm('Are you sure you want to delete this booking?')) return;
+    if (!confirm('Ali ste prepričani, da želite izbrisati to rezervacijo?')) return;
 
     try {
       const { error } = await supabase
@@ -415,7 +415,7 @@ const ManageBookingsInteractive = () => {
 
   const handleBulkDelete = async () => {
     if (selectedBookings.length === 0) return;
-    if (!confirm(`Delete ${selectedBookings.length} bookings?`)) return;
+    if (!confirm(`Izbrišem ${selectedBookings.length} rezervacij?`)) return;
 
     try {
       const { error } = await supabase
@@ -498,7 +498,7 @@ const ManageBookingsInteractive = () => {
   if (!isHydrated || loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-gray-600">Loading bookings...</div>
+        <div className="text-gray-600">Nalaganje rezervacij...</div>
       </div>
     );
   }
@@ -531,7 +531,7 @@ const ManageBookingsInteractive = () => {
 
       <div className="flex items-center justify-between">
         <p className="text-text-secondary font-caption">
-          Showing {filteredBookings.length === 0 ? 0 : (currentPage - 1) * PAGE_SIZE + 1}–{Math.min(currentPage * PAGE_SIZE, filteredBookings.length)} of {filteredBookings.length} bookings
+          Prikazano {filteredBookings.length === 0 ? 0 : (currentPage - 1) * PAGE_SIZE + 1}–{Math.min(currentPage * PAGE_SIZE, filteredBookings.length)} od {filteredBookings.length} rezervacij
         </p>
       </div>
 
@@ -549,14 +549,14 @@ const ManageBookingsInteractive = () => {
       {totalPages > 1 && (
         <div className="flex items-center justify-between bg-card rounded-lg border border-border px-4 py-3">
           <p className="text-sm text-text-secondary font-caption">
-            Page {currentPage} of {totalPages}
+            Stran {currentPage} od {totalPages}
           </p>
           <div className="flex items-center gap-1">
             <button
               onClick={() => setCurrentPage(1)}
               disabled={currentPage === 1}
               className="p-2 rounded-md text-text-secondary hover:bg-muted disabled:opacity-40 disabled:cursor-not-allowed transition-smooth"
-              aria-label="First page"
+              aria-label="Prva stran"
             >
               <Icon name="ChevronDoubleLeftIcon" variant="outline" size={16} />
             </button>
@@ -564,7 +564,7 @@ const ManageBookingsInteractive = () => {
               onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
               disabled={currentPage === 1}
               className="p-2 rounded-md text-text-secondary hover:bg-muted disabled:opacity-40 disabled:cursor-not-allowed transition-smooth"
-              aria-label="Previous page"
+              aria-label="Prejšnja stran"
             >
               <Icon name="ChevronLeftIcon" variant="outline" size={16} />
             </button>
@@ -596,7 +596,7 @@ const ManageBookingsInteractive = () => {
               onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
               disabled={currentPage === totalPages}
               className="p-2 rounded-md text-text-secondary hover:bg-muted disabled:opacity-40 disabled:cursor-not-allowed transition-smooth"
-              aria-label="Next page"
+              aria-label="Naslednja stran"
             >
               <Icon name="ChevronRightIcon" variant="outline" size={16} />
             </button>
@@ -604,7 +604,7 @@ const ManageBookingsInteractive = () => {
               onClick={() => setCurrentPage(totalPages)}
               disabled={currentPage === totalPages}
               className="p-2 rounded-md text-text-secondary hover:bg-muted disabled:opacity-40 disabled:cursor-not-allowed transition-smooth"
-              aria-label="Last page"
+              aria-label="Zadnja stran"
             >
               <Icon name="ChevronDoubleRightIcon" variant="outline" size={16} />
             </button>

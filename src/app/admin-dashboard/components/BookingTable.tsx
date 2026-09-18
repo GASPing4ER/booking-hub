@@ -52,29 +52,29 @@ const BookingTable = ({
                   checked={allSelected}
                   onChange={onSelectAll}
                   className="w-4 h-4 rounded border-input text-primary focus:ring-2 focus:ring-ring cursor-pointer"
-                  aria-label="Select all bookings"
+                  aria-label="Izberi vse rezervacije"
                 />
               </th>
               <th className="px-4 py-4 text-left text-sm font-caption font-semibold text-text-primary">
-                Guest
+                Gost
               </th>
               <th className="px-4 py-4 text-left text-sm font-caption font-semibold text-text-primary">
-                Accommodation
+                Nastanitev
               </th>
               <th className="px-4 py-4 text-left text-sm font-caption font-semibold text-text-primary">
-                Check-in
+                Prijava
               </th>
               <th className="px-4 py-4 text-left text-sm font-caption font-semibold text-text-primary">
-                Check-out
+                Odjava
               </th>
               <th className="px-4 py-4 text-left text-sm font-caption font-semibold text-text-primary">
                 Status
               </th>
               <th className="px-4 py-4 text-left text-sm font-caption font-semibold text-text-primary">
-                Amount
+                Znesek
               </th>
               <th className="px-4 py-4 text-left text-sm font-caption font-semibold text-text-primary">
-                Actions
+                Dejanja
               </th>
             </tr>
           </thead>
@@ -114,7 +114,7 @@ const BookingTable = ({
       {bookings.length === 0 && (
         <div className="p-12 text-center">
           <p className="text-text-secondary font-caption">
-            No bookings found matching your filters.
+            Ni rezervacij, ki bi ustrezale vašim filtrom.
           </p>
         </div>
       )}

@@ -28,8 +28,8 @@ interface CalendarDay {
 
 type BookingStep = 'browse' | 'confirm';
 
-const DAYS_OF_WEEK = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const DAYS_OF_WEEK = ['Ned', 'Pon', 'Tor', 'Sre', 'Čet', 'Pet', 'Sob'];
+const MONTHS = ['Januar', 'Februar', 'Marec', 'April', 'Maj', 'Junij', 'Julij', 'Avgust', 'September', 'Oktober', 'November', 'December'];
 
 function formatDate(date: Date): string {
   return date.toISOString().split('T')[0];
@@ -162,8 +162,8 @@ function AccommodationDetailPageContent() {
         pricePerNight: parseFloat(property.price_per_night) || 0,
         minStayNights: property.min_stay_nights || 1,
         amenities: property.amenities || [],
-        houseRules: property.house_rules || ['No smoking', 'No pets', 'Quiet hours 10pm-8am'],
-        images: getPropertyImages(property.image_urls, property.image_url, `${property.name} - accommodation photo`),
+        houseRules: property.house_rules || ['Kajenje prepovedano', 'Hišni ljubljenčki prepovedani', 'Nočni mir od 22h do 8h'],
+        images: getPropertyImages(property.image_urls, property.image_url, `${property.name} - fotografija nastanitve`),
       });
 
       // Fetch bookings for this property
@@ -228,14 +228,14 @@ function AccommodationDetailPageContent() {
       // Set mock data for demo
       setAccommodation({
         id: accommodationKey,
-        name: 'Ocean View Suite',
-        description: 'A stunning ocean view suite with modern amenities, perfect for couples or small families seeking a luxurious coastal retreat.',
+        name: 'Apartma s pogledom na morje',
+        description: 'Osupljiv apartma s pogledom na morje z modernimi ugodnostmi, popoln za pare ali manjše družine, ki iščejo razkošni obmorski umik.',
         capacity: 4,
         pricePerNight: 180,
         minStayNights: 2,
-        amenities: ['WiFi', 'Air Conditioning', 'Kitchen', 'Ocean View', 'Parking', 'Pool Access'],
-        houseRules: ['No smoking', 'No pets', 'Quiet hours 10pm-8am', 'Check-in after 3pm'],
-        images: [{ url: '', alt: 'Ocean View Suite - spacious room with panoramic ocean views' }],
+        amenities: ['WiFi', 'Klimatska naprava', 'Kuhinja', 'Pogled na morje', 'Parkiranje', 'Dostop do bazena'],
+        houseRules: ['Kajenje prepovedano', 'Hišni ljubljenčki prepovedani', 'Nočni mir od 22h do 8h', 'Prijava po 15h'],
+        images: [{ url: '', alt: 'Apartma s pogledom na morje - prostorna soba s panoramskim pogledom na morje' }],
       });
       // Build demo calendar
       const days: Record<string, CalendarDay> = {};
@@ -344,7 +344,7 @@ function AccommodationDetailPageContent() {
             onClick={() => handleDateClick(dateStr)}
             disabled={isPast || status === 'booked' || status === 'blocked'}
             className={cellClass}
-            title={status === 'booked' ? 'Already booked' : status === 'blocked' ? 'Not available' : `${dateStr} - $${calDay?.price || accommodation?.pricePerNight}/night`}
+            title={status === 'booked' ? 'Že rezervirano' : status === 'blocked' ? 'Ni na voljo' : `${dateStr} - $${calDay?.price || accommodation?.pricePerNight}/noč`}
           >
             {day}
             {dotClass && (
@@ -425,7 +425,7 @@ function AccommodationDetailPageContent() {
 
       setBookingSuccess(true);
     } catch (err: any) {
-      setBookingError(err.message || 'Failed to submit booking. Please try again.');
+      setBookingError(err.message || 'Rezervacije ni bilo mogoče poslati. Prosimo, poskusite znova.');
     } finally {
       setSubmitting(false);
     }
@@ -436,7 +436,7 @@ function AccommodationDetailPageContent() {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
           <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-          <p className="font-caption text-text-secondary">Loading accommodation...</p>
+          <p className="font-caption text-text-secondary">Nalaganje nastanitve...</p>
         </div>
       </div>
     );
@@ -447,7 +447,7 @@ function AccommodationDetailPageContent() {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <Icon name="ExclamationCircleIcon" variant="outline" size={48} className="text-text-secondary mx-auto mb-4" />
-          <p className="font-heading text-xl text-text-primary">Accommodation not found</p>
+          <p className="font-heading text-xl text-text-primary">Nastanitev ni najdena</p>
           <button
             type="button"
             onClick={() =>
@@ -457,7 +457,7 @@ function AccommodationDetailPageContent() {
             }
             className="mt-4 text-primary font-caption hover:underline"
           >
-            Back to listings
+            Nazaj na seznam
           </button>
         </div>
       </div>
@@ -471,21 +471,21 @@ function AccommodationDetailPageContent() {
           <div className="w-20 h-20 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-6">
             <Icon name="CheckCircleIcon" variant="solid" size={48} className="text-success" />
           </div>
-          <h2 className="font-heading font-bold text-2xl text-text-primary mb-2">Booking Requested!</h2>
+          <h2 className="font-heading font-bold text-2xl text-text-primary mb-2">Rezervacija zahtevana!</h2>
           <p className="font-body text-text-secondary mb-6">
-            Your booking request for <strong>{accommodation.name}</strong> from <strong>{checkIn}</strong> to <strong>{checkOut}</strong> has been submitted. You'll receive a confirmation email shortly.
+            Vaša zahteva za rezervacijo <strong>{accommodation.name}</strong> od <strong>{checkIn}</strong> do <strong>{checkOut}</strong> je bila oddana. Kmalu boste prejeli potrditveno e-pošto.
           </p>
           <div className="bg-muted rounded-lg p-4 mb-6 text-left space-y-2">
             <div className="flex justify-between font-caption text-sm">
-              <span className="text-text-secondary">Check-in</span>
+              <span className="text-text-secondary">Prijava</span>
               <span className="text-text-primary font-medium">{checkIn}</span>
             </div>
             <div className="flex justify-between font-caption text-sm">
-              <span className="text-text-secondary">Check-out</span>
+              <span className="text-text-secondary">Odjava</span>
               <span className="text-text-primary font-medium">{checkOut}</span>
             </div>
             <div className="flex justify-between font-caption text-sm">
-              <span className="text-text-secondary">Total</span>
+              <span className="text-text-secondary">Skupaj</span>
               <span className="text-primary font-semibold">${totalPrice}</span>
             </div>
           </div>
@@ -497,13 +497,13 @@ function AccommodationDetailPageContent() {
             }
             className="w-full bg-primary text-primary-foreground px-6 py-3 rounded-lg font-caption font-medium hover:bg-primary/90 transition-colors mb-3"
           >
-            Back to Accommodations
+            Nazaj na nastanitve
           </button>
           <button
             onClick={() => router.push('/my-booking')}
             className="w-full border border-border text-text-secondary px-6 py-3 rounded-lg font-caption font-medium hover:bg-muted transition-colors"
           >
-            Check My Booking
+            Preveri mojo rezervacijo
           </button>
         </div>
       </div>
@@ -524,7 +524,7 @@ function AccommodationDetailPageContent() {
             className="flex items-center gap-2 text-text-secondary hover:text-primary transition-colors font-caption text-sm"
           >
             <Icon name="ArrowLeftIcon" variant="outline" size={18} />
-            <span>Back to Accommodations</span>
+            <span>Nazaj na nastanitve</span>
           </button>
           <span className="text-border">|</span>
           <span className="font-caption text-sm text-text-primary font-medium truncate">{accommodation.name}</span>
@@ -572,7 +572,7 @@ function AccommodationDetailPageContent() {
                         ? 'border-primary ring-2 ring-primary/20'
                         : 'border-border hover:border-primary/60'
                     }`}
-                    aria-label={`View property photo ${index + 1}`}
+                    aria-label={`Poglej fotografijo nepremičnine ${index + 1}`}
                   >
                     <AppImage
                       src={image.url}
@@ -591,30 +591,30 @@ function AccommodationDetailPageContent() {
                 <div className="flex items-center gap-4 mt-2">
                   <div className="flex items-center gap-1.5 text-text-secondary">
                     <Icon name="UserGroupIcon" variant="outline" size={16} className="text-primary" />
-                    <span className="font-caption text-sm">Up to {accommodation.capacity} guests</span>
+                    <span className="font-caption text-sm">Do {accommodation.capacity} gostov</span>
                   </div>
                   <div className="flex items-center gap-1.5 text-text-secondary">
                     <Icon name="MoonIcon" variant="outline" size={16} className="text-primary" />
-                    <span className="font-caption text-sm">Min. {accommodation.minStayNights} night{accommodation.minStayNights > 1 ? 's' : ''}</span>
+                    <span className="font-caption text-sm">Najm. {accommodation.minStayNights} {accommodation.minStayNights === 1 ? 'noč' : 'noči'}</span>
                   </div>
                 </div>
               </div>
               <div className="text-right flex-shrink-0">
                 <p className="font-heading font-bold text-2xl text-primary">${accommodation.pricePerNight}</p>
-                <p className="font-caption text-xs text-text-secondary">per night</p>
+                <p className="font-caption text-xs text-text-secondary">na noč</p>
               </div>
             </div>
 
             {/* Description */}
             <div className="bg-card rounded-xl p-5 border border-border">
-              <h2 className="font-heading font-semibold text-lg text-text-primary mb-3">About this place</h2>
+              <h2 className="font-heading font-semibold text-lg text-text-primary mb-3">O tej nastanitvi</h2>
               <p className="font-body text-text-secondary leading-relaxed">{accommodation.description}</p>
             </div>
 
             {/* Amenities */}
             {accommodation.amenities.length > 0 && (
               <div className="bg-card rounded-xl p-5 border border-border">
-                <h2 className="font-heading font-semibold text-lg text-text-primary mb-4">Amenities</h2>
+                <h2 className="font-heading font-semibold text-lg text-text-primary mb-4">Ugodnosti</h2>
                 <div className="grid grid-cols-2 gap-3">
                   {accommodation.amenities.map((amenity, i) => (
                     <div key={i} className="flex items-center gap-2">
@@ -629,7 +629,7 @@ function AccommodationDetailPageContent() {
             {/* House Rules */}
             {accommodation.houseRules.length > 0 && (
               <div className="bg-card rounded-xl p-5 border border-border">
-                <h2 className="font-heading font-semibold text-lg text-text-primary mb-4">House Rules</h2>
+                <h2 className="font-heading font-semibold text-lg text-text-primary mb-4">Hišni red</h2>
                 <div className="space-y-2">
                   {accommodation.houseRules.map((rule, i) => (
                     <div key={i} className="flex items-center gap-2">
@@ -647,8 +647,8 @@ function AccommodationDetailPageContent() {
             <div className="bg-card rounded-2xl border border-border shadow-lg sticky top-20">
               {step === 'browse' ? (
                 <div className="p-5">
-                  <h2 className="font-heading font-semibold text-xl text-text-primary mb-1">Select Dates</h2>
-                  <p className="font-caption text-sm text-text-secondary mb-4">Click a date to set check-in, then click another for check-out</p>
+                  <h2 className="font-heading font-semibold text-xl text-text-primary mb-1">Izberite datume</h2>
+                  <p className="font-caption text-sm text-text-secondary mb-4">Kliknite na datum za nastavitev prijave, nato kliknite še enega za odjavo</p>
 
                   {/* Calendar Navigation */}
                   <div className="flex items-center justify-between mb-4">
@@ -691,34 +691,34 @@ function AccommodationDetailPageContent() {
                   <div className="flex flex-wrap gap-3 mb-4 pb-4 border-b border-border">
                     <div className="flex items-center gap-1.5">
                       <div className="w-3 h-3 rounded-full bg-primary" />
-                      <span className="font-caption text-xs text-text-secondary">Selected</span>
+                      <span className="font-caption text-xs text-text-secondary">Izbrano</span>
                     </div>
                     <div className="flex items-center gap-1.5">
                       <div className="w-3 h-3 rounded-full bg-primary/15" />
-                      <span className="font-caption text-xs text-text-secondary">In range</span>
+                      <span className="font-caption text-xs text-text-secondary">V obdobju</span>
                     </div>
                     <div className="flex items-center gap-1.5">
                       <div className="w-3 h-3 rounded-full bg-error/60" />
-                      <span className="font-caption text-xs text-text-secondary">Booked</span>
+                      <span className="font-caption text-xs text-text-secondary">Rezervirano</span>
                     </div>
                     <div className="flex items-center gap-1.5">
                       <div className="w-3 h-3 rounded-full bg-muted border border-border" />
-                      <span className="font-caption text-xs text-text-secondary">Blocked</span>
+                      <span className="font-caption text-xs text-text-secondary">Blokirano</span>
                     </div>
                   </div>
 
                   {/* Selected Dates Summary */}
                   <div className="grid grid-cols-2 gap-3 mb-4">
                     <div className={`p-3 rounded-lg border-2 transition-colors ${checkIn ? 'border-primary bg-primary/5' : 'border-border bg-muted'}`}>
-                      <p className="font-caption text-xs text-text-secondary mb-1">Check-in</p>
+                      <p className="font-caption text-xs text-text-secondary mb-1">Prijava</p>
                       <p className={`font-caption text-sm font-semibold ${checkIn ? 'text-primary' : 'text-text-secondary'}`}>
-                        {checkIn || 'Select date'}
+                        {checkIn || 'Izberite datum'}
                       </p>
                     </div>
                     <div className={`p-3 rounded-lg border-2 transition-colors ${checkOut ? 'border-primary bg-primary/5' : 'border-border bg-muted'}`}>
-                      <p className="font-caption text-xs text-text-secondary mb-1">Check-out</p>
+                      <p className="font-caption text-xs text-text-secondary mb-1">Odjava</p>
                       <p className={`font-caption text-sm font-semibold ${checkOut ? 'text-primary' : 'text-text-secondary'}`}>
-                        {checkOut || 'Select date'}
+                        {checkOut || 'Izberite datum'}
                       </p>
                     </div>
                   </div>
@@ -726,12 +726,12 @@ function AccommodationDetailPageContent() {
                   {nights > 0 && (
                     <div className="bg-muted rounded-lg p-3 mb-4">
                       <div className="flex justify-between font-caption text-sm mb-1">
-                        <span className="text-text-secondary">${accommodation.pricePerNight} × {nights} nights</span>
+                        <span className="text-text-secondary">${accommodation.pricePerNight} × {nights} noči</span>
                         <span className="text-text-primary font-semibold">${totalPrice}</span>
                       </div>
                       {nights < accommodation.minStayNights && (
                         <p className="text-error text-xs font-caption mt-1">
-                          Minimum stay is {accommodation.minStayNights} nights
+                          Najkrajše bivanje je {accommodation.minStayNights} noči
                         </p>
                       )}
                     </div>
@@ -742,7 +742,7 @@ function AccommodationDetailPageContent() {
                     disabled={!checkIn || !checkOut || nights < accommodation.minStayNights}
                     className="w-full bg-primary text-primary-foreground px-4 py-3 rounded-lg font-caption font-medium shadow hover:bg-primary/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
-                    <span>Continue to Book</span>
+                    <span>Nadaljuj z rezervacijo</span>
                     <Icon name="ArrowRightIcon" variant="outline" size={18} className="text-primary-foreground" />
                   </button>
 
@@ -751,7 +751,7 @@ function AccommodationDetailPageContent() {
                       onClick={() => { setCheckIn(null); setCheckOut(null); }}
                       className="w-full mt-2 text-text-secondary hover:text-text-primary font-caption text-sm transition-colors"
                     >
-                      Clear selection
+                      Počisti izbiro
                     </button>
                   )}
                 </div>
@@ -762,23 +762,23 @@ function AccommodationDetailPageContent() {
                     className="flex items-center gap-2 text-text-secondary hover:text-primary transition-colors font-caption text-sm mb-4"
                   >
                     <Icon name="ArrowLeftIcon" variant="outline" size={16} />
-                    <span>Back to calendar</span>
+                    <span>Nazaj na koledar</span>
                   </button>
 
-                  <h2 className="font-heading font-semibold text-xl text-text-primary mb-4">Complete Booking</h2>
+                  <h2 className="font-heading font-semibold text-xl text-text-primary mb-4">Zaključi rezervacijo</h2>
 
                   {/* Booking Summary */}
                   <div className="bg-muted rounded-lg p-4 mb-5 space-y-2">
                     <div className="flex justify-between font-caption text-sm">
-                      <span className="text-text-secondary">Check-in</span>
+                      <span className="text-text-secondary">Prijava</span>
                       <span className="text-text-primary font-medium">{checkIn}</span>
                     </div>
                     <div className="flex justify-between font-caption text-sm">
-                      <span className="text-text-secondary">Check-out</span>
+                      <span className="text-text-secondary">Odjava</span>
                       <span className="text-text-primary font-medium">{checkOut}</span>
                     </div>
                     <div className="flex justify-between font-caption text-sm">
-                      <span className="text-text-secondary">{nights} nights × ${accommodation.pricePerNight}</span>
+                      <span className="text-text-secondary">{nights} noči × ${accommodation.pricePerNight}</span>
                       <span className="text-primary font-semibold">${totalPrice}</span>
                     </div>
                   </div>
@@ -787,30 +787,30 @@ function AccommodationDetailPageContent() {
                   <div className="space-y-3">
                     <div>
                       <label className="block font-caption text-sm font-medium text-text-primary mb-1">
-                        Full Name <span className="text-error">*</span>
+                        Polno ime <span className="text-error">*</span>
                       </label>
                       <input
                         type="text"
                         value={guestName}
                         onChange={(e) => setGuestName(e.target.value)}
-                        placeholder="John Doe"
+                        placeholder="Janez Novak"
                         className="w-full px-3 py-2.5 rounded-lg border border-input bg-background font-caption text-sm text-text-primary focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
                       />
                     </div>
                     <div>
                       <label className="block font-caption text-sm font-medium text-text-primary mb-1">
-                        Email <span className="text-error">*</span>
+                        E-pošta <span className="text-error">*</span>
                       </label>
                       <input
                         type="email"
                         value={guestEmail}
                         onChange={(e) => setGuestEmail(e.target.value)}
-                        placeholder="john@example.com"
+                        placeholder="janez@primer.si"
                         className="w-full px-3 py-2.5 rounded-lg border border-input bg-background font-caption text-sm text-text-primary focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
                       />
                     </div>
                     <div>
-                      <label className="block font-caption text-sm font-medium text-text-primary mb-1">Phone (optional)</label>
+                      <label className="block font-caption text-sm font-medium text-text-primary mb-1">Telefon (neobvezno)</label>
                       <input
                         type="tel"
                         value={guestPhone}
@@ -836,18 +836,18 @@ function AccommodationDetailPageContent() {
                     {submitting ? (
                       <>
                         <div className="w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" />
-                        <span>Submitting...</span>
+                        <span>Pošiljanje...</span>
                       </>
                     ) : (
                       <>
                         <Icon name="CheckCircleIcon" variant="solid" size={18} className="text-primary-foreground" />
-                        <span>Request Booking</span>
+                        <span>Pošlji zahtevo za rezervacijo</span>
                       </>
                     )}
                   </button>
 
                   <p className="font-caption text-xs text-text-secondary text-center mt-3">
-                    Your booking will be confirmed by the host within 24 hours
+                    Vašo rezervacijo bo gostitelj potrdil v 24 urah
                   </p>
                 </div>
               )}

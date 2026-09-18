@@ -31,31 +31,31 @@ export default function MarketingFooter() {
               </span>
             </div>
             <p className="font-body text-text-secondary mb-4 max-w-md">
-              The complete booking management platform for accommodation
-              providers. Streamline operations, increase revenue, and deliver
-              exceptional guest experiences.
+              Celovita platforma za upravljanje rezervacij za ponudnike
+              nastanitev. Poenostavite poslovanje, povečajte prihodek in
+              zagotovite izjemna doživetja za goste.
             </p>
           </div>
 
           {/* Product Links */}
           <div>
             <h3 className="font-heading font-semibold text-lg text-text-primary mb-4">
-              Product
+              Izdelek
             </h3>
             <ul className="space-y-2">
               <li>
                 <button className="font-body text-text-secondary hover:text-primary transition-smooth">
-                  Features
+                  Funkcionalnosti
                 </button>
               </li>
               <li>
                 <button className="font-body text-text-secondary hover:text-primary transition-smooth">
-                  Pricing
+                  Cenik
                 </button>
               </li>
               <li>
                 <button className="font-body text-text-secondary hover:text-primary transition-smooth">
-                  Integrations
+                  Integracije
                 </button>
               </li>
               <li>
@@ -63,7 +63,7 @@ export default function MarketingFooter() {
                   href="/login"
                   className="font-body text-text-secondary hover:text-primary transition-smooth"
                 >
-                  Sign In
+                  Prijava
                 </Link>
               </li>
             </ul>
@@ -72,27 +72,27 @@ export default function MarketingFooter() {
           {/* Company Links */}
           <div>
             <h3 className="font-heading font-semibold text-lg text-text-primary mb-4">
-              Company
+              Podjetje
             </h3>
             <ul className="space-y-2">
               <li>
                 <button className="font-body text-text-secondary hover:text-primary transition-smooth">
-                  About Us
+                  O nas
                 </button>
               </li>
               <li>
                 <button className="font-body text-text-secondary hover:text-primary transition-smooth">
-                  Contact
+                  Kontakt
                 </button>
               </li>
               <li>
                 <button className="font-body text-text-secondary hover:text-primary transition-smooth">
-                  Privacy Policy
+                  Pravilnik o zasebnosti
                 </button>
               </li>
               <li>
                 <button className="font-body text-text-secondary hover:text-primary transition-smooth">
-                  Terms of Service
+                  Pogoji uporabe
                 </button>
               </li>
             </ul>
@@ -103,8 +103,8 @@ export default function MarketingFooter() {
         <div className="pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="font-caption text-sm text-text-secondary text-center sm:text-left">
             {currentYear !== null
-              ? `© ${currentYear} BookingHub. All rights reserved.`
-              : `© BookingHub. All rights reserved.`}
+              ? `© ${currentYear} BookingHub. Vse pravice pridržane.`
+              : `© BookingHub. Vse pravice pridržane.`}
           </p>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2 px-3 py-1 bg-success/10 rounded-md">
@@ -115,7 +115,7 @@ export default function MarketingFooter() {
                 className="text-success"
               />
               <span className="font-caption text-sm text-success font-medium">
-                PCI Compliant
+                Skladno s PCI
               </span>
             </div>
           </div>

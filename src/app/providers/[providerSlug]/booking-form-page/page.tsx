@@ -4,9 +4,9 @@ import ProviderBrandingHeader from '@/components/common/ProviderBrandingHeader';
 import BookingFormInteractive from './components/BookingFormInteractive';
 
 export const metadata: Metadata = {
-  title: 'Book Your Stay - BookingHub',
+  title: 'Rezervirajte svoje bivanje - BookingHub',
   description:
-    'Complete your accommodation booking request by selecting dates, providing guest information, and submitting your reservation for review.',
+    'Zaključite zahtevo za rezervacijo nastanitve z izbiro datumov, vnosom podatkov o gostih in oddajo rezervacije v pregled.',
 };
 
 type Props = {

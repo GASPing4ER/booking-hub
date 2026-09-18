@@ -10,39 +10,39 @@ interface Feature {
 const features: Feature[] = [
   {
     icon: 'CalendarDaysIcon',
-    title: 'Unified Calendar Management',
+    title: 'Poenoteno upravljanje koledarja',
     description:
-      'Sync bookings across all platforms in real-time. Prevent double bookings with automatic calendar updates from Airbnb, Booking.com, and direct reservations.',
+      'Sinhronizirajte rezervacije med vsemi platformami v realnem času. Preprečite dvojne rezervacije s samodejnimi posodobitvami koledarja iz Airbnb, Booking.com in neposrednih rezervacij.',
   },
   {
     icon: 'ChartBarIcon',
-    title: 'Advanced Analytics & Reports',
+    title: 'Napredna analitika in poročila',
     description:
-      'Track occupancy rates, revenue trends, and seasonal patterns. Make data-driven decisions with comprehensive reporting and visual dashboards.',
+      'Spremljajte stopnje zasedenosti, trende prihodkov in sezonske vzorce. Sprejemajte odločitve, podprte s podatki, z izčrpnimi poročili in vizualnimi nadzornimi ploščami.',
   },
   {
     icon: 'ChatBubbleLeftRightIcon',
-    title: 'Guest Communication Hub',
+    title: 'Središče za komunikacijo z gosti',
     description:
-      'Centralize all guest messages in one inbox. Automate confirmations, send reminders, and provide exceptional customer service effortlessly.',
+      'Združite vsa sporočila gostov v enem nabiralniku. Avtomatizirajte potrditve, pošiljajte opomnike in zagotavljajte izjemno storitev za stranke brez napora.',
   },
   {
     icon: 'CurrencyDollarIcon',
-    title: 'Dynamic Pricing Tools',
+    title: 'Orodja za dinamično oblikovanje cen',
     description:
-      'Optimize your revenue with smart pricing recommendations based on demand, seasonality, and local events. Maximize bookings and profits.',
+      'Optimizirajte svoj prihodek s pametnimi cenovnimi priporočili glede na povpraševanje, sezonskost in lokalne dogodke. Povečajte število rezervacij in dobiček.',
   },
   {
     icon: 'HomeModernIcon',
-    title: 'Multi-Property Management',
+    title: 'Upravljanje več nepremičnin',
     description:
-      'Manage unlimited properties from a single dashboard. Perfect for growing portfolios with bulk operations and property-specific settings.',
+      'Upravljajte neomejeno število nepremičnin z ene nadzorne plošče. Popolno za rastoče portfelje z množičnimi operacijami in nastavitvami za posamezne nepremičnine.',
   },
   {
     icon: 'ShieldCheckIcon',
-    title: 'Secure Payment Processing',
+    title: 'Varna obdelava plačil',
     description:
-      'Accept payments safely with PCI-compliant processing. Support multiple payment methods and currencies with automatic reconciliation.',
+      'Varno sprejemajte plačila z obdelavo v skladu s PCI. Podpora za več načinov plačila in valut s samodejnim usklajevanjem.',
   },
 ];
 
@@ -52,12 +52,12 @@ export default function FeaturesShowcase() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="font-heading font-semibold text-3xl sm:text-4xl lg:text-5xl text-text-primary mb-4">
-            Everything You Need to Succeed
+            Vse, kar potrebujete za uspeh
           </h2>
           <p className="font-body text-lg sm:text-xl text-text-secondary max-w-3xl mx-auto text-balance">
-            BookingHub provides all the tools accommodation providers need to
-            streamline operations, increase bookings, and deliver exceptional
-            guest experiences.
+            BookingHub zagotavlja vsa orodja, ki jih ponudniki nastanitev
+            potrebujejo za poenostavitev poslovanja, povečanje števila
+            rezervacij in zagotavljanje izjemnih doživetij za goste.
           </p>
         </div>
 

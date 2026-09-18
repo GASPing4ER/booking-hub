@@ -55,13 +55,26 @@ const PropertyCard = ({ property, onEdit, onEmbed, onDelete, onStatusChange }: P
     }
   };
 
+  const getStatusLabel = (status: string) => {
+    switch (status) {
+      case 'available':
+        return 'Na voljo';
+      case 'unavailable':
+        return 'Ni na voljo';
+      case 'maintenance':
+        return 'Vzdrževanje';
+      default:
+        return status;
+    }
+  };
+
   return (
     <div className="bg-card rounded-lg border border-border shadow-hospitality-sm hover:shadow-hospitality transition-smooth overflow-hidden">
       {/* Property Image */}
       <div className="relative h-48 overflow-hidden">
         <AppImage
           src={property.image}
-          alt={`${property.name} accommodation`}
+          alt={`Nastanitev ${property.name}`}
           fill
           className="object-cover"
         />
@@ -72,15 +85,15 @@ const PropertyCard = ({ property, onEdit, onEmbed, onDelete, onStatusChange }: P
               variant="solid"
               size={16}
             />
-            <span className="text-xs font-caption font-medium capitalize">
-              {property.status}
+            <span className="text-xs font-caption font-medium">
+              {getStatusLabel(property.status)}
             </span>
           </div>
         </div>
         {property.images.length > 1 && (
           <div className="absolute bottom-3 left-3 flex items-center gap-1 rounded-md bg-card/90 px-2.5 py-1 text-xs font-caption font-medium text-text-primary shadow-hospitality-sm">
             <Icon name="PhotoIcon" variant="outline" size={14} />
-            {property.images.length} photos
+            {property.images.length} fotografij
           </div>
         )}
       </div>
@@ -98,7 +111,7 @@ const PropertyCard = ({ property, onEdit, onEmbed, onDelete, onStatusChange }: P
               {property.slug}
             </p>
           ) : (
-            <p className="text-xs text-text-secondary italic mt-1 font-caption">Slug pending assignment</p>
+            <p className="text-xs text-text-secondary italic mt-1 font-caption">URL-oznaka bo dodeljena</p>
           )}
           </div>
           <div className="flex items-center gap-1">
@@ -125,7 +138,7 @@ const PropertyCard = ({ property, onEdit, onEmbed, onDelete, onStatusChange }: P
           ))}
           {property.amenities.length > 3 && (
             <span className="px-2 py-1 bg-muted rounded text-xs font-caption text-text-secondary">
-              +{property.amenities.length - 3} more
+              +{property.amenities.length - 3} več
             </span>
           )}
         </div>
@@ -135,11 +148,11 @@ const PropertyCard = ({ property, onEdit, onEmbed, onDelete, onStatusChange }: P
           <div className="flex items-center gap-2">
             <Icon name="UserGroupIcon" variant="outline" size={18} className="text-text-secondary" />
             <span className="text-sm font-caption text-text-secondary">
-              Up to {property.capacity} guests
+              Do {property.capacity} gostov
             </span>
           </div>
           <div className="text-right">
-            <p className="text-sm text-text-secondary font-caption">Per Night</p>
+            <p className="text-sm text-text-secondary font-caption">Na noč</p>
             <p className="text-lg font-heading font-semibold text-primary">
               {property.pricePerNight}
             </p>
@@ -153,15 +166,15 @@ const PropertyCard = ({ property, onEdit, onEmbed, onDelete, onStatusChange }: P
             className="flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-md border border-input text-text-secondary hover:bg-muted hover:text-text-primary transition-smooth font-caption font-medium"
           >
             <Icon name="PencilIcon" variant="outline" size={16} />
-            Edit
+            Uredi
           </button>
           <button
             onClick={() => onEmbed(property)}
             className="flex items-center justify-center gap-2 px-4 py-2 rounded-md border border-input text-text-secondary hover:bg-muted hover:text-text-primary transition-smooth font-caption font-medium"
-            aria-label={`Embed ${property.name}`}
+            aria-label={`Vgradi ${property.name}`}
           >
             <Icon name="CodeBracketIcon" variant="outline" size={16} />
-            <span className="hidden sm:inline">Embed</span>
+            <span className="hidden sm:inline">Vgradi</span>
           </button>
           <button
             onClick={() => onDelete(property.id)}

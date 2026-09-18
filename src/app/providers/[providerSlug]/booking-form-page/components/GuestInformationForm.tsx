@@ -33,7 +33,7 @@ const GuestInformationForm = ({
     setNameError('');
 
     if (value.length > 0 && value.length < 2) {
-      setNameError('Name must be at least 2 characters');
+      setNameError('Ime mora imeti vsaj 2 znaka');
     }
 
     onGuestNameChange(value);
@@ -45,7 +45,7 @@ const GuestInformationForm = ({
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (value.length > 0 && !emailRegex.test(value)) {
-      setEmailError('Please enter a valid email address');
+      setEmailError('Prosimo, vnesite veljaven e-poštni naslov');
     }
 
     onGuestEmailChange(value);
@@ -57,7 +57,7 @@ const GuestInformationForm = ({
 
     const phoneRegex = /^[\d\s\-\+\(\)]+$/;
     if (value.length > 0 && !phoneRegex.test(value)) {
-      setPhoneError('Please enter a valid phone number');
+      setPhoneError('Prosimo, vnesite veljavno telefonsko številko');
     }
 
     onGuestPhoneChange(value);
@@ -71,7 +71,7 @@ const GuestInformationForm = ({
           htmlFor="guestName"
           className="block font-caption font-medium text-text-primary mb-2"
         >
-          Full Name <span className="text-error">*</span>
+          Polno ime <span className="text-error">*</span>
         </label>
         <div className="relative">
           <input
@@ -79,7 +79,7 @@ const GuestInformationForm = ({
             id="guestName"
             value={guestName}
             onChange={handleNameChange}
-            placeholder="John Doe"
+            placeholder="Janez Novak"
             required
             className={`
               w-full px-4 py-3 pr-12 rounded-md border transition-smooth
@@ -112,7 +112,7 @@ const GuestInformationForm = ({
           htmlFor="guestEmail"
           className="block font-caption font-medium text-text-primary mb-2"
         >
-          Email Address <span className="text-error">*</span>
+          E-poštni naslov <span className="text-error">*</span>
         </label>
         <div className="relative">
           <input
@@ -120,7 +120,7 @@ const GuestInformationForm = ({
             id="guestEmail"
             value={guestEmail}
             onChange={handleEmailChange}
-            placeholder="john.doe@example.com"
+            placeholder="janez.novak@primer.si"
             required
             className={`
               w-full px-4 py-3 pr-12 rounded-md border transition-smooth
@@ -153,7 +153,7 @@ const GuestInformationForm = ({
           htmlFor="guestPhone"
           className="block font-caption font-medium text-text-primary mb-2"
         >
-          Phone Number <span className="text-error">*</span>
+          Telefonska številka <span className="text-error">*</span>
         </label>
         <div className="relative">
           <input
@@ -194,13 +194,13 @@ const GuestInformationForm = ({
           htmlFor="specialRequests"
           className="block font-caption font-medium text-text-primary mb-2"
         >
-          Special Requests <span className="caption text-text-secondary">(Optional)</span>
+          Posebne zahteve <span className="caption text-text-secondary">(neobvezno)</span>
         </label>
         <textarea
           id="specialRequests"
           value={specialRequests}
           onChange={(e) => onSpecialRequestsChange(e.target.value)}
-          placeholder="Any special requirements or requests for your stay..."
+          placeholder="Posebne zahteve ali želje za vaše bivanje..."
           rows={4}
           maxLength={500}
           className="
@@ -211,7 +211,7 @@ const GuestInformationForm = ({
           "
         />
         <p className="caption text-text-secondary mt-1 text-right">
-          {specialRequests.length}/500 characters
+          {specialRequests.length}/500 znakov
         </p>
       </div>
     </div>

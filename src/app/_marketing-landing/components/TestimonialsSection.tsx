@@ -16,7 +16,7 @@ const testimonials: Testimonial[] = [
     location: 'Miami, FL',
     rating: 5,
     quote:
-      'BookingHub transformed how we manage our 12 properties. Calendar sync alone saved us 10+ hours per week, and the analytics helped us increase revenue by 35% in just 6 months.',
+      'BookingHub je preoblikoval način, kako upravljamo naših 12 nepremičnin. Samo sinhronizacija koledarja nam je prihranila več kot 10 ur na teden, analitika pa nam je pomagala povečati prihodek za 35 % v samo 6 mesecih.',
   },
   {
     name: 'James Chen',
@@ -24,7 +24,7 @@ const testimonials: Testimonial[] = [
     location: 'Aspen, CO',
     rating: 5,
     quote:
-      'The multi-platform integration is seamless. We went from juggling 3 different systems to one unified dashboard. Our booking errors dropped to zero and guest satisfaction scores improved dramatically.',
+      'Integracija med platformami je brezhibna. Od žongliranja s 3 različnimi sistemi smo prešli na eno poenoteno nadzorno ploščo. Napake pri rezervacijah so padle na nič, ocene zadovoljstva gostov pa so se izjemno izboljšale.',
   },
   {
     name: 'Maria Rodriguez',
@@ -32,7 +32,7 @@ const testimonials: Testimonial[] = [
     location: 'Austin, TX',
     rating: 5,
     quote:
-      'As a solo operator managing 5 properties, BookingHub gave me my life back. The automation features handle routine tasks while I focus on providing amazing guest experiences. Best investment I\'ve made.',
+      'Kot samostojni upravitelj 5 nepremičnin mi je BookingHub vrnil življenje. Funkcionalnosti za avtomatizacijo prevzamejo rutinska opravila, medtem ko se jaz osredotočam na zagotavljanje izjemnih doživetij za goste. Najboljša naložba doslej.',
   },
 ];
 
@@ -42,11 +42,11 @@ export default function TestimonialsSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="font-heading font-semibold text-3xl sm:text-4xl lg:text-5xl text-text-primary mb-4">
-            Trusted by Providers Worldwide
+            Zaupajo nam ponudniki po vsem svetu
           </h2>
           <p className="font-body text-lg sm:text-xl text-text-secondary max-w-2xl mx-auto">
-            Join thousands of accommodation providers who have transformed their
-            business with BookingHub
+            Pridružite se tisočem ponudnikov nastanitev, ki so z BookingHub
+            preoblikovali svoje poslovanje
           </p>
         </div>
 

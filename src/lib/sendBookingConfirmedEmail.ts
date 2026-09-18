@@ -34,9 +34,9 @@ export function bookingRowToConfirmedEmailPayload(
 
   return {
     guestEmail: email,
-    guestName: row.guest_name?.trim() || 'Guest',
+    guestName: row.guest_name?.trim() || 'Gost',
     bookingId: row.id,
-    propertyName: row.properties?.name ?? 'Your stay',
+    propertyName: row.properties?.name ?? 'Vaša nastanitev',
     checkIn: row.check_in,
     checkOut: row.check_out,
     guests: row.guests ?? 1,

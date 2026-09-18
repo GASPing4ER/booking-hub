@@ -155,7 +155,7 @@ const ReportsDashboardInteractive = () => {
       setMetrics([
         {
           id: 'revenue',
-          label: 'Total Revenue',
+          label: 'Skupni prihodek',
           value: `$${totalRevenue.toFixed(0)}`,
           change: revenueChange.label,
           changeType: revenueChange.type,
@@ -163,7 +163,7 @@ const ReportsDashboardInteractive = () => {
         },
         {
           id: 'occupancy',
-          label: 'Occupancy Rate',
+          label: 'Stopnja zasedenosti',
           value: `${occupancyRate.toFixed(1)}%`,
           change: occupancyChange.label,
           changeType: occupancyChange.type,
@@ -171,7 +171,7 @@ const ReportsDashboardInteractive = () => {
         },
         {
           id: 'booking-value',
-          label: 'Avg Booking Value',
+          label: 'Povprečna vrednost rezervacije',
           value: `$${avgBookingValue.toFixed(0)}`,
           change: avgValueChange.label,
           changeType: avgValueChange.type,
@@ -179,7 +179,7 @@ const ReportsDashboardInteractive = () => {
         },
         {
           id: 'satisfaction',
-          label: 'Guest Satisfaction',
+          label: 'Zadovoljstvo gostov',
           value: `${avgRating.toFixed(1)}/5.0`,
           change: '—',
           changeType: 'neutral',
@@ -279,17 +279,17 @@ const ReportsDashboardInteractive = () => {
 
       // Seasonal patterns
       const seasonMap: { [key: string]: string } = {
-        '0': 'Winter', '1': 'Winter', '2': 'Spring',
-        '3': 'Spring', '4': 'Spring', '5': 'Summer',
-        '6': 'Summer', '7': 'Summer', '8': 'Fall',
-        '9': 'Fall', '10': 'Fall', '11': 'Winter',
+        '0': 'Zima', '1': 'Zima', '2': 'Pomlad',
+        '3': 'Pomlad', '4': 'Pomlad', '5': 'Poletje',
+        '6': 'Poletje', '7': 'Poletje', '8': 'Jesen',
+        '9': 'Jesen', '10': 'Jesen', '11': 'Zima',
       };
 
       const seasonalStats: { [key: string]: { bookings: number; revenue: number } } = {
-        Spring: { bookings: 0, revenue: 0 },
-        Summer: { bookings: 0, revenue: 0 },
-        Fall: { bookings: 0, revenue: 0 },
-        Winter: { bookings: 0, revenue: 0 },
+        Pomlad: { bookings: 0, revenue: 0 },
+        Poletje: { bookings: 0, revenue: 0 },
+        Jesen: { bookings: 0, revenue: 0 },
+        Zima: { bookings: 0, revenue: 0 },
       };
 
       bookings?.forEach((booking) => {
@@ -322,14 +322,14 @@ const ReportsDashboardInteractive = () => {
       });
 
       const sources = [
-        { name: 'Confirmed', value: statusStats['confirmed'], color: '#059669' },
-        { name: 'Pending', value: statusStats['pending'], color: '#d97706' },
-        { name: 'Cancelled', value: statusStats['cancelled'], color: '#dc2626' },
+        { name: 'Potrjeno', value: statusStats['confirmed'], color: '#059669' },
+        { name: 'V obdelavi', value: statusStats['pending'], color: '#d97706' },
+        { name: 'Preklicano', value: statusStats['cancelled'], color: '#dc2626' },
       ].filter((s) => s.value > 0);
 
       // If no bookings at all, show a placeholder
       if (sources.length === 0) {
-        sources.push({ name: 'No Data', value: 1, color: '#e5e7eb' });
+        sources.push({ name: 'Ni podatkov', value: 1, color: '#e5e7eb' });
       }
 
       setBookingSourceData(sources);
@@ -343,7 +343,7 @@ const ReportsDashboardInteractive = () => {
   const handleExport = (format: string) => {
     if (format === 'csv') {
       // Build CSV from property performance data
-      const headers = ['Property', 'Revenue ($)', 'Occupancy (%)', 'Bookings', 'Avg per Booking ($)'];
+      const headers = ['Nepremičnina', 'Prihodek ($)', 'Zasedenost (%)', 'Rezervacije', 'Povprečno na rezervacijo ($)'];
       const rows = propertyPerformanceData.map((p) => [
         `"${p.property}"`,
         p.revenue.toFixed(2),
@@ -370,7 +370,7 @@ const ReportsDashboardInteractive = () => {
   if (!isHydrated || loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-gray-600">Loading reports...</div>
+        <div className="text-gray-600">Nalaganje poročil...</div>
       </div>
     );
   }
@@ -389,32 +389,32 @@ const ReportsDashboardInteractive = () => {
             {/* Date Range Filter */}
             <div className="flex flex-col gap-2">
               <label className="text-sm font-caption font-medium text-text-secondary">
-                Date Range
+                Časovno obdobje
               </label>
               <select
                 value={dateRange}
                 onChange={(e) => setDateRange(e.target.value)}
                 className="px-4 py-2 border border-border rounded-md bg-background text-text-primary focus:outline-none focus:ring-2 focus:ring-primary transition-smooth"
               >
-                <option value="7">Last 7 days</option>
-                <option value="30">Last 30 days</option>
-                <option value="90">Last 90 days</option>
-                <option value="365">Last 12 months</option>
-                <option value="custom">Custom range</option>
+                <option value="7">Zadnjih 7 dni</option>
+                <option value="30">Zadnjih 30 dni</option>
+                <option value="90">Zadnjih 90 dni</option>
+                <option value="365">Zadnjih 12 mesecev</option>
+                <option value="custom">Poljubno obdobje</option>
               </select>
             </div>
 
             {/* Property Filter */}
             <div className="flex flex-col gap-2">
               <label className="text-sm font-caption font-medium text-text-secondary">
-                Property
+                Nepremičnina
               </label>
               <select
                 value={propertyFilter}
                 onChange={(e) => setPropertyFilter(e.target.value)}
                 className="px-4 py-2 border border-border rounded-md bg-background text-text-primary focus:outline-none focus:ring-2 focus:ring-primary transition-smooth"
               >
-                <option value="all">All Properties</option>
+                <option value="all">Vse nepremičnine</option>
                 {properties.map((property) => (
                   <option key={property.id} value={property.id}>
                     {property.name}
@@ -448,10 +448,10 @@ const ReportsDashboardInteractive = () => {
       <div className="bg-card rounded-lg border border-border p-4 sm:p-6 shadow-hospitality-sm">
         <div className="mb-6">
           <h2 className="font-heading font-semibold text-xl text-text-primary mb-1">
-            Booking Trends
+            Trendi rezervacij
           </h2>
           <p className="text-sm text-text-secondary">
-            Monthly booking volume and revenue over the last 12 months
+            Mesečni obseg rezervacij in prihodek v zadnjih 12 mesecih
           </p>
         </div>
         <ResponsiveContainer width="100%" height={300}>
@@ -485,7 +485,7 @@ const ReportsDashboardInteractive = () => {
               stroke="#1e3a8a"
               fillOpacity={1}
               fill="url(#colorBookings)"
-              name="Bookings"
+              name="Rezervacije"
             />
             <Area
               yAxisId="right"
@@ -494,7 +494,7 @@ const ReportsDashboardInteractive = () => {
               stroke="#d97706"
               fillOpacity={1}
               fill="url(#colorRevenue)"
-              name="Revenue ($)"
+              name="Prihodek ($)"
             />
           </AreaChart>
         </ResponsiveContainer>
@@ -506,10 +506,10 @@ const ReportsDashboardInteractive = () => {
         <div className="bg-card rounded-lg border border-border p-4 sm:p-6 shadow-hospitality-sm">
           <div className="mb-6">
             <h2 className="font-heading font-semibold text-xl text-text-primary mb-1">
-              Occupancy Rate
+              Stopnja zasedenosti
             </h2>
             <p className="text-sm text-text-secondary">
-              Capacity utilization over the last 6 months
+              Izkoriščenost kapacitet v zadnjih 6 mesecih
             </p>
           </div>
           <ResponsiveContainer width="100%" height={250}>
@@ -531,7 +531,7 @@ const ReportsDashboardInteractive = () => {
                 stroke="#059669"
                 strokeWidth={3}
                 dot={{ fill: '#059669', r: 5 }}
-                name="Occupancy Rate"
+                name="Stopnja zasedenosti"
               />
             </LineChart>
           </ResponsiveContainer>
@@ -541,10 +541,10 @@ const ReportsDashboardInteractive = () => {
         <div className="bg-card rounded-lg border border-border p-4 sm:p-6 shadow-hospitality-sm">
           <div className="mb-6">
             <h2 className="font-heading font-semibold text-xl text-text-primary mb-1">
-              Seasonal Patterns
+              Sezonski vzorci
             </h2>
             <p className="text-sm text-text-secondary">
-              Booking trends and revenue by season
+              Trendi rezervacij in prihodek po letnih časih
             </p>
           </div>
           <ResponsiveContainer width="100%" height={250}>
@@ -565,14 +565,14 @@ const ReportsDashboardInteractive = () => {
                 yAxisId="left"
                 dataKey="bookings"
                 fill="#1e3a8a"
-                name="Bookings"
+                name="Rezervacije"
                 radius={[8, 8, 0, 0]}
               />
               <Bar
                 yAxisId="right"
                 dataKey="revenue"
                 fill="#d97706"
-                name="Revenue ($)"
+                name="Prihodek ($)"
                 radius={[8, 8, 0, 0]}
               />
             </BarChart>
@@ -586,10 +586,10 @@ const ReportsDashboardInteractive = () => {
         <div className="bg-card rounded-lg border border-border p-4 sm:p-6 shadow-hospitality-sm">
           <div className="mb-6">
             <h2 className="font-heading font-semibold text-xl text-text-primary mb-1">
-              Property Performance
+              Uspešnost nepremičnin
             </h2>
             <p className="text-sm text-text-secondary">
-              Revenue comparison across properties
+              Primerjava prihodka med nepremičninami
             </p>
           </div>
           <ResponsiveContainer width="100%" height={300}>
@@ -604,7 +604,7 @@ const ReportsDashboardInteractive = () => {
                   borderRadius: '8px',
                 }}
               />
-              <Bar dataKey="revenue" fill="#1e3a8a" radius={[0, 8, 8, 0]} name="Revenue ($)" />
+              <Bar dataKey="revenue" fill="#1e3a8a" radius={[0, 8, 8, 0]} name="Prihodek ($)" />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -613,10 +613,10 @@ const ReportsDashboardInteractive = () => {
         <div className="bg-card rounded-lg border border-border p-4 sm:p-6 shadow-hospitality-sm">
           <div className="mb-6">
             <h2 className="font-heading font-semibold text-xl text-text-primary mb-1">
-              Booking Status Breakdown
+              Razčlenitev statusa rezervacij
             </h2>
             <p className="text-sm text-text-secondary">
-              Distribution of bookings by current status
+              Porazdelitev rezervacij po trenutnem statusu
             </p>
           </div>
           <div className="flex flex-col sm:flex-row items-center gap-6">
@@ -653,10 +653,10 @@ const ReportsDashboardInteractive = () => {
       <div className="bg-card rounded-lg border border-border p-4 sm:p-6 shadow-hospitality-sm">
         <div className="mb-6">
           <h2 className="font-heading font-semibold text-xl text-text-primary mb-1">
-            Detailed Property Metrics
+            Podrobne metrike nepremičnin
           </h2>
           <p className="text-sm text-text-secondary">
-            Comprehensive performance data for all properties
+            Celoviti podatki o uspešnosti za vse nepremičnine
           </p>
         </div>
         <div className="overflow-x-auto">
@@ -664,19 +664,19 @@ const ReportsDashboardInteractive = () => {
             <thead>
               <tr className="border-b border-border">
                 <th className="text-left py-3 px-4 font-caption font-semibold text-text-primary">
-                  Property
+                  Nepremičnina
                 </th>
                 <th className="text-right py-3 px-4 font-caption font-semibold text-text-primary">
-                  Revenue
+                  Prihodek
                 </th>
                 <th className="text-right py-3 px-4 font-caption font-semibold text-text-primary">
-                  Occupancy
+                  Zasedenost
                 </th>
                 <th className="text-right py-3 px-4 font-caption font-semibold text-text-primary">
-                  Bookings
+                  Rezervacije
                 </th>
                 <th className="text-right py-3 px-4 font-caption font-semibold text-text-primary">
-                  Avg/Booking
+                  Povpr./rezervacijo
                 </th>
               </tr>
             </thead>

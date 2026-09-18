@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import ProviderSignUpInteractive from './components/ProviderSignUpInteractive';
 
 export const metadata: Metadata = {
-  title: 'Provider Sign Up - BookingHub',
-  description: 'Create your BookingHub provider account and start managing your accommodations',
+  title: 'Registracija ponudnika - BookingHub',
+  description: 'Ustvarite svoj račun ponudnika BookingHub in začnite upravljati svoje nastanitve',
 };
 
 export default function ProviderSignUpPage() {

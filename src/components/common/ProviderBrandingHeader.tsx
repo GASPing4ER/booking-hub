@@ -37,7 +37,7 @@ const ProviderBrandingHeader = ({
                 className="text-text-secondary group-hover:text-primary transition-smooth"
               />
               <span className="hidden sm:inline font-caption font-medium">
-                Back
+                Nazaj
               </span>
             </Link>
           )}
@@ -53,7 +53,7 @@ const ProviderBrandingHeader = ({
               <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-md overflow-hidden flex-shrink-0 bg-muted">
                 <AppImage
                   src={providerLogo}
-                  alt={`${providerName} logo`}
+                  alt={`Logotip ${providerName}`}
                   width={48}
                   height={48}
                   className="w-full h-full object-cover"
@@ -74,7 +74,7 @@ const ProviderBrandingHeader = ({
                 {providerName}
               </span>
               <span className="font-caption text-xs text-text-secondary hidden sm:block">
-                Accommodation Booking
+                Rezervacija nastanitve
               </span>
             </div>
           </Link>
@@ -83,7 +83,7 @@ const ProviderBrandingHeader = ({
           <div className="flex items-center gap-2 sm:gap-4">
             <button
               className="w-10 h-10 rounded-md flex items-center justify-center text-text-secondary hover:bg-muted hover:text-primary transition-smooth"
-              aria-label="Help"
+              aria-label="Pomoč"
             >
               <Icon
                 name="QuestionMarkCircleIcon"

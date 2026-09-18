@@ -101,7 +101,7 @@ function BookingConfirmationContent() {
   const formatDate = (dateStr: string) => {
     if (!dateStr) return '';
     const date = new Date(dateStr + 'T00:00:00');
-    return date.toLocaleDateString('en-US', {
+    return date.toLocaleDateString('sl-SI', {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
@@ -119,11 +119,11 @@ function BookingConfirmationContent() {
   const handleAddToCalendar = () => {
     if (!booking) return;
 
-    const title = encodeURIComponent(`Stay at ${booking.propertyName}`);
+    const title = encodeURIComponent(`Bivanje v ${booking.propertyName}`);
     const startDate = booking.checkIn.replace(/-/g, '');
     const endDate = booking.checkOut.replace(/-/g, '');
     const details = encodeURIComponent(
-      `Booking ID: ${booking.bookingId}\nGuests: ${booking.guests}\nTotal: $${parseFloat(booking.total).toFixed(2)}`
+      `ID rezervacije: ${booking.bookingId}\nGostje: ${booking.guests}\nSkupaj: $${parseFloat(booking.total).toFixed(2)}`
     );
     const location = encodeURIComponent(booking.propertyName);
 
@@ -150,20 +150,20 @@ function BookingConfirmationContent() {
             <Icon name="CheckCircleIcon" variant="solid" size={48} className="text-success" />
           </div>
           <h1 className="font-heading font-bold text-3xl text-text-primary mb-2">
-            Booking Confirmed!
+            Rezervacija potrjena!
           </h1>
           {booking.guestName && (
             <p className="font-caption text-text-secondary text-base">
-              Thank you, <span className="font-semibold text-text-primary">{booking.guestName}</span>!
+              Hvala, <span className="font-semibold text-text-primary">{booking.guestName}</span>!
               {booking.guestEmail && (
-                <> We{emailSent ? "'ve sent a confirmation to" : "'ll be in touch at"} <span className="font-semibold text-text-primary">{booking.guestEmail}</span>.</>
+                <> {emailSent ? 'Poslali smo vam potrditev na' : 'Kontaktirali vas bomo na'} <span className="font-semibold text-text-primary">{booking.guestEmail}</span>.</>
               )}
             </p>
           )}
           {emailSent && (
             <div className="mt-3 inline-flex items-center gap-2 px-3 py-1.5 bg-success/10 rounded-full">
               <Icon name="EnvelopeIcon" variant="outline" size={14} className="text-success" />
-              <span className="font-caption text-xs text-success font-medium">Confirmation email sent</span>
+              <span className="font-caption text-xs text-success font-medium">Potrditvena e-pošta je bila poslana</span>
             </div>
           )}
         </div>
@@ -173,7 +173,7 @@ function BookingConfirmationContent() {
           {/* Booking ID Banner */}
           <div className="bg-primary/5 border-b border-border px-6 py-4 flex items-center justify-between">
             <div>
-              <p className="font-caption text-xs text-text-secondary uppercase tracking-wide mb-1">Booking Reference</p>
+              <p className="font-caption text-xs text-text-secondary uppercase tracking-wide mb-1">Sklic rezervacije</p>
               <p className="font-heading font-bold text-lg text-primary tracking-wider">
                 #{booking.bookingId.slice(0, 8).toUpperCase()}
               </p>
@@ -191,7 +191,7 @@ function BookingConfirmationContent() {
                 <Icon name="BuildingOfficeIcon" variant="outline" size={16} className="text-text-secondary" />
               </div>
               <div>
-                <p className="font-caption text-xs text-text-secondary uppercase tracking-wide">Property</p>
+                <p className="font-caption text-xs text-text-secondary uppercase tracking-wide">Nepremičnina</p>
                 <p className="font-heading font-semibold text-text-primary">{booking.propertyName}</p>
               </div>
             </div>
@@ -202,19 +202,19 @@ function BookingConfirmationContent() {
                 <Icon name="CalendarDaysIcon" variant="outline" size={16} className="text-text-secondary" />
               </div>
               <div className="flex-1">
-                <p className="font-caption text-xs text-text-secondary uppercase tracking-wide mb-1">Dates</p>
+                <p className="font-caption text-xs text-text-secondary uppercase tracking-wide mb-1">Datumi</p>
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <p className="font-caption text-xs text-text-secondary">Check-in</p>
+                    <p className="font-caption text-xs text-text-secondary">Prijava</p>
                     <p className="font-caption font-medium text-text-primary text-sm">{formatDate(booking.checkIn)}</p>
                   </div>
                   <div>
-                    <p className="font-caption text-xs text-text-secondary">Check-out</p>
+                    <p className="font-caption text-xs text-text-secondary">Odjava</p>
                     <p className="font-caption font-medium text-text-primary text-sm">{formatDate(booking.checkOut)}</p>
                   </div>
                 </div>
                 <p className="font-caption text-xs text-text-secondary mt-1">
-                  {nights} {nights === 1 ? 'night' : 'nights'}
+                  {nights} {nights === 1 ? 'noč' : 'noči'}
                 </p>
               </div>
             </div>
@@ -225,9 +225,9 @@ function BookingConfirmationContent() {
                 <Icon name="UsersIcon" variant="outline" size={16} className="text-text-secondary" />
               </div>
               <div>
-                <p className="font-caption text-xs text-text-secondary uppercase tracking-wide">Guests</p>
+                <p className="font-caption text-xs text-text-secondary uppercase tracking-wide">Gostje</p>
                 <p className="font-heading font-semibold text-text-primary">
-                  {booking.guests} {parseInt(booking.guests) === 1 ? 'guest' : 'guests'}
+                  {booking.guests} {parseInt(booking.guests) === 1 ? 'gost' : 'gostov'}
                 </p>
               </div>
             </div>
@@ -238,7 +238,7 @@ function BookingConfirmationContent() {
                 <Icon name="CurrencyDollarIcon" variant="outline" size={16} className="text-primary" />
               </div>
               <div>
-                <p className="font-caption text-xs text-text-secondary uppercase tracking-wide">Total Amount</p>
+                <p className="font-caption text-xs text-text-secondary uppercase tracking-wide">Skupni znesek</p>
                 <p className="font-heading font-bold text-2xl text-primary">
                   ${parseFloat(booking.total).toFixed(2)}
                 </p>
@@ -254,7 +254,7 @@ function BookingConfirmationContent() {
             className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg font-caption font-medium hover:bg-primary/90 transition-smooth"
           >
             <Icon name="CalendarDaysIcon" variant="outline" size={20} />
-            Add to Google Calendar
+            Dodaj v Google Koledar
           </button>
 
           <Link
@@ -262,7 +262,7 @@ function BookingConfirmationContent() {
             className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-card border border-border text-text-primary rounded-lg font-caption font-medium hover:bg-muted transition-smooth"
           >
             <Icon name="MagnifyingGlassIcon" variant="outline" size={20} />
-            Look Up My Booking
+            Poišči mojo rezervacijo
           </Link>
 
           <Link
@@ -270,13 +270,13 @@ function BookingConfirmationContent() {
             className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-card border border-border text-text-primary rounded-lg font-caption font-medium hover:bg-muted transition-smooth"
           >
             <Icon name="HomeIcon" variant="outline" size={20} />
-            Back to Home
+            Nazaj na začetno stran
           </Link>
         </div>
 
         {/* Status Note */}
         <p className="text-center font-caption text-xs text-text-secondary mt-6">
-          Your booking is pending confirmation. We'll review and confirm your reservation shortly.
+          Vaša rezervacija čaka na potrditev. Kmalu jo bomo pregledali in potrdili.
         </p>
       </div>
     </div>

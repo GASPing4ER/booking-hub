@@ -46,7 +46,7 @@ function AccommodationCard({
         <div className="absolute top-3 left-3">
           <span className="px-2 py-1 rounded-md text-xs font-medium font-caption capitalize bg-muted text-text-secondary">
             {accommodation.status === 'available'
-              ? 'Available'
+              ? 'Razpoložljivo'
               : accommodation.status}
           </span>
         </div>
@@ -58,7 +58,7 @@ function AccommodationCard({
             {accommodation.name}
           </h3>
           <div className="text-right ml-3 flex-shrink-0">
-            <p className="font-caption text-xs text-text-secondary">From</p>
+            <p className="font-caption text-xs text-text-secondary">Od</p>
             <p className="font-heading font-bold text-lg text-primary">
               ${accommodation.pricePerNight}
             </p>
@@ -95,7 +95,7 @@ function AccommodationCard({
           className="w-full bg-primary text-primary-foreground px-4 py-2.5 rounded-lg font-caption font-medium text-sm shadow hover:bg-primary/90 transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <span>
-            {accommodation.status === 'available' ? 'View & book' : 'Not available'}
+            {accommodation.status === 'available' ? 'Poglej in rezerviraj' : 'Ni na voljo'}
           </span>
           <Icon name="ArrowRightIcon" variant="outline" size={16} />
         </button>
@@ -159,14 +159,14 @@ function ProviderAccommodationsPageContent() {
         capacity: prop.capacity || 2,
         pricePerNight: parseFloat(prop.price_per_night) || 0,
         status: prop.status || 'available',
-        images: getPropertyImages(prop.image_urls, prop.image_url, `${prop.name} accommodation`),
+        images: getPropertyImages(prop.image_urls, prop.image_url, `${prop.name} nastanitev`),
         amenities: prop.amenities || [],
       }));
 
       setProviderData({
         id: ownerProfile?.id || '',
         slug: providerSlug,
-        name: ownerProfile?.business_name || 'Provider',
+        name: ownerProfile?.business_name || 'Ponudnik',
         accommodations,
       });
     } catch (err: any) {
@@ -174,7 +174,7 @@ function ProviderAccommodationsPageContent() {
       setProviderData({
         id: '',
         slug: providerSlug,
-        name: 'Provider',
+        name: 'Ponudnik',
         accommodations: [],
       });
     } finally {
@@ -200,7 +200,7 @@ function ProviderAccommodationsPageContent() {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
           <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-          <p className="font-caption text-text-secondary">Loading accommodations…</p>
+          <p className="font-caption text-text-secondary">Nalaganje nastanitev…</p>
         </div>
       </div>
     );
@@ -221,10 +221,10 @@ function ProviderAccommodationsPageContent() {
             className="inline-flex items-center gap-2 font-caption text-sm text-text-secondary hover:text-primary transition-colors"
           >
             <Icon name="ArrowLeftIcon" variant="outline" size={18} />
-            Back to {providerData.name}
+            Nazaj na {providerData.name}
           </Link>
           <h1 className="font-heading font-bold text-xl sm:text-2xl text-text-primary">
-            Accommodations
+            Nastanitve
           </h1>
         </div>
       </div>
@@ -232,7 +232,7 @@ function ProviderAccommodationsPageContent() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
           <p className="font-body text-text-secondary">
-            Bookable stays for this provider. Toggle to include unavailable listings.
+            Nastanitve tega ponudnika, ki jih lahko rezervirate. Preklopite za prikaz nerazpoložljivih nastanitev.
           </p>
           <div className="flex items-center gap-2 bg-muted rounded-lg p-1 w-fit">
             <button
@@ -244,7 +244,7 @@ function ProviderAccommodationsPageContent() {
                   : 'text-text-secondary hover:text-text-primary'
               }`}
             >
-              Available ({availableCount})
+              Razpoložljivo ({availableCount})
             </button>
             <button
               type="button"
@@ -255,7 +255,7 @@ function ProviderAccommodationsPageContent() {
                   : 'text-text-secondary hover:text-text-primary'
               }`}
             >
-              All ({providerData.accommodations.length})
+              Vse ({providerData.accommodations.length})
             </button>
           </div>
         </div>
@@ -268,14 +268,14 @@ function ProviderAccommodationsPageContent() {
               size={40}
               className="text-text-secondary mx-auto mb-3"
             />
-            <p className="font-heading text-lg text-text-primary mb-1">No listings match</p>
+            <p className="font-heading text-lg text-text-primary mb-1">Nobena nastanitev ne ustreza</p>
             <p className="font-caption text-text-secondary mb-4">
               {filter === 'available'
-                ? 'Nothing is marked available right now.'
-                : 'This provider has not added any properties yet.'}
+                ? 'Trenutno ni razpoložljivih nastanitev.'
+                : 'Ta ponudnik še ni dodal nobene nepremičnine.'}
             </p>
             <Link href={basePath} className="text-primary font-caption font-medium hover:underline">
-              Return to storefront
+              Vrni se na trgovino
             </Link>
           </div>
         ) : (

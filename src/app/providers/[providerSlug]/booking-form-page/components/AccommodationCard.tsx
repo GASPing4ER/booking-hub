@@ -72,14 +72,14 @@ const AccommodationCard = ({
               className="text-text-secondary"
             />
             <span className="caption text-text-secondary">
-              Up to {accommodation.capacity} guests
+              Do {accommodation.capacity} gostov
             </span>
           </div>
           <div className="text-right">
             <p className="font-heading font-semibold text-lg text-primary">
               ${accommodation.pricePerNight}
             </p>
-            <p className="caption text-text-secondary">per night</p>
+            <p className="caption text-text-secondary">na noč</p>
           </div>
         </div>
 
@@ -95,7 +95,7 @@ const AccommodationCard = ({
           ))}
           {accommodation.amenities.length > 3 && (
             <span className="caption px-2 py-1 bg-muted text-text-secondary rounded-md">
-              +{accommodation.amenities.length - 3} more
+              +{accommodation.amenities.length - 3} več
             </span>
           )}
         </div>

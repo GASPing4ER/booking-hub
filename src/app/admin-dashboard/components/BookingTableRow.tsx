@@ -39,6 +39,12 @@ const BookingTableRow = ({
 }: BookingTableRowProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
+  const statusLabels: Record<string, string> = {
+    confirmed: 'Potrjeno',
+    cancelled: 'Preklicano',
+    pending: 'V obdelavi',
+  };
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'confirmed':
@@ -54,7 +60,7 @@ const BookingTableRow = ({
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
+    return date.toLocaleDateString('sl-SI', {
       month: 'short',
       day: 'numeric',
       year: 'numeric',
@@ -72,7 +78,7 @@ const BookingTableRow = ({
               checked={isSelected}
               onChange={() => onSelect(booking.id)}
               className="w-4 h-4 rounded border-input text-primary focus:ring-2 focus:ring-ring cursor-pointer"
-              aria-label={`Select booking for ${booking.guestName}`}
+              aria-label={`Izberi rezervacijo za ${booking.guestName}`}
             />
           </td>
           <td className="px-4 py-4">
@@ -95,7 +101,7 @@ const BookingTableRow = ({
               <span className="text-sm font-caption text-text-primary">
                 {formatDate(booking.checkIn)}
               </span>
-              <span className="text-xs text-text-secondary">Check-in</span>
+              <span className="text-xs text-text-secondary">Prijava</span>
             </div>
           </td>
           <td className="px-4 py-4">
@@ -103,7 +109,7 @@ const BookingTableRow = ({
               <span className="text-sm font-caption text-text-primary">
                 {formatDate(booking.checkOut)}
               </span>
-              <span className="text-xs text-text-secondary">Check-out</span>
+              <span className="text-xs text-text-secondary">Odjava</span>
             </div>
           </td>
           <td className="px-4 py-4">
@@ -112,7 +118,7 @@ const BookingTableRow = ({
                 booking.status
               )}`}
             >
-              {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
+              {statusLabels[booking.status] || booking.status}
             </span>
           </td>
           <td className="px-4 py-4">
@@ -127,14 +133,14 @@ const BookingTableRow = ({
                   <button
                     onClick={() => onStatusChange(booking.id, 'confirmed')}
                     className="p-2 rounded-md bg-success/10 text-success hover:bg-success/20 transition-smooth"
-                    aria-label="Confirm booking"
+                    aria-label="Potrdi rezervacijo"
                   >
                     <Icon name="CheckIcon" variant="solid" size={16} />
                   </button>
                   <button
                     onClick={() => onStatusChange(booking.id, 'cancelled')}
                     className="p-2 rounded-md bg-error/10 text-error hover:bg-error/20 transition-smooth"
-                    aria-label="Cancel booking"
+                    aria-label="Prekliči rezervacijo"
                   >
                     <Icon name="XMarkIcon" variant="solid" size={16} />
                   </button>
@@ -146,7 +152,7 @@ const BookingTableRow = ({
                   <button
                     onClick={() => onEdit(booking)}
                     className="p-2 rounded-md text-text-secondary hover:bg-muted hover:text-primary transition-smooth"
-                    aria-label="Edit booking"
+                    aria-label="Uredi rezervacijo"
                   >
                     <Icon name="PencilIcon" variant="outline" size={18} />
                   </button>
@@ -155,7 +161,7 @@ const BookingTableRow = ({
                   <button
                     onClick={() => onDelete(booking.id)}
                     className="p-2 rounded-md text-text-secondary hover:bg-muted hover:text-error transition-smooth"
-                    aria-label="Delete booking"
+                    aria-label="Izbriši rezervacijo"
                   >
                     <Icon name="TrashIcon" variant="outline" size={18} />
                   </button>
@@ -163,7 +169,7 @@ const BookingTableRow = ({
                 <button
                   onClick={() => setIsExpanded(!isExpanded)}
                   className="p-2 rounded-md bg-muted text-text-secondary hover:bg-primary/10 hover:text-primary transition-smooth"
-                  aria-label="View details"
+                  aria-label="Poglej podrobnosti"
                 >
                   <Icon name="EyeIcon" variant="outline" size={16} />
                 </button>
@@ -183,7 +189,7 @@ const BookingTableRow = ({
                 checked={isSelected}
                 onChange={() => onSelect(booking.id)}
                 className="mt-1 w-4 h-4 rounded border-input text-primary focus:ring-2 focus:ring-ring cursor-pointer"
-                aria-label={`Select booking for ${booking.guestName}`}
+                aria-label={`Izberi rezervacijo za ${booking.guestName}`}
               />
               <div>
                 <h4 className="font-caption font-semibold text-text-primary">
@@ -197,7 +203,7 @@ const BookingTableRow = ({
                 booking.status
               )}`}
             >
-              {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
+              {statusLabels[booking.status] || booking.status}
             </span>
           </div>
 
@@ -243,21 +249,21 @@ const BookingTableRow = ({
                   className="flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-success text-success-foreground hover:bg-success/90 transition-smooth"
                 >
                   <Icon name="CheckIcon" variant="solid" size={16} />
-                  <span className="font-caption font-medium text-sm">Confirm</span>
+                  <span className="font-caption font-medium text-sm">Potrdi</span>
                 </button>
                 <button
                   onClick={() => onStatusChange(booking.id, 'cancelled')}
                   className="flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-error text-error-foreground hover:bg-error/90 transition-smooth"
                 >
                   <Icon name="XMarkIcon" variant="solid" size={16} />
-                  <span className="font-caption font-medium text-sm">Cancel</span>
+                  <span className="font-caption font-medium text-sm">Prekliči</span>
                 </button>
               </>
             )}
             <button
               onClick={() => setIsExpanded(!isExpanded)}
               className="p-2 rounded-md bg-muted text-text-secondary hover:bg-primary/10 hover:text-primary transition-smooth"
-              aria-label="View details"
+              aria-label="Poglej podrobnosti"
             >
               <Icon name="EyeIcon" variant="outline" size={20} />
             </button>
@@ -272,7 +278,7 @@ const BookingTableRow = ({
             <div className="grid grid-cols-2 gap-6">
               <div>
                 <h4 className="font-caption font-semibold text-text-primary mb-3">
-                  Booking Details
+                  Podrobnosti rezervacije
                 </h4>
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">
@@ -282,7 +288,7 @@ const BookingTableRow = ({
                       size={16}
                       className="text-text-secondary"
                     />
-                    <span className="text-sm text-text-secondary">Guests:</span>
+                    <span className="text-sm text-text-secondary">Gostje:</span>
                     <span className="text-sm font-caption font-medium text-text-primary">
                       {booking.guests}
                     </span>
@@ -295,7 +301,7 @@ const BookingTableRow = ({
                       className="text-text-secondary"
                     />
                     <span className="text-sm text-text-secondary">
-                      Booked on:
+                      Rezervirano:
                     </span>
                     <span className="text-sm font-caption font-medium text-text-primary">
                       {formatDate(booking.bookingDate)}
@@ -310,10 +316,10 @@ const BookingTableRow = ({
                         className="text-text-secondary"
                       />
                       <span className="text-sm text-text-secondary">
-                        {booking.status === 'confirmed' ? 'Confirmed at:' : 'Cancelled at:'}
+                        {booking.status === 'confirmed' ? 'Potrjeno ob:' : 'Preklicano ob:'}
                       </span>
                       <span className="text-sm font-caption font-medium text-text-primary">
-                        {new Date(booking.statusUpdatedAt).toLocaleString('en-US', {
+                        {new Date(booking.statusUpdatedAt).toLocaleString('sl-SI', {
                           month: 'short',
                           day: 'numeric',
                           year: 'numeric',
@@ -328,7 +334,7 @@ const BookingTableRow = ({
               {booking.specialRequests && (
                 <div>
                   <h4 className="font-caption font-semibold text-text-primary mb-3">
-                    Special Requests
+                    Posebne zahteve
                   </h4>
                   <p className="text-sm text-text-secondary">
                     {booking.specialRequests}
@@ -344,7 +350,7 @@ const BookingTableRow = ({
       {isExpanded && (
         <div className="lg:hidden bg-muted/30 border border-border rounded-lg p-4 mb-4">
           <h4 className="font-caption font-semibold text-text-primary mb-3">
-            Additional Details
+            Dodatne podrobnosti
           </h4>
           <div className="space-y-2 mb-3">
             <div className="flex items-center gap-2">
@@ -354,7 +360,7 @@ const BookingTableRow = ({
                 size={16}
                 className="text-text-secondary"
               />
-              <span className="text-sm text-text-secondary">Guests:</span>
+              <span className="text-sm text-text-secondary">Gostje:</span>
               <span className="text-sm font-caption font-medium text-text-primary">
                 {booking.guests}
               </span>
@@ -366,7 +372,7 @@ const BookingTableRow = ({
                 size={16}
                 className="text-text-secondary"
               />
-              <span className="text-sm text-text-secondary">Booked on:</span>
+              <span className="text-sm text-text-secondary">Rezervirano:</span>
               <span className="text-sm font-caption font-medium text-text-primary">
                 {formatDate(booking.bookingDate)}
               </span>
@@ -380,10 +386,10 @@ const BookingTableRow = ({
                   className="text-text-secondary"
                 />
                 <span className="text-sm text-text-secondary">
-                  {booking.status === 'confirmed' ? 'Confirmed at:' : 'Cancelled at:'}
+                  {booking.status === 'confirmed' ? 'Potrjeno ob:' : 'Preklicano ob:'}
                 </span>
                 <span className="text-sm font-caption font-medium text-text-primary">
-                  {new Date(booking.statusUpdatedAt).toLocaleString('en-US', {
+                  {new Date(booking.statusUpdatedAt).toLocaleString('sl-SI', {
                     month: 'short',
                     day: 'numeric',
                     year: 'numeric',
@@ -397,7 +403,7 @@ const BookingTableRow = ({
           {booking.specialRequests && (
             <div>
               <h5 className="font-caption font-semibold text-text-primary mb-2 text-sm">
-                Special Requests
+                Posebne zahteve
               </h5>
               <p className="text-sm text-text-secondary">
                 {booking.specialRequests}

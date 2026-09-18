@@ -35,13 +35,13 @@ const RecurringPatternModal = ({ onClose, onApply }: RecurringPatternModalProps)
   );
 
   const daysOfWeek = [
-    { label: 'Sun', value: 0 },
-    { label: 'Mon', value: 1 },
-    { label: 'Tue', value: 2 },
-    { label: 'Wed', value: 3 },
-    { label: 'Thu', value: 4 },
-    { label: 'Fri', value: 5 },
-    { label: 'Sat', value: 6 },
+    { label: 'Ned', value: 0 },
+    { label: 'Pon', value: 1 },
+    { label: 'Tor', value: 2 },
+    { label: 'Sre', value: 3 },
+    { label: 'Čet', value: 4 },
+    { label: 'Pet', value: 5 },
+    { label: 'Sob', value: 6 },
   ];
 
   const toggleDay = (day: number) => {
@@ -59,19 +59,19 @@ const RecurringPatternModal = ({ onClose, onApply }: RecurringPatternModalProps)
     const newErrors: { startDate?: string; endDate?: string; days?: string } = {};
 
     if (!pattern.startDate) {
-      newErrors.startDate = 'Start date is required';
+      newErrors.startDate = 'Začetni datum je obvezen';
     }
 
     if (!pattern.endDate) {
-      newErrors.endDate = 'End date is required';
+      newErrors.endDate = 'Končni datum je obvezen';
     }
 
     if (pattern.startDate && pattern.endDate && pattern.startDate >= pattern.endDate) {
-      newErrors.endDate = 'End date must be after start date';
+      newErrors.endDate = 'Končni datum mora biti po začetnem datumu';
     }
 
     if (pattern.type === 'weekly' && pattern.selectedDays.length === 0) {
-      newErrors.days = 'Please select at least one day';
+      newErrors.days = 'Izberite vsaj en dan';
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -87,12 +87,12 @@ const RecurringPatternModal = ({ onClose, onApply }: RecurringPatternModalProps)
       <div className="bg-card rounded-lg border border-border shadow-hospitality-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between p-6 border-b border-border">
           <h2 className="font-heading font-semibold text-2xl text-text-primary">
-            Set Recurring Availability Pattern
+            Nastavite ponavljajoč vzorec razpoložljivosti
           </h2>
           <button
             onClick={onClose}
             className="w-8 h-8 rounded-md flex items-center justify-center text-text-secondary hover:bg-muted hover:text-text-primary transition-smooth"
-            aria-label="Close modal"
+            aria-label="Zapri okno"
           >
             <Icon name="XMarkIcon" variant="outline" size={20} />
           </button>
@@ -102,7 +102,7 @@ const RecurringPatternModal = ({ onClose, onApply }: RecurringPatternModalProps)
           {/* Pattern Type */}
           <div>
             <label className="block text-sm font-caption font-medium text-text-secondary mb-2">
-              Pattern Type
+              Tip vzorca
             </label>
             <div className="flex gap-4">
               <label className="flex items-center gap-2 cursor-pointer">
@@ -114,7 +114,7 @@ const RecurringPatternModal = ({ onClose, onApply }: RecurringPatternModalProps)
                   onChange={(e) => setPattern({ ...pattern, type: 'daily' })}
                   className="w-4 h-4 text-primary focus:ring-primary"
                 />
-                <span className="text-text-primary">Daily</span>
+                <span className="text-text-primary">Dnevno</span>
               </label>
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
@@ -125,7 +125,7 @@ const RecurringPatternModal = ({ onClose, onApply }: RecurringPatternModalProps)
                   onChange={(e) => setPattern({ ...pattern, type: 'weekly' })}
                   className="w-4 h-4 text-primary focus:ring-primary"
                 />
-                <span className="text-text-primary">Weekly</span>
+                <span className="text-text-primary">Tedensko</span>
               </label>
             </div>
           </div>
@@ -134,7 +134,7 @@ const RecurringPatternModal = ({ onClose, onApply }: RecurringPatternModalProps)
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-caption font-medium text-text-secondary mb-2">
-                Start Date *
+                Začetni datum *
               </label>
               <input
                 type="date"
@@ -153,7 +153,7 @@ const RecurringPatternModal = ({ onClose, onApply }: RecurringPatternModalProps)
 
             <div>
               <label className="block text-sm font-caption font-medium text-text-secondary mb-2">
-                End Date *
+                Končni datum *
               </label>
               <input
                 type="date"
@@ -173,7 +173,7 @@ const RecurringPatternModal = ({ onClose, onApply }: RecurringPatternModalProps)
           {pattern.type === 'weekly' && (
             <div>
               <label className="block text-sm font-caption font-medium text-text-secondary mb-2">
-                Select Days *
+                Izberite dneve *
               </label>
               <div className="flex flex-wrap gap-2">
                 {daysOfWeek.map((day) => (
@@ -198,7 +198,7 @@ const RecurringPatternModal = ({ onClose, onApply }: RecurringPatternModalProps)
           {/* Availability Status */}
           <div>
             <label className="block text-sm font-caption font-medium text-text-secondary mb-2">
-              Set As
+              Nastavi kot
             </label>
             <div className="flex gap-4">
               <label className="flex items-center gap-2 cursor-pointer">
@@ -212,7 +212,7 @@ const RecurringPatternModal = ({ onClose, onApply }: RecurringPatternModalProps)
                 />
                 <span className="text-text-primary flex items-center gap-2">
                   <Icon name="CheckCircleIcon" variant="solid" size={16} className="text-success" />
-                  Available
+                  Razpoložljivo
                 </span>
               </label>
               <label className="flex items-center gap-2 cursor-pointer">
@@ -226,7 +226,7 @@ const RecurringPatternModal = ({ onClose, onApply }: RecurringPatternModalProps)
                 />
                 <span className="text-text-primary flex items-center gap-2">
                   <Icon name="XCircleIcon" variant="solid" size={16} className="text-error" />
-                  Unavailable
+                  Ni na voljo
                 </span>
               </label>
             </div>
@@ -236,31 +236,31 @@ const RecurringPatternModal = ({ onClose, onApply }: RecurringPatternModalProps)
           <div className="bg-muted rounded-md p-4">
             <h3 className="font-caption font-semibold text-text-primary mb-2 flex items-center gap-2">
               <Icon name="InformationCircleIcon" variant="outline" size={20} className="text-primary" />
-              Pattern Preview
+              Predogled vzorca
             </h3>
             <p className="text-sm text-text-secondary">
               {pattern.type === 'daily' ? (
                 <>
-                  This will set <strong>every day</strong> from {pattern.startDate} to{' '}
-                  {pattern.endDate} as <strong>{pattern.status}</strong>.
+                  To bo nastavilo <strong>vsak dan</strong> od {pattern.startDate} do{' '}
+                  {pattern.endDate} kot <strong>{pattern.status === 'available' ? 'razpoložljivo' : 'nerazpoložljivo'}</strong>.
                 </>
               ) : (
                 <>
-                  This will set{' '}
+                  To bo nastavilo{' '}
                   <strong>
                     {pattern.selectedDays.length > 0
                       ? pattern.selectedDays
                           .sort((a, b) => a - b)
                           .map((d) => daysOfWeek.find((day) => day.value === d)?.label)
                           .join(', ')
-                      : 'no days'}
+                      : 'brez dni'}
                   </strong>{' '}
-                  from {pattern.startDate} to {pattern.endDate} as <strong>{pattern.status}</strong>.
+                  od {pattern.startDate} do {pattern.endDate} kot <strong>{pattern.status === 'available' ? 'razpoložljivo' : 'nerazpoložljivo'}</strong>.
                 </>
               )}
             </p>
             <p className="text-xs text-text-secondary mt-2">
-              Note: Dates with existing bookings will not be affected.
+              Opomba: Datumi z obstoječimi rezervacijami ne bodo spremenjeni.
             </p>
           </div>
 
@@ -271,13 +271,13 @@ const RecurringPatternModal = ({ onClose, onApply }: RecurringPatternModalProps)
               onClick={onClose}
               className="px-6 py-2 bg-muted text-text-primary rounded-md font-caption font-medium hover:bg-muted/80 transition-smooth"
             >
-              Cancel
+              Prekliči
             </button>
             <button
               type="submit"
               className="px-6 py-2 bg-primary text-primary-foreground rounded-md font-caption font-medium hover:bg-primary/90 transition-smooth"
             >
-              Apply Pattern
+              Uporabi vzorec
             </button>
           </div>
         </form>

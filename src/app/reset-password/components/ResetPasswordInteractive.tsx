@@ -30,12 +30,12 @@ export default function ResetPasswordInteractive() {
     setError('');
 
     if (password.length < 8) {
-      setError('Password must be at least 8 characters long.');
+      setError('Geslo mora vsebovati vsaj 8 znakov.');
       return;
     }
 
     if (password !== confirmPassword) {
-      setError('Passwords do not match.');
+      setError('Gesli se ne ujemata.');
       return;
     }
 
@@ -47,7 +47,7 @@ export default function ResetPasswordInteractive() {
       setSuccess(true);
       setTimeout(() => router.push('/provider-login'), 3000);
     } catch (err: any) {
-      setError(err.message || 'Failed to reset password. Please try again.');
+      setError(err.message || 'Ponastavitev gesla ni uspela. Poskusite znova.');
     } finally {
       setLoading(false);
     }
@@ -62,15 +62,15 @@ export default function ResetPasswordInteractive() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <h2 className="font-heading font-bold text-2xl text-text-primary mb-2">Password Updated!</h2>
+          <h2 className="font-heading font-bold text-2xl text-text-primary mb-2">Geslo posodobljeno!</h2>
           <p className="text-text-secondary text-sm mb-6">
-            Your password has been successfully reset. Redirecting you to sign in...
+            Vaše geslo je bilo uspešno ponastavljeno. Preusmerjamo vas na prijavo...
           </p>
           <Link
             href="/provider-login"
             className="block w-full text-center bg-primary text-white font-semibold py-3 px-6 rounded-lg hover:bg-primary-dark transition-smooth"
           >
-            Sign In Now
+            Prijavite se zdaj
           </Link>
         </div>
       </div>
@@ -86,8 +86,8 @@ export default function ResetPasswordInteractive() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
             </svg>
           </div>
-          <h1 className="font-heading font-bold text-2xl text-text-primary">Set New Password</h1>
-          <p className="text-text-secondary text-sm mt-1">Choose a strong password for your account</p>
+          <h1 className="font-heading font-bold text-2xl text-text-primary">Nastavite novo geslo</h1>
+          <p className="text-text-secondary text-sm mt-1">Izberite močno geslo za svoj račun</p>
         </div>
 
         {error && (
@@ -99,7 +99,7 @@ export default function ResetPasswordInteractive() {
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-text-primary mb-1.5">
-              New Password
+              Novo geslo
             </label>
             <div className="relative">
               <input
@@ -110,7 +110,7 @@ export default function ResetPasswordInteractive() {
                 required
                 minLength={8}
                 className="w-full px-4 py-3 pr-11 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm placeholder-gray-400"
-                placeholder="At least 8 characters"
+                placeholder="Vsaj 8 znakov"
               />
               <button
                 type="button"
@@ -133,7 +133,7 @@ export default function ResetPasswordInteractive() {
 
           <div>
             <label htmlFor="confirmPassword" className="block text-sm font-medium text-text-primary mb-1.5">
-              Confirm New Password
+              Potrdi novo geslo
             </label>
             <input
               id="confirmPassword"
@@ -142,7 +142,7 @@ export default function ResetPasswordInteractive() {
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm placeholder-gray-400"
-              placeholder="Repeat your password"
+              placeholder="Ponovite svoje geslo"
             />
           </div>
 
@@ -157,10 +157,10 @@ export default function ResetPasswordInteractive() {
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                 </svg>
-                Updating...
+                Posodabljanje...
               </>
             ) : (
-              'Update Password'
+              'Posodobi geslo'
             )}
           </button>
         </form>

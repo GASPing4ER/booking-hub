@@ -95,13 +95,13 @@ function ProviderStorefrontHomeContent() {
 
       setProviderData({
         slug: providerSlug,
-        name: ownerProfile?.business_name || 'Seaside Retreat',
+        name: ownerProfile?.business_name || 'Obmorski umik',
         tagline:
           ownerProfile?.tagline ||
-          'Experience Coastal Luxury & Tranquility',
+          'Doživite obalno razkošje in mir',
         description:
           ownerProfile?.bio ||
-          'Welcome to our carefully curated accommodations offering the perfect blend of relaxation and adventure.',
+          'Dobrodošli v naših skrbno izbranih nastanitvah, ki ponujajo popolno mešanico sprostitve in pustolovščine.',
         email: ownerProfile?.business_email || 'info@example.com',
         phone: ownerProfile?.business_phone || '',
         address:
@@ -113,10 +113,10 @@ function ProviderStorefrontHomeContent() {
       console.error('Error fetching provider:', err.message);
       setProviderData({
         slug: providerSlug,
-        name: 'Seaside Retreat',
-        tagline: 'Experience Coastal Luxury & Tranquility',
+        name: 'Obmorski umik',
+        tagline: 'Doživite obalno razkošje in mir',
         description:
-          'Welcome to our carefully curated accommodations.',
+          'Dobrodošli v naših skrbno izbranih nastanitvah.',
         email: 'info@example.com',
         phone: '+1 (555) 000-0000',
         address: 'Coastal Drive, Miami Beach',
@@ -133,7 +133,7 @@ function ProviderStorefrontHomeContent() {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
           <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-          <p className="font-caption text-text-secondary">Loading…</p>
+          <p className="font-caption text-text-secondary">Nalaganje…</p>
         </div>
       </div>
     );
@@ -160,11 +160,11 @@ function ProviderStorefrontHomeContent() {
           <div className="flex flex-wrap items-center justify-center gap-6 text-primary-foreground/80 mb-10">
             <div className="flex items-center gap-2">
               <Icon name="ShieldCheckIcon" variant="solid" size={20} className="text-accent" />
-              <span className="font-caption text-sm">Verified Property</span>
+              <span className="font-caption text-sm">Preverjena nepremičnina</span>
             </div>
             <div className="flex items-center gap-2">
               <Icon name="StarIcon" variant="solid" size={20} className="text-accent" />
-              <span className="font-caption text-sm">Top Rated</span>
+              <span className="font-caption text-sm">Najbolje ocenjeno</span>
             </div>
           </div>
 
@@ -172,9 +172,9 @@ function ProviderStorefrontHomeContent() {
             href={accommodationsPath}
             className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-primary-foreground text-primary font-heading font-semibold text-lg shadow-lg hover:bg-primary-foreground/90 transition-all"
           >
-            View accommodations
+            Prikaži nastanitve
             <span className="font-caption font-medium opacity-90">
-              ({providerData.availableAccommodations} available)
+              ({providerData.availableAccommodations} razpoložljivih)
             </span>
             <Icon name="ArrowRightIcon" variant="outline" size={22} className="text-primary" />
           </Link>
@@ -185,13 +185,13 @@ function ProviderStorefrontHomeContent() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
             <div className="md:col-span-2">
-              <h2 className="font-heading font-semibold text-2xl text-text-primary mb-3">About Us</h2>
+              <h2 className="font-heading font-semibold text-2xl text-text-primary mb-3">O nas</h2>
               <p className="font-body text-text-secondary leading-relaxed">{providerData.description}</p>
               <p className="font-caption text-text-secondary mt-4">
                 {providerData.totalAccommodations}{' '}
-                {providerData.totalAccommodations === 1 ? 'listing' : 'listings'} •{' '}
+                {providerData.totalAccommodations === 1 ? 'nastanitev' : 'nastanitev'} •{' '}
                 <Link href={accommodationsPath} className="text-primary font-medium hover:underline">
-                  Browse all
+                  Prebrskajte vse
                 </Link>
               </p>
             </div>
@@ -228,7 +228,7 @@ function ProviderStorefrontHomeContent() {
             <span className="font-heading font-semibold text-text-primary">{providerData.name}</span>
           </div>
           <p className="font-caption text-sm text-text-secondary">
-            Powered by <span className="text-primary font-medium">BookingHub</span>
+            Poganja <span className="text-primary font-medium">BookingHub</span>
           </p>
         </div>
       </footer>
